@@ -1,0 +1,2 @@
+include ':app', ':wheelLibrary', ':matise', ':xrichtext'
+rootProject.name='DongJia'

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name" translatable="false">懂家</string>
+    <string name="save" translatable="false">保存</string>
+    <string name="phone_tips" translatable="false">请留下联系方式，以方便我们回复您</string>
+
+    <array name="dummy_items">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+        <item>Six</item>
+        <item>Seven</item>
+        <item>Eight</item>
+        <item>Nine</item>
+        <item>Ten</item>
+    </array>
+
+    <string name="file_provider_authorities" translatable="false">com.yalantis.ucrop.provider</string>
+
+    <string name="channel_critical" translatable="false">Critical events</string>
+    <string name="channel_importance" translatable="false">Importance events</string>
+    <string name="channel_default" translatable="false">Default events</string>
+    <string name="channel_low" translatable="false">Low events</string>
+    <string name="channel_media" translatable="false">Media events</string>
+
+
+    <string name="action_settings" translatable="false">设置</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="tag" translatable="false"> (X5内核功能演示)</string>
+
+</resources>
