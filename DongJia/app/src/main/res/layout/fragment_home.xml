@@ -93,7 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="182dp"
                 android:background="@color/black"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                tools:listitem="@layout/item_home_limited_time" />
             <!--爆款热卖-->
             <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="316dp"
                 android:background="@color/black"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                tools:listitem="@layout/item_home_best_selling"/>
             <!--超级品牌-->
             <TextView
                 android:layout_width="wrap_content"
@@ -125,6 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="316dp"
                 android:background="@color/black"
+                tools:listitem="@layout/item_home_super"
                 android:orientation="vertical" />
             <!--一美臻选-->
             <TextView
@@ -140,6 +143,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="316dp"
+                tools:listitem="@layout/item_home_selection"
                 android:background="@color/black"
                 android:orientation="vertical" />
         </LinearLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="202dp">
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_margin="12dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="箭牌卫浴"
+            android:textColor="@color/typed_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_store_name"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="共988件商品"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+
+        <LinearLayout
+            android:layout_width="102dp"
+            android:layout_height="127dp"
+            android:layout_below="@id/iv_avatar"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <com.yalantis.ucrop.view.GestureCropImageView
+                android:layout_width="102dp"
+                android:layout_height="102dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥34767"
+                    android:textColor="@color/home_16"
+                    android:textSize="13sp"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥76743"
+                    android:textSize="10sp"
+                    android:textColor="@color/hint_text_color"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

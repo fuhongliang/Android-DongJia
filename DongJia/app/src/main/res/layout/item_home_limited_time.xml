@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="-20dp"
+        android:background="#F8F3E6"
+        android:gravity="center"
+        android:text="距结束22:44:16"
+        android:textColor="@color/home_16"
+        android:textSize="9sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="现代红木家具"
+        android:textSize="13sp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/typed_text_color"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp">
+        <TextView
+            android:id="@+id/after_voucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="券后￥"
+            android:layout_centerVertical="true"
+            android:textColor="@color/home_16"
+            android:textSize="9sp"
+            />
+        <TextView
+            android:layout_toRightOf="@id/after_voucher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="97889.78"
+            android:textSize="13sp"
+            android:textColor="@color/home_16"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥3222"
+            android:textColor="@color/hint_text_color"
+            android:textSize="9sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</LinearLayout>
