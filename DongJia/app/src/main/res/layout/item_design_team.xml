@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="李翠花"
+            android:textColor="@color/typed_text_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="设计师·作品10"
+            android:textColor="@color/hint_text_color"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="48dp"
+            android:layout_height="19dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_green_3"
+            android:gravity="center"
+            android:text="8年经验"
+            android:textColor="#0AC782"
+            android:textSize="10sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:layout_width="0dp"
+            android:layout_height="84dp"
+            android:layout_weight="1"
+            android:background="@color/black" />
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:layout_width="0dp"
+            android:layout_height="84dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:background="@color/black" />
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:layout_width="0dp"
+            android:layout_height="84dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:background="@color/black" />
+    </LinearLayout>
+
+</LinearLayout>

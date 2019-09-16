@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_header" />
+
+    <View style="@style/line_fff" />
+
+    <com.yalantis.ucrop.view.GestureCropImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="27dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="11dp"
+        android:text="李翠花"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="11sp"
+        android:text="设计师 · 8年经验"
+        android:textColor="@color/hint_text_color"
+        android:textSize="11sp" />
+
+    <LinearLayout
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <cn.ifhu.dongjia.view.dialog.RVPIndicator
+            android:id="@+id/rvp_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:indicator_color="#0AC782"
+            app:indicator_height="2dp"
+            app:indicator_visible_count="2"
+            app:text_color_normal="#999999"
+            app:text_color_selected="@color/black" />
+
+
+        <ImageView style="@style/v_line" />
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

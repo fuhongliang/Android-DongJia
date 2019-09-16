@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yalantis.ucrop.view.GestureCropImageView
+        android:layout_width="168dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:background="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="500平米亲子餐厅装修设计"
+            android:layout_centerInParent="true"
+            android:textColor="@color/typed_text_color"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+</LinearLayout>
