@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_header" />
+
+    <View style="@style/dividing_line" />
+
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="懂家"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="V1.0.0"
+        android:textColor="@color/hint_text_color"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_marginTop="38dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="懂家 以“全面提升中国人的居家文化品质”为宗旨，总部位于上海，现已成为大型家居卖场连锁集团、国内家居行业的领军企业，将Shopping Mall业态和家居关联商品引入家居商场，满足了一站式消费需求。在二十多年积累沉淀的基础上，2010年3月正式启动“百店计划”。为了提升家居卖场的文化品格、购物环境和服务档次，月星家居师法英国百年老店哈罗德百货公司（Harrods），启动打造“中国家居业的哈罗德”的改造升级工程，旨在将月星家居广场从平台式卖场升级为家居主题购物中心"
+        android:textColor="@color/navigation_color"
+        android:textSize="14sp" />
+</LinearLayout>
