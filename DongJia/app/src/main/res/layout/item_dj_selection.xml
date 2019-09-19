@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-3dp"
+        android:layout_toRightOf="@id/iv_avatar"
+        android:background="@drawable/bg_white_3"
+        android:paddingLeft="12dp">
+
+        <TextView
+            android:id="@+id/tv_store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13sp"
+            android:maxLines="2"
+            android:text="左右真皮沙发3.1米功能靠头现代客厅整装大小户型贵妃组合..."
+            android:textColor="@color/typed_text_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_store_name"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:text="87834已买"
+            android:textColor="@color/hint_text_color"
+            android:textSize="10sp" />
+
+        <RelativeLayout
+            android:layout_below="@id/tv_shop"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="13dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_original_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥19648"
+                android:layout_marginRight="9dp"
+                android:textColor="@color/home_16"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_current_price"
+                android:layout_width="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_original_price"
+                android:text="￥19648"
+                android:textColor="@color/hint_text_color"
+                android:textSize="10sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.yalantis.ucrop.view.GestureCropImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="115dp"
+        android:layout_height="110dp"
+        android:background="@color/black" />
+</RelativeLayout>

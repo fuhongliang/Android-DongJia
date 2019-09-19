@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_header" />
+
+    <View
+        android:id="@+id/line"
+        style="@style/line_fff"
+        android:layout_below="@id/header" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/iv_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_shop_cart"
+        android:layout_below="@id/line" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@drawable/select" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="47dp"
+            android:text="全选"
+            android:textColor="@color/typed_text_color"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="69dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/green"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="69dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_toLeftOf="@id/tv_ok"
+            android:background="#F7C62F"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_delete"
+            android:text="总计：￥23"
+            android:textColor="@color/home_16"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+</RelativeLayout>

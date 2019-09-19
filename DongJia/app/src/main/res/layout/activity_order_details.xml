@@ -9,6 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -46,7 +47,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="12dp"
-                        android:background="@drawable/bg_e6_white" />
+                        android:background="@drawable/icon_ic_shouhdz" />
 
                     <TextView
                         android:id="@+id/useless2"
@@ -84,7 +85,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="12dp"
-                        android:background="@drawable/bg_e6_white" />
+                        android:background="@drawable/icon_ic_dingqianwsz" />
 
                     <TextView
                         android:id="@+id/tv_address"

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_select1"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:padding="15dp"
+            android:src="@drawable/select" />
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_select1"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="9dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="鑫宝家居"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_store_name"
+            android:background="@drawable/center_ic_xuanze" />
+    </RelativeLayout>
+
+    <View
+        style="@style/line_fff"
+        android:layout_marginLeft="15dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_select2"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@drawable/select" />
+
+        <com.yalantis.ucrop.view.GestureCropImageView
+            android:id="@+id/iv_good_pic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@id/iv_select2"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_good_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/iv_good_pic"
+            android:text="暖眠北欧三人沙发橡木家具"
+            android:textColor="@color/typed_text_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_specification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_good_name"
+            android:layout_marginTop="11dp"
+            android:layout_toRightOf="@id/iv_good_pic"
+            android:text="深灰色"
+            android:textColor="@color/hint_text_color"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_specification"
+            android:layout_toRightOf="@id/iv_good_pic">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥3232"
+                android:layout_centerVertical="true"
+                android:textColor="@color/home_16"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="5dp"
+                android:padding="10dp"
+                android:src="@drawable/gouwuche_ic_jia" />
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="15sp"
+                android:layout_toLeftOf="@id/iv_add"
+                android:layout_centerVertical="true"
+                android:textColor="@color/typed_text_color"/>
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:padding="10dp"
+                android:layout_toLeftOf="@id/tv_number"
+                android:src="@drawable/gouwuche_ic_jian" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
