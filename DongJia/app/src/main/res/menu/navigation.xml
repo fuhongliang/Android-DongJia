@@ -3,21 +3,21 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/dibu_ic_sp_x"
+        android:icon="@drawable/bar_ic_sy_xian"
         android:title="首页" />
 
     <item
-        android:id="@+id/navigation_order"
-        android:icon="@drawable/dibu_ic_sp_x"
+        android:id="@+id/navigation_case"
+        android:icon="@drawable/bar_ic_jz_xian"
         android:title="家装方案" />
     <item
-        android:id="@+id/navigation_goods"
-        android:icon="@drawable/dibu_ic_sp_x"
+        android:id="@+id/navigation_cart"
+        android:icon="@drawable/bar_ic_gwc_xian"
         android:title="购物车" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/dibu_ic_sp_x"
+        android:id="@+id/navigation_me"
+        android:icon="@drawable/bar_ic_wd_xian"
         android:title="我的" />
 
 </menu>

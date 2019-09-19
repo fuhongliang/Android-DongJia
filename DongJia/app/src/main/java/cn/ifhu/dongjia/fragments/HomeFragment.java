@@ -14,19 +14,19 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseFragment;
 
 /**
- * 我的页面
+ * 首页
  */
-public class MeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment {
     Unbinder unbinder;
 
     public static BaseFragment newInstance() {
-        return new MeFragment();
+        return new HomeFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_me, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }

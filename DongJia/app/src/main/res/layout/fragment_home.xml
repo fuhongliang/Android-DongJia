@@ -176,6 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="316dp"
                 android:orientation="vertical"
+                android:background="@drawable/bg_white_3"
                 tools:listitem="@layout/item_home_selection" />
         </LinearLayout>
     </ScrollView>
