@@ -150,6 +150,15 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.iielse:ImageWatcher:1.1.5'
 
+    /**
+     *  Banner图
+     */
+    implementation 'com.github.xiaohaibin:XBanner:1.6.7'
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+    implementation 'com.ogaclejapan.smarttablayout:library:1.7.0@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.7.0@aar'
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
+
     //----极光推送
     implementation 'cn.jiguang.sdk:jpush:3.3.4'
     implementation 'cn.jiguang.sdk:jcore:2.1.0'

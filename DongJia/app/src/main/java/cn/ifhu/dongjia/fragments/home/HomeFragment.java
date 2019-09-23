@@ -1,4 +1,4 @@
-package cn.ifhu.dongjia.fragments;
+package cn.ifhu.dongjia.fragments.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.activity.home.SearchActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
 
 /**
@@ -30,4 +32,13 @@ public class HomeFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
+
+    /**
+     * 搜索跳转
+     */
+    @OnClick(R.id.rl_search)
+    public void onRlSearchClicked() {
+        goToActivity(SearchActivity.class);
+    }
+
 }

@@ -26,10 +26,10 @@ import cn.ifhu.dongjia.adapter.FragmentAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
 import cn.ifhu.dongjia.base.ViewManager;
-import cn.ifhu.dongjia.fragments.HomeCaseFragment;
-import cn.ifhu.dongjia.fragments.HomeFragment;
-import cn.ifhu.dongjia.fragments.MeFragment;
-import cn.ifhu.dongjia.fragments.ShopCartFragment;
+import cn.ifhu.dongjia.fragments.homeCase.HomeCaseFragment;
+import cn.ifhu.dongjia.fragments.home.HomeFragment;
+import cn.ifhu.dongjia.fragments.me.MeFragment;
+import cn.ifhu.dongjia.fragments.shopCart.ShopCartFragment;
 import cn.ifhu.dongjia.model.MessageEvent;
 import cn.ifhu.dongjia.utils.MchInfoLogic;
 

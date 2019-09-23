@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,46 @@ import androidx.fragment.app.Fragment;
 import cn.ifhu.dongjia.utils.Utils;
 import cn.ifhu.dongjia.view.dialog.loading.LoadingDialog;
 
+import static cn.ifhu.dongjia.utils.Constants.DATA;
+
 
 /**
  * @author tony
  */
 @Keep
 public abstract class BaseFragment extends Fragment {
+
+    /**
+     * 跳转到页面 cls
+     * @param cls 目标页面
+     */
+    public void goToActivity(Class<?> cls){
+        Intent intent = new Intent(getHoldingActivity(),cls);
+        startActivity(intent);
+    }
+
+
+    /**
+     * 携带数据跳转
+     * @param cls 目标页面
+     * @param data 携带的数据，DATA
+     */
+    public void goToActivity(Class<?> cls,String data){
+        Intent intent = new Intent(getHoldingActivity(),cls);
+        intent.putExtra(DATA,data);
+        startActivity(intent);
+    }
+
+    /**
+     * 携带数据跳转
+     * @param cls 目标页面
+     * @param data 携带的数据，DATA
+     */
+    public void goToActivity(Class<?> cls,int data){
+        Intent intent = new Intent(getHoldingActivity(),cls);
+        intent.putExtra(DATA,data);
+        startActivity(intent);
+    }
 
     protected BaseActivity mActivity;
 

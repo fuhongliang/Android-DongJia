@@ -43,6 +43,8 @@
 
             <EditText
                 style="@style/editText_name"
+                android:inputType="number"
+                android:maxLength="11"
                 android:hint="请输入手机号码" />
         </LinearLayout>
 
