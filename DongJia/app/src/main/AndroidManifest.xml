@@ -3,13 +3,12 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="cn.ifhu.dongjia">
 
-
-    <!--微信登录权限-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- for mta statistics, not necessary-->
+    <!-- 微信权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,6 +40,30 @@
         <activity android:name=".activity.me.AddressActivity" />
         <activity android:name=".activity.me.AddAddressActivity"/>
         <!--shopCart-->
+
+        <!--微信登录回调页面-->
+<!--        <activity-->
+<!--            android:name=".wxapi.WXEntryActivity"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar.Transparent"-->
+<!--            android:exported="true"-->
+<!--            android:taskAffinity="net.sourceforge.simcpux"-->
+<!--            android:launchMode="singleTask">-->
+<!--        </activity>-->
+        <activity
+            android:name="cn.ifhu.dongjia.wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:launchMode="singleTask"/>
+<!--        <activity-->
+<!--            android:name=".wxapi.WXEntryActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="微信分享回调"-->
+<!--            android:launchMode="singleTop"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/Theme.AppCompat.NoActionBar.Transparent" />-->
     </application>
 
     <dist:module dist:instant="true" />

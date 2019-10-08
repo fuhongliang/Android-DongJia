@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -36,6 +37,7 @@ import cn.ifhu.dongjia.fragments.me.MeFragment;
 import cn.ifhu.dongjia.fragments.shopCart.ShopCartFragment;
 import cn.ifhu.dongjia.model.MessageEvent;
 import cn.ifhu.dongjia.utils.MchInfoLogic;
+import cn.ifhu.dongjia.utils.ToastHelper;
 
 import static cn.ifhu.dongjia.utils.Constants.LOGOUT;
 import static cn.ifhu.dongjia.utils.Constants.UNNORMALORDER;
@@ -57,7 +59,7 @@ public class MainActivity extends BaseActivity {
      * 微信登录
      */
     // APP_ID 替换为你的应用从官方网站申请到的合法appID
-    private static final String APP_ID = "wx4cb54f0fb9038e2e";
+    public static final String APP_ID = "wx4cb54f0fb9038e2e";
 
     // IWXAPI 是第三方app和微信通信的openApi接口
     private IWXAPI api;
@@ -68,12 +70,11 @@ public class MainActivity extends BaseActivity {
 
         // 将应用的appId注册到微信
         api.registerApp(APP_ID);
-
+        ToastHelper.makeText("注册微信成功").show();
         //建议动态监听微信启动广播进行注册到微信
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 // 将该app注册到微信
                 api.registerApp(APP_ID);
             }

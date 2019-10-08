@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 android {
 
     signingConfigs {
+        debug {
+            keyAlias ReleasekeyAlias
+            keyPassword ReleasekeyPassword
+            storeFile file(ReleasestoreFile)
+            storePassword ReleasestorePassword
+        }
         release {
             keyAlias ReleasekeyAlias
             keyPassword ReleasekeyPassword
@@ -35,7 +41,7 @@ android {
     buildTypes {
         debug {//开发环境
             buildConfigField "String", "STRING_API_ENV", "\"2\""
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
         release {
             // 如果没有提供混淆规则文件，则设置默认的混淆规则文件（SDK/tools/proguard/proguard-android.txt）
@@ -60,7 +66,7 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
-            applicationId "cn.ifhu.dongjia.dev"
+            applicationId "cn.ifhu.dongjia"//"cn.ifhu.dongjia.dev"
             manifestPlaceholders = [
                     app_icon             : "@mipmap/icon_dev"
             ]
