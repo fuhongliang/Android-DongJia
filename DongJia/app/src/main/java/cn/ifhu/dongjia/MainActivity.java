@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,6 +24,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import butterknife.internal.Constants;
 import cn.ifhu.dongjia.activity.LoginActivity;
 import cn.ifhu.dongjia.adapter.FragmentAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
@@ -49,6 +53,33 @@ public class MainActivity extends BaseActivity {
         return setCurrentItemIcon(item);
     };
 
+    /**
+     * 微信登录
+     */
+    // APP_ID 替换为你的应用从官方网站申请到的合法appID
+    private static final String APP_ID = "wx4cb54f0fb9038e2e";
+
+    // IWXAPI 是第三方app和微信通信的openApi接口
+    private IWXAPI api;
+
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+
+        // 将应用的appId注册到微信
+        api.registerApp(APP_ID);
+
+        //建议动态监听微信启动广播进行注册到微信
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // 将该app注册到微信
+                api.registerApp(APP_ID);
+            }
+        }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+
+    }
     public boolean setCurrentItemIcon(MenuItem item) {
         int i = item.getItemId();
         if (i == R.id.navigation_home) {
@@ -89,7 +120,7 @@ public class MainActivity extends BaseActivity {
         navigation.setItemTextColor(csl);
         //注册监听蓝牙
         registerReceiver(mReceiver, makeFilter());
-
+        regToWx();
 //        if (!MchInfoLogic.getMchTel().equals("") ) {
 //            Log.e("JIGUANG-JPush", "设置别名" + MchInfoLogic.getMchTel());
 //            JPushInterface.setAlias(this, SEQUENCE, MchInfoLogic.getMchTel());
@@ -205,4 +236,7 @@ public class MainActivity extends BaseActivity {
             }
         }
     };
+
+    private class APP_ID {
+    }
 }
