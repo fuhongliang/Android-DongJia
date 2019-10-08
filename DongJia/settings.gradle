@@ -1,2 +1,2 @@
-include ':app', ':wheelLibrary', ':matise', ':xrichtext'
+include ':app', ':wheel_library'
 //rootProject.name='DongJia'

@@ -2,33 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/category_color"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="168dp"
-        android:layout_height="218dp"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
-        <com.yalantis.ucrop.view.GestureCropImageView
-            android:layout_width="168dp"
-            android:layout_height="165dp"
-            android:background="@color/black" />
+        <com.sunfusheng.GlideImageView
+            android:id="@+id/iv_cover_pic"
+            android:layout_width="115dp"
+            android:layout_height="110dp"
+            android:background="@drawable/bg_white_3"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="110dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_name"
+                android:layout_marginTop="13dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="北欧简约设计自如布..."
                 android:textColor="@color/typed_text_color"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/tv_show_integral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5868人已买"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/hint_text_color"
+                android:textSize="10sp" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_height="30dp">
 
                 <TextView
@@ -45,20 +64,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="￥2322"
-                    android:layout_toRightOf="@id/tv_price"
                     android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tv_price"
+                    android:text="￥2322"
                     android:textColor="@color/hint_text_color"
                     android:textSize="10sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="5868人已买"
-                    android:textColor="@color/hint_text_color"
-                    android:textSize="10sp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

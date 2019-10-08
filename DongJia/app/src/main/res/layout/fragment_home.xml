@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/category_color"
     android:orientation="vertical">
 
@@ -64,11 +64,11 @@
                 android:background="@drawable/home_ic_sousuo" />
 
             <TextView
-                android:layout_toRightOf="@id/options1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:layout_toRightOf="@id/options1"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:text="请输入关键词搜索"
                 android:textColor="@color/hint_text_color"
                 android:textSize="13sp" />
@@ -92,31 +92,33 @@
                 android:id="@+id/xbanner"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
+                android:layout_marginTop="15dp"
                 app:AutoPlayTime="6000"
+                app:isClipChildrenMode="false"
+                app:isShowIndicatorOnlyOne="true"
+                app:isShowNumberIndicator="true"
+                app:pageChangeDuration="800"
                 app:pointNormal="@drawable/shape_noraml"
                 app:pointSelect="@drawable/shape_selected"
                 app:pointsPosition="RIGHT"
-                app:tipTextSize="12sp"
-                app:isShowNumberIndicator="true"
-                app:isShowIndicatorOnlyOne="true"
-                app:pageChangeDuration="800"
                 app:pointsVisibility="false"
-                app:isClipChildrenMode="false"
-                />
+                app:tipTextSize="12sp" />
 
             <!--分类-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/bg_white_4"
-                android:orientation="vertical">
+                android:background="@drawable/bg_white_4">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_nav_icon"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     tools:listitem="@layout/item_home_classification" />
-            </LinearLayout>
+            </RelativeLayout>
+
             <!--限时抢购-->
             <TextView
                 android:layout_width="wrap_content"
@@ -129,10 +131,13 @@
                 android:textStyle="bold" />
             <!--限时抢购图片-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_panic_buy"
                 android:layout_width="match_parent"
-                android:layout_height="182dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_white_3"
                 android:orientation="vertical"
+                android:paddingTop="11dp"
+                android:paddingBottom="10dp"
                 tools:listitem="@layout/item_home_limited_time" />
             <!--爆款热卖-->
             <TextView
@@ -146,10 +151,12 @@
                 android:textStyle="bold" />
             <!--爆款热卖图片-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommend_goods"
                 android:layout_width="match_parent"
-                android:layout_height="316dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_white_3"
                 android:orientation="vertical"
+                android:padding="8dp"
                 tools:listitem="@layout/item_home_best_selling" />
             <!--超级品牌-->
             <TextView
@@ -163,8 +170,9 @@
                 android:textStyle="bold" />
             <!--超级品牌图片-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_super_list"
                 android:layout_width="match_parent"
-                android:layout_height="316dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_white_4"
                 android:orientation="vertical"
                 tools:listitem="@layout/item_home_super" />
@@ -180,10 +188,11 @@
                 android:textStyle="bold" />
             <!--懂家臻选图片-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommend"
                 android:layout_width="match_parent"
-                android:layout_height="316dp"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_white_3"
+                android:orientation="vertical"
                 tools:listitem="@layout/item_home_selection" />
         </LinearLayout>
     </ScrollView>

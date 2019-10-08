@@ -18,6 +18,8 @@ public class DateUtil {
     public static final String YEAR_MONTH_FORMAT = "yyyy-MM";
     public static final String YEAR_MONTH_DAY_FORMAT = "yyyy-MM-dd";
     public static final String YEAR_MONTH_DAY_MINUTE = "yyyy-MM-dd hh:mm";
+    public static final String TIME = "hh:mm:ss";
+
 
     public static String getCurDateYear(Date date) {
         DateTime dateTime = new DateTime(date);
@@ -52,6 +54,10 @@ public class DateUtil {
     public static String getLongToString(Long date) {
         DateTime dateTime = new DateTime(date * 1000L);
         return dateTime.toString(YEAR_MONTH_DAY_FORMAT);
+    }
+    public static String getLongToTimeString(Long date) {
+        DateTime dateTime = new DateTime(date * 1000L);
+        return dateTime.toString(TIME);
     }
 
 

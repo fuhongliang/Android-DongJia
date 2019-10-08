@@ -10,22 +10,34 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <!--商家背景-->
-            <com.yalantis.ucrop.view.GestureCropImageView
-                android:id="@+id/iv_avatar_bg"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@color/black" />
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/options1"
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp"
+                    android:background="#C2BEBB" />
+                <!--商家背景-->
+                <com.sunfusheng.GlideImageView
+                    android:id="@+id/iv_avatar_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/black" />
+            </RelativeLayout>
+
             <!--名片-->
             <RelativeLayout
                 android:layout_width="158dp"
@@ -34,7 +46,7 @@
                 android:layout_marginTop="-80dp"
                 android:background="@drawable/bg_white_4">
 
-                <com.yalantis.ucrop.view.GestureCropImageView
+                <com.sunfusheng.GlideImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
@@ -55,6 +67,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/options2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_store_name"
@@ -63,6 +76,15 @@
                     android:text="综合体验"
                     android:textColor="@color/typed_text_color"
                     android:textSize="9sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_store_name"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@id/options2"
+                    android:orientation="horizontal" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -91,14 +113,31 @@
                     android:layout_height="34dp"
                     android:layout_below="@id/tv_information">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="更多品牌信息"
-                        android:textColor="@color/hint_text_color"
-                        android:textSize="10sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        >
+
+                        <TextView
+                            android:id="@+id/options3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多品牌信息"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="50dp"
+                            android:textColor="@color/hint_text_color"
+                            android:textSize="10sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="4dp"
+                            android:layout_toRightOf="@id/options3"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/pickers_ic_jt" />
+                    </RelativeLayout>
                 </RelativeLayout>
+
             </RelativeLayout>
 
             <TextView
@@ -116,8 +155,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                tools:listitem="@layout/item_home_best_selling"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                tools:listitem="@layout/item_home_best_selling" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -149,8 +188,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                tools:listitem="@layout/item_home_case"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                tools:listitem="@layout/item_home_case" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -182,8 +221,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                tools:listitem="@layout/item_home_design"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                tools:listitem="@layout/item_home_design" />
 
 
             <TextView
@@ -201,8 +240,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                tools:listitem="@layout/item_home_selection"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                tools:listitem="@layout/item_home_selection" />
 
         </LinearLayout>
     </ScrollView>

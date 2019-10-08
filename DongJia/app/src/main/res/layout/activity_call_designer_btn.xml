@@ -4,13 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/category_color">
 
-    <com.yalantis.ucrop.view.GestureCropImageView
+    <com.sunfusheng.GlideImageView
         android:id="@+id/iv_avatar_bg"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="@color/black" />
 
     <ImageView
+        android:id="@+id/iv_back"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/statusbar_ic_fanhui"
@@ -32,13 +33,14 @@
             android:orientation="horizontal">
 
 
-            <com.yalantis.ucrop.view.GestureCropImageView
+            <com.sunfusheng.GlideImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/black" />
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -49,6 +51,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_store_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -57,6 +60,7 @@
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -76,6 +80,7 @@
         android:padding="15dp">
 
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="二室二厅装修装饰布置必须确定布局的房子结构是否合理，这将直接影响后期使用效果和生活质量。例如隔音效果好的房间用作房间，客厅如何减少门的开启确定厨房和炊具的位置，展示物品的选择，阳台是否开放。在二室二厅装修过程中应遵循：使用尽可能多的壁橱，吊柜和角柜作为改善，尽可能的利用空间，尽可能考虑自然采光，考虑预埋水，电，通讯，有线电视，音频等。" />
@@ -89,6 +94,7 @@
         android:background="#CCCCCC"
         />
     <RelativeLayout
+        android:id="@+id/rl_call_designer"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:background="@color/white"

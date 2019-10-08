@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.bv_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initViewPager();
         if (!EventBus.getDefault().isRegistered(this)) {

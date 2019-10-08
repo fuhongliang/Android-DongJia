@@ -163,7 +163,7 @@ public <init>(android.content.Context, android.util.AttributeSet, int);
 
 ## 不混淆自定义的包
 ##
--keep public class  cn.ifhu.myimei.view.** { *; }
+-keep public class  cn.ifhu.dongjia.view.** { *; }
 
 -keep public class * extends android.widget.TextView{
 *** get*();
@@ -319,7 +319,7 @@ public <init>(android.content.Context, android.util.AttributeSet, int);
 -keepattributes EnclosingMethod
 
 # Gson
--keep class cn.ifhu.myimei.model.bean.**{*;} # 自定义数据模型的bean目录
+-keep class cn.ifhu.dongjia.model.bean.**{*;} # 自定义数据模型的bean目录
 
 
 # glide混淆

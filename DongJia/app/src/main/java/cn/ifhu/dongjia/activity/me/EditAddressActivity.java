@@ -17,17 +17,15 @@ import cn.ifhu.dongjia.utils.StringUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 
 /**
- * 新增地址页面
+ * 编辑地址
  */
-public class AddAddressActivity extends BaseActivity {
+public class EditAddressActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_right_text)
     TextView tvRightText;
-    @BindView(R.id.swh_auto_print)
-    Switch swhAutoPrint;
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_phone)
@@ -36,6 +34,8 @@ public class AddAddressActivity extends BaseActivity {
     TextView tvAddress;
     @BindView(R.id.et_house_number)
     EditText etHouseNumber;
+    @BindView(R.id.swh_auto_print)
+    Switch swhAutoPrint;
     @BindView(R.id.tv_ok)
     TextView tvOk;
 
@@ -44,8 +44,7 @@ public class AddAddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
-        tvTitle.setText("新增地址");
-        tvRightText.setText("删除");
+        tvTitle.setText("编辑地址");
     }
 
     /**
@@ -79,10 +78,7 @@ public class AddAddressActivity extends BaseActivity {
     @OnClick(R.id.tv_ok)
     public void onTvOkClicked() {
         if (checkEmpty()) {
-        }
-    }
 
-    @OnClick(R.id.tv_right_text)
-    public void onTvRightTextClicked() {
+        }
     }
 }

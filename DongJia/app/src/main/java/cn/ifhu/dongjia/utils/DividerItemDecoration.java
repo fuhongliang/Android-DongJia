@@ -12,10 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import java.util.HashMap;
+
 /**
  * @author fuhongliang
  */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+
+//    private HashMap<String, Integer> mSpaceValueMap;
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
@@ -25,9 +29,20 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
 
+//    public static final String TOP_DECORATION = "top_decoration";
+//    public static final String BOTTOM_DECORATION = "bottom_decoration";
+//    public static final String LEFT_DECORATION = "left_decoration";
+//    public static final String RIGHT_DECORATION = "right_decoration";
+
     private Drawable mDivider;
 
     private int mOrientation;
+
+
+//    public DividerItemDecoration(HashMap<String, Integer> mSpaceValueMap) {
+//        this.mSpaceValueMap = mSpaceValueMap;
+//    }
+
 
     public DividerItemDecoration(Context context, int orientation) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
@@ -94,13 +109,29 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         int spanCount = getSpanCount(parent);
         int childCount = parent.getAdapter().getItemCount();
         if (isLastRaw(parent, itemPosition, spanCount, childCount)) {
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+            outRect.set(0, 15, mDivider.getIntrinsicWidth(), 15);
         } else if (isLastColum(parent, itemPosition, spanCount, childCount)) {
             outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
         } else {
-            outRect.set(0, 0, mDivider.getIntrinsicWidth(),
+            outRect.set(0, 15, mDivider.getIntrinsicWidth(),
                     mDivider.getIntrinsicHeight());
         }
+//        if (isLastRaw(parent, itemPosition, spanCount, childCount)) {
+//            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+//        } else if (isLastColum(parent, itemPosition, spanCount, childCount)) {
+//            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+//        } else {
+//            outRect.set(0, 0, mDivider.getIntrinsicWidth(),
+//                    mDivider.getIntrinsicHeight());
+//        }
+//        if (mSpaceValueMap.get(TOP_DECORATION) != null)
+//            outRect.top = mSpaceValueMap.get(TOP_DECORATION);
+//        if (mSpaceValueMap.get(LEFT_DECORATION) != null)
+//            outRect.left = mSpaceValueMap.get(LEFT_DECORATION);
+//        if (mSpaceValueMap.get(RIGHT_DECORATION) != null)
+//            outRect.right = mSpaceValueMap.get(RIGHT_DECORATION);
+//        if (mSpaceValueMap.get(BOTTOM_DECORATION) != null)
+//            outRect.bottom = mSpaceValueMap.get(BOTTOM_DECORATION);
     }
 
     private boolean isLastRaw(RecyclerView parent, int pos, int spanCount,
@@ -121,7 +152,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                 if (pos >= childCount) {
                     return true;
                 }
-            } else{
+            } else {
                 // 如果是最后一行，则不需要绘制底部
                 if ((pos + 1) % spanCount == 0) {
                     return true;

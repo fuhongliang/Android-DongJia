@@ -1,9 +1,8 @@
-package cn.ifhu.dongjia.activity.me;
+package cn.ifhu.dongjia.activity.homeCase;
 
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,35 +16,31 @@ import cn.ifhu.dongjia.utils.StringUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 
 /**
- * 新增地址页面
+ * 增加联系设计师
  */
-public class AddAddressActivity extends BaseActivity {
+public class AddCallDesignerActivity extends BaseActivity {
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_right_text)
     TextView tvRightText;
-    @BindView(R.id.swh_auto_print)
-    Switch swhAutoPrint;
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_phone)
     EditText etPhone;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
-    @BindView(R.id.et_house_number)
-    EditText etHouseNumber;
+    @BindView(R.id.et_content)
+    EditText etContent;
     @BindView(R.id.tv_ok)
     TextView tvOk;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_address);
+        setContentView(R.layout.activity_call_designer);
         ButterKnife.bind(this);
-        tvTitle.setText("新增地址");
-        tvRightText.setText("删除");
+        tvTitle.setText("联系设计师");
+
     }
 
     /**
@@ -60,12 +55,8 @@ public class AddAddressActivity extends BaseActivity {
             ToastHelper.makeText("请输入手机号码").show();
             return false;
         }
-        if (StringUtils.isEmpty(tvAddress.getText().toString())) {
-            ToastHelper.makeText("请选择地址").show();
-            return false;
-        }
-        if (StringUtils.isEmpty(etHouseNumber.getText().toString())) {
-            ToastHelper.makeText("请输入详情地址").show();
+        if (StringUtils.isEmpty(etContent.getText().toString())) {
+            ToastHelper.makeText("请输入留言内容").show();
             return false;
         }
         return true;
@@ -79,10 +70,7 @@ public class AddAddressActivity extends BaseActivity {
     @OnClick(R.id.tv_ok)
     public void onTvOkClicked() {
         if (checkEmpty()) {
-        }
-    }
 
-    @OnClick(R.id.tv_right_text)
-    public void onTvRightTextClicked() {
+        }
     }
 }

@@ -5,69 +5,157 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_mch_logo"
         android:layout_width="match_parent"
         android:layout_height="202dp">
 
-        <com.yalantis.ucrop.view.GestureCropImageView
-            android:id="@+id/iv_avatar"
+        <com.sunfusheng.GlideImageView
+            android:id="@+id/iv_mch_logo"
             android:layout_width="33dp"
             android:layout_height="33dp"
-            android:layout_margin="12dp"
-            android:background="@color/black" />
+            android:layout_margin="12dp" />
 
         <TextView
             android:id="@+id/tv_store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_toRightOf="@id/iv_mch_logo"
             android:text="箭牌卫浴"
             android:textColor="@color/typed_text_color"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_goods_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_store_name"
             android:layout_marginTop="4dp"
-            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_toRightOf="@id/iv_mch_logo"
             android:text="共988件商品"
             android:textColor="@color/black"
             android:textSize="11sp" />
 
         <LinearLayout
-            android:layout_width="102dp"
-            android:layout_height="127dp"
-            android:layout_below="@id/iv_avatar"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
+            android:layout_below="@id/iv_mch_logo"
+            android:layout_width="match_parent"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <com.yalantis.ucrop.view.GestureCropImageView
+            <LinearLayout
+                android:id="@+id/ll_store1"
+                android:gravity="left"
                 android:layout_width="102dp"
-                android:layout_height="102dp"
-                android:background="@color/black" />
+                android:layout_height="127dp"
+                android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="25dp">
-                <TextView
+                <com.sunfusheng.GlideImageView
+                    android:id="@+id/iv_cover_pic0"
+                    android:layout_width="102dp"
+                    android:layout_height="102dp" />
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥34767"
-                    android:textColor="@color/home_16"
-                    android:textSize="13sp"
-                    android:layout_centerVertical="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥76743"
-                    android:textSize="10sp"
-                    android:textColor="@color/hint_text_color"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
+                    android:layout_height="25dp">
+
+                    <TextView
+                        android:id="@+id/tv_price0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="￥34767"
+                        android:textColor="@color/home_16"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_original_price0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="￥76743"
+                        android:textColor="@color/hint_text_color"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_store2"
+                android:layout_width="102dp"
+                android:layout_height="127dp"
+                android:layout_marginLeft="12dp"
+                android:orientation="vertical">
+
+                <com.sunfusheng.GlideImageView
+                    android:id="@+id/iv_cover_pic1"
+                    android:layout_width="102dp"
+                    android:layout_height="102dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp">
+
+                    <TextView
+                        android:id="@+id/tv_price1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="￥34767"
+                        android:textColor="@color/home_16"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_original_price1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="￥76743"
+                        android:textColor="@color/hint_text_color"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_store3"
+                android:layout_width="102dp"
+                android:layout_marginLeft="12dp"
+                android:layout_height="127dp"
+                android:orientation="vertical">
+
+                <com.sunfusheng.GlideImageView
+                    android:id="@+id/iv_cover_pic2"
+                    android:layout_width="102dp"
+                    android:layout_height="102dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp">
+
+                    <TextView
+                        android:id="@+id/tv_price2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="￥34767"
+                        android:textColor="@color/home_16"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_original_price2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="￥76743"
+                        android:textColor="@color/hint_text_color"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
+
     </RelativeLayout>
 </LinearLayout>
