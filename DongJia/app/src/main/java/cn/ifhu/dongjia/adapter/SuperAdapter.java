@@ -26,9 +26,9 @@ import cn.ifhu.dongjia.model.data.HomeDataBean;
 public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBean, SuperAdapter.ViewHolder> {
 
 
-
     private List<HomeDataBean.NewMchListBean> mDatas;
     private Context mContext;
+    private OnClickItem onClickItem;
 
     @Override
     public void setData(List<HomeDataBean.NewMchListBean> data) {
@@ -37,9 +37,10 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
         notifyDataSetChanged();
     }
 
-    public SuperAdapter(List<HomeDataBean.NewMchListBean> mData, Context mContext) {
+    public SuperAdapter(List<HomeDataBean.NewMchListBean> mData, Context mContext, OnClickItem onClickItem) {
         this.mDatas = mData;
         this.mContext = mContext;
+        this.onClickItem = onClickItem;
     }
 
     @Override
@@ -58,14 +59,8 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
         holder.ivMchLogo.load(mDatas.get(position).getMch_logo());
         holder.tvStoreName.setText(mDatas.get(position).getMch_name());
         holder.tvGoodsCount.setText("共" + mDatas.get(position).getGoods_count() + "件商品");
+
         if (mDatas.get(position).getGoods_list() != null && mDatas.get(position).getGoods_list().size() > 0) {
-//            holder.ivCoverPic0.load(mDatas.get(position).getGoods_list().get(position).getCover_pic());
-//            holder.tvPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(position).getPrice());
-//            holder.tvOriginalPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(position).getOriginal_price());
-//            holder.tvOriginalPrice0.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-//
-//        }
-//        if (mDatas != null) {
             switch (mDatas.size()) {
                 case 0:
                     holder.llStore1.setVisibility(View.GONE);
@@ -118,6 +113,10 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
                     break;
             }
         }
+        if (onClickItem != null) {
+            holder.llSuper.setOnClickListener(v ->
+                    onClickItem.llSuper(position));
+        }
     }
 
 
@@ -127,6 +126,10 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
             return 0;
         }
         return mDatas.size();
+    }
+
+    public interface OnClickItem {
+        void llSuper(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -162,6 +165,8 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
         LinearLayout llStore3;
         @BindView(R.id.rl_mch_logo)
         RelativeLayout rlMchLogo;
+        @BindView(R.id.ll_super)
+        LinearLayout llSuper;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

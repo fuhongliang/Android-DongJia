@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.fragments.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.WebView.WebViewActivity;
+import cn.ifhu.dongjia.activity.home.GoodDetailsActivity;
 import cn.ifhu.dongjia.activity.home.SearchActivity;
 import cn.ifhu.dongjia.adapter.NavIconAdapter;
 import cn.ifhu.dongjia.adapter.PanicBuyAdapter;
@@ -123,7 +125,11 @@ public class HomeFragment extends BaseFragment {
         /**
          * 限时抢购
          */
-        newPanicBuyAdapter = new PanicBuyAdapter(panicBuyData, getActivity());
+        newPanicBuyAdapter = new PanicBuyAdapter(panicBuyData, getActivity(), position -> {
+            Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
+            intent.putExtra("id",panicBuyData.get(position).getId());
+            startActivity(intent);
+        });
         rvPanicBuy.setNestedScrollingEnabled(false);
         rvPanicBuy.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         rvPanicBuy.setAdapter(newPanicBuyAdapter);
@@ -131,7 +137,11 @@ public class HomeFragment extends BaseFragment {
         /**
          * 爆款热卖
          */
-        newRecommendGoodsAdapter = new RecommendGoodsAdapter(recommendGoodsData, getActivity());
+        newRecommendGoodsAdapter = new RecommendGoodsAdapter(recommendGoodsData, getActivity(), position -> {
+            Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
+            intent.putExtra("id",recommendGoodsData.get(position).getId());
+            startActivity(intent);
+        });
         rvRecommendGoods.setNestedScrollingEnabled(false);
         //方格形布局
         rvRecommendGoods.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -141,17 +151,30 @@ public class HomeFragment extends BaseFragment {
         /**
          * 超级品牌
          */
-        newSuperAdapter = new SuperAdapter(superData, getActivity());
+        newSuperAdapter = new SuperAdapter(superData, getActivity(), new SuperAdapter.OnClickItem() {
+            @Override
+            public void llSuper(int position) {
+                Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
+                intent.putExtra("id",superData.get(position).getId());
+                startActivity(intent);
+            }
+        });
         rvSuperList.setNestedScrollingEnabled(false);
         //垂直布局
         rvSuperList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         rvSuperList.setAdapter(newSuperAdapter);
-        rvSuperList.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST));
         rvSuperList.setOnScrollListener(new LoadMoreScrollListener(rvSuperList));
         /**
          * 懂家臻选
          */
-        newRecommendAdapter = new RecommendAdapter(recommendData,getActivity());
+        newRecommendAdapter = new RecommendAdapter(recommendData, getActivity(), new RecommendAdapter.OnClickItem() {
+            @Override
+            public void recommend(int position) {
+                Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
+                intent.putExtra("id",recommendData.get(position).getId());
+                startActivity(intent);
+            }
+        });
         newRecommendAdapter.setLoadMordListener(loadIndex -> {
             getRecommend(loadIndex);
         });

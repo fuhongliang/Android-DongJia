@@ -1,5 +1,7 @@
 package cn.ifhu.dongjia.net;
 
+import java.util.Map;
+
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
@@ -32,6 +34,6 @@ public interface HomeService {
      * 商品详情
      */
     @GET("/index.php?r=api/default/goods")
-    public Observable<BaseEntity<GoodDetailsDataBean>> Goods(@QueryMap GoodDetailsGetBean goodDetailsGetBean);
+    public Observable<BaseEntity<GoodDetailsDataBean>> Goods(@QueryMap Map<String,Object> urlParam);
 
 }

@@ -3,6 +3,7 @@ package cn.ifhu.dongjia.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,12 +22,15 @@ import cn.ifhu.dongjia.utils.DateUtil;
 
 public class PanicBuyAdapter extends BaseLoadMoreAdapter<HomeDataBean.MiaoshaBean.GoodsListBean, PanicBuyAdapter.ViewHolder> {
 
+
     private List<HomeDataBean.MiaoshaBean.GoodsListBean> mDatas;
     private Context mContext;
+    public OnClickItem onClickItem;
 
-    public PanicBuyAdapter(List<HomeDataBean.MiaoshaBean.GoodsListBean> mDatas, Context mContext) {
+    public PanicBuyAdapter(List<HomeDataBean.MiaoshaBean.GoodsListBean> mDatas, Context mContext, OnClickItem onClickItem) {
         this.mContext = mContext;
         this.mDatas = mDatas;
+        this.onClickItem = onClickItem;
     }
 
     @Override
@@ -52,20 +56,28 @@ public class PanicBuyAdapter extends BaseLoadMoreAdapter<HomeDataBean.MiaoshaBea
 
         holder.ivPic.load(mDatas.get(position).getPic());
         //String类型转换long类型
-        holder.tvStartTime.setText("距结束"+DateUtil.getLongToTimeString(Long.valueOf(mDatas.get(position).getStart_time())));
+        holder.tvStartTime.setText("距结束" + DateUtil.getLongToTimeString(Long.valueOf(mDatas.get(position).getStart_time())));
         holder.tvName.setText(mDatas.get(position).getName());
         holder.tvPrice.setText(mDatas.get(position).getPrice());
         holder.tvPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvMiaoShaPrice.setText(mDatas.get(position).getMiaosha_price());
+        if (onClickItem != null) {
+            holder.llBuy.setOnClickListener(v ->
+                    onClickItem.panicBuy(position));
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        if (mDatas == null){
+        if (mDatas == null) {
             return 0;
         }
         return mDatas.size();
+    }
+
+    public interface OnClickItem {
+        void panicBuy(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,6 +91,9 @@ public class PanicBuyAdapter extends BaseLoadMoreAdapter<HomeDataBean.MiaoshaBea
         TextView tvMiaoShaPrice;
         @BindView(R.id.tv_price)
         TextView tvPrice;
+
+        @BindView(R.id.ll_buy)
+        LinearLayout llBuy;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

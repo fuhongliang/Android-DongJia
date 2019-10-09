@@ -1,5 +1,7 @@
 package cn.ifhu.dongjia.model.data;
 
+import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
+
 import java.util.List;
 
 public class GoodDetailsDataBean {
@@ -660,7 +662,7 @@ public class GoodDetailsDataBean {
         }
     }
 
-    public static class PicListBean {
+    public static class PicListBean extends SimpleBannerInfo {
         /**
          * pic_url : http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/44/44fbb2a1f0ade2054c7a71252d7f1b0781da3b2e.png
          */
@@ -673,6 +675,11 @@ public class GoodDetailsDataBean {
 
         public void setPic_url(String pic_url) {
             this.pic_url = pic_url;
+        }
+
+        @Override
+        public Object getXBannerUrl() {
+            return null;
         }
     }
 

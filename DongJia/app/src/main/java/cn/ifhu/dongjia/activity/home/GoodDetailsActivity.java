@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DeviceUtil;
 import cn.ifhu.dongjia.utils.GlideRoundTransform;
 import cn.ifhu.dongjia.utils.StringUtils;
+import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
  * 商品详情
@@ -87,12 +89,16 @@ public class GoodDetailsActivity extends BaseActivity {
     //轮播图
     private List<GoodDetailsDataBean.PicListBean> banner_data = new ArrayList<>();
 
+    int id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_good_details);
         ButterKnife.bind(this);
         initBanner();
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
         getGoods();
     }
 
@@ -108,12 +114,12 @@ public class GoodDetailsActivity extends BaseActivity {
             HomeDataBean.BannerListBean listBean = ((HomeDataBean.BannerListBean) model);
             loadRoundImage((ImageView) view, listBean.getPic_url());
         });
-//        xbanner.setOnItemClickListener((banner, model, view, position) -> {
-//            HomeDataBean.BannerListBean listBean = ((HomeDataBean.BannerListBean) model);
-//            if (!StringUtils.isEmpty(listBean.getPic_url())) {
-//                WebViewActivity.start(this, listBean.getPage_url(), "");
-//            }
-//        });
+        xbanner.setOnItemClickListener((banner, model, view, position) -> {
+            HomeDataBean.BannerListBean listBean = ((HomeDataBean.BannerListBean) model);
+            if (!StringUtils.isEmpty(listBean.getPic_url())) {
+                WebViewActivity.start(this, listBean.getPage_url(), "");
+            }
+        });
     }
 
     public static void loadRoundImage(ImageView view, String url) {
@@ -123,10 +129,16 @@ public class GoodDetailsActivity extends BaseActivity {
         Glide.with(view.getContext()).load(url).apply(myOptions).into(view);
     }
 
+
+
+    /**
+     * 商品详情接口
+     */
     public void getGoods() {
         GoodDetailsGetBean goodDetailsGetBean = new GoodDetailsGetBean();
         setLoadingMessageIndicator(true);
-        RetrofitAPIManager.create(HomeService.class).Goods(goodDetailsGetBean)
+        goodDetailsGetBean.setId(id);
+        RetrofitAPIManager.create(HomeService.class).Goods(goodDetailsGetBean.getPostParam())
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodDetailsDataBean>(true) {
             @Override
             protected void onApiComplete() {
@@ -137,7 +149,7 @@ public class GoodDetailsActivity extends BaseActivity {
             protected void onSuccees(BaseEntity<GoodDetailsDataBean> t) throws Exception {
                 banner_data = t.getData().getPic_list();
                 xbanner.setAutoPlayAble(banner_data.size() > 1);
-//                xbanner.setBannerData(banner_data);
+                xbanner.setBannerData(banner_data);
             }
         });
 

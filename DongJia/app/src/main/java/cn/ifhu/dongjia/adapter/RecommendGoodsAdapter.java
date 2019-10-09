@@ -3,6 +3,7 @@ package cn.ifhu.dongjia.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,10 +24,9 @@ import cn.ifhu.dongjia.model.data.HomeDataBean;
  */
 public class RecommendGoodsAdapter extends BaseLoadMoreAdapter<HomeDataBean.RecommendGoodsBean, RecommendGoodsAdapter.ViewHolder> {
 
-
     private List<HomeDataBean.RecommendGoodsBean> mDatas;
     private Context mContext;
-//    private OnclickButton onclickButton;
+    private OnClickItem onClickItem;
 
     @Override
     public void setData(List<HomeDataBean.RecommendGoodsBean> data) {
@@ -35,10 +35,10 @@ public class RecommendGoodsAdapter extends BaseLoadMoreAdapter<HomeDataBean.Reco
         notifyDataSetChanged();
     }
 
-    public RecommendGoodsAdapter(List<HomeDataBean.RecommendGoodsBean> mDatas, Context mContext) {
+    public RecommendGoodsAdapter(List<HomeDataBean.RecommendGoodsBean> mDatas, Context mContext, OnClickItem onClickItem) {
         this.mDatas = mDatas;
         this.mContext = mContext;
-//        this.onclickButton = onclickButton;
+        this.onClickItem = onClickItem;
     }
 
     @Override
@@ -57,23 +57,27 @@ public class RecommendGoodsAdapter extends BaseLoadMoreAdapter<HomeDataBean.Reco
 
         holder.ivStorePic.load(mDatas.get(position).getCover_pic());
         holder.tvStoreName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText("￥"+mDatas.get(position).getPrice());
-        holder.tvOriginalPrice.setText("￥"+mDatas.get(position).getOriginal_price());
+        holder.tvPrice.setText("￥" + mDatas.get(position).getPrice());
+        holder.tvOriginalPrice.setText("￥" + mDatas.get(position).getOriginal_price());
         holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        if (onClickItem != null) {
+            holder.llRecommendGoods.setOnClickListener(v ->
+                    onClickItem.recommendGoods(position));
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        if (mDatas == null){
+        if (mDatas == null) {
             return 0;
         }
         return mDatas.size();
     }
 
-//    public interface OnclickButton {
-//
-//    }
+    public interface OnClickItem {
+        void recommendGoods(int position);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_store_pic)
@@ -84,6 +88,9 @@ public class RecommendGoodsAdapter extends BaseLoadMoreAdapter<HomeDataBean.Reco
         TextView tvPrice;
         @BindView(R.id.tv_original_price)
         TextView tvOriginalPrice;
+
+        @BindView(R.id.ll_recommend_goods)
+        LinearLayout llRecommendGoods;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

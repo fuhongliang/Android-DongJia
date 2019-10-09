@@ -3,6 +3,7 @@ package cn.ifhu.dongjia.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,10 +24,12 @@ public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.List
 
     private List<RecommendDataBean.ListBean> mDatas;
     private Context mContext;
+    private OnClickItem onClickItem;
 
-    public RecommendAdapter(List<RecommendDataBean.ListBean> mDatas, Context mContext) {
+    public RecommendAdapter(List<RecommendDataBean.ListBean> mDatas, Context mContext, OnClickItem onClickItem) {
         this.mContext = mContext;
         this.mDatas = mDatas;
+        this.onClickItem = onClickItem;
     }
 
     @Override
@@ -51,10 +54,14 @@ public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.List
         if (position == mDatas.size()) return;
         holder.ivCoverPic.load(mDatas.get(position).getCover_pic());
         holder.tvName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText("￥"+mDatas.get(position).getPrice());
-        holder.tvOriginalPrice.setText("￥"+mDatas.get(position).getOriginal_price());
+        holder.tvPrice.setText("￥" + mDatas.get(position).getPrice());
+        holder.tvOriginalPrice.setText("￥" + mDatas.get(position).getOriginal_price());
         holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tvShowIntegral.setText(mDatas.get(position).getShow_integral()+"人已买");
+        holder.tvShowIntegral.setText(mDatas.get(position).getShow_integral() + "人已买");
+        if (onClickItem != null){
+            holder.llRecommend.setOnClickListener(v ->
+                    onClickItem.recommend(position));
+        }
     }
 
 
@@ -63,6 +70,9 @@ public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.List
         return mDatas.size() < PAGESIZE ? mDatas.size() : mDatas.size() + 1;
     }
 
+    public interface OnClickItem{
+        void recommend(int position);
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_cover_pic)
         GlideImageView ivCoverPic;
@@ -74,7 +84,8 @@ public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.List
         TextView tvOriginalPrice;
         @BindView(R.id.tv_show_integral)
         TextView tvShowIntegral;
-
+        @BindView(R.id.ll_recommend)
+        LinearLayout llRecommend;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
