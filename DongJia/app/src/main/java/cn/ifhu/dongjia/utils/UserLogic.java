@@ -7,12 +7,18 @@ import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
 import cn.ifhu.dongjia.model.UserBean;
+import cn.ifhu.dongjia.model.data.UserDataBean;
 
 import static cn.ifhu.dongjia.utils.Constants.USER;
 
+/**
+ * UserLogin:保存本地数据
+ * saveUser:保存数据
+ * getUser:取出数据
+ */
 public class UserLogic {
 
-    public static void saveUser(UserBean dataBean) {
+    public static void saveUser(UserDataBean dataBean) {
         Logger.d(dataBean);
         if (dataBean != null) {
             Gson gson = new Gson();
@@ -22,12 +28,12 @@ public class UserLogic {
     }
 
 
-    public static UserBean getUser() {
+    public static UserDataBean getUser() {
         String json = IrReference.getInstance().getString(USER, "");
-        Log.e("JIGUANG-JPush--","user String = "+json);
+        Log.e("JIGUANG-JPush--", "user String = " + json);
         if (!TextUtils.isEmpty(json)) {
             Gson gson = new Gson();
-            UserBean mUser = gson.fromJson(json, UserBean.class);
+            UserDataBean mUser = gson.fromJson(json, UserDataBean.class);
             return mUser;
         }
         return null;

@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import cn.ifhu.dongjia.R;
 
 /**
- *
+ *评价星星工具
  * @author KevinFu
  * @date 2019-06-03
  * Copyright (c) 2019 KevinFu

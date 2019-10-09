@@ -23,12 +23,12 @@
         android:background="#0EC262" />
     <!--我的订单-->
     <RelativeLayout
+        android:id="@+id/rl_login"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="-84dp"
         android:layout_marginRight="15dp"
-        android:visibility="gone"
         android:background="@drawable/bg_white_4">
         <!--用户名称-->
         <TextView
@@ -190,9 +190,11 @@
     </RelativeLayout>
     <!--没有登录的时候页面-->
     <RelativeLayout
+        android:id="@+id/rl_noLogin"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_marginLeft="15dp"
+        android:visibility="gone"
         android:layout_marginTop="-84dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_white_4"
@@ -238,7 +240,8 @@
     </RelativeLayout>
 
     <!--用户头像-->
-    <com.yalantis.ucrop.view.GestureCropImageView
+    <com.sunfusheng.GlideImageView
+        android:id="@+id/iv_avatar"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_gravity="center"
@@ -363,6 +366,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_logout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:visibility="gone"

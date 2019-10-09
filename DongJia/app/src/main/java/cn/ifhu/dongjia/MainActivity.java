@@ -39,6 +39,7 @@ import cn.ifhu.dongjia.model.MessageEvent;
 import cn.ifhu.dongjia.utils.MchInfoLogic;
 import cn.ifhu.dongjia.utils.ToastHelper;
 
+import static cn.ifhu.dongjia.utils.Constants.LOGOIN;
 import static cn.ifhu.dongjia.utils.Constants.LOGOUT;
 import static cn.ifhu.dongjia.utils.Constants.UNNORMALORDER;
 import static cn.ifhu.dongjia.utils.Constants.UNSHIPPINGORDER;
@@ -54,55 +55,6 @@ public class MainActivity extends BaseActivity {
         resetToDefaultIcon();
         return setCurrentItemIcon(item);
     };
-
-    /**
-     * 微信登录
-     */
-    // APP_ID 替换为你的应用从官方网站申请到的合法appID
-    public static final String APP_ID = "wx4cb54f0fb9038e2e";
-
-    // IWXAPI 是第三方app和微信通信的openApi接口
-    private IWXAPI api;
-
-    private void regToWx() {
-        // 通过WXAPIFactory工厂，获取IWXAPI的实例
-        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
-
-        // 将应用的appId注册到微信
-        api.registerApp(APP_ID);
-        ToastHelper.makeText("注册微信成功").show();
-        //建议动态监听微信启动广播进行注册到微信
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // 将该app注册到微信
-                api.registerApp(APP_ID);
-            }
-        }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
-
-    }
-    public boolean setCurrentItemIcon(MenuItem item) {
-        int i = item.getItemId();
-        if (i == R.id.navigation_home) {
-            item.setIcon(R.drawable.bar_ic_sy_mian);
-            mPager.setCurrentItem(0, false);
-            return true;
-        } else if (i == R.id.navigation_case) {
-            item.setIcon(R.drawable.bar_ic_jz_mian);
-            mPager.setCurrentItem(1, false);
-            return true;
-        } else if (i == R.id.navigation_cart) {
-            item.setIcon(R.drawable.bar_ic_gwc_mian);
-            mPager.setCurrentItem(2, false);
-//            ((GoodsFragment) mFragments.get(2)).getCatsData();
-            return true;
-        } else if (i == R.id.navigation_me) {
-            item.setIcon(R.drawable.bar_ic_wd_mian);
-            mPager.setCurrentItem(3, false);
-            return true;
-        }
-        return false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +122,56 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+
+    /**
+     * 微信登录
+     */
+    // APP_ID 替换为你的应用从官方网站申请到的合法appID
+    public static final String APP_ID = "wx4cb54f0fb9038e2e";
+
+    // IWXAPI 是第三方app和微信通信的openApi接口
+    private IWXAPI api;
+
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+
+        // 将应用的appId注册到微信
+        api.registerApp(APP_ID);
+        //建议动态监听微信启动广播进行注册到微信
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // 将该app注册到微信
+                api.registerApp(APP_ID);
+            }
+        }, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+
+    }
+    public boolean setCurrentItemIcon(MenuItem item) {
+        int i = item.getItemId();
+        if (i == R.id.navigation_home) {
+            item.setIcon(R.drawable.bar_ic_sy_mian);
+            mPager.setCurrentItem(0, false);
+            return true;
+        } else if (i == R.id.navigation_case) {
+            item.setIcon(R.drawable.bar_ic_jz_mian);
+            mPager.setCurrentItem(1, false);
+            return true;
+        } else if (i == R.id.navigation_cart) {
+            item.setIcon(R.drawable.bar_ic_gwc_mian);
+            mPager.setCurrentItem(2, false);
+//            ((GoodsFragment) mFragments.get(2)).getCatsData();
+            return true;
+        } else if (i == R.id.navigation_me) {
+            item.setIcon(R.drawable.bar_ic_wd_mian);
+            mPager.setCurrentItem(3, false);
+            return true;
+        }
+        return false;
+    }
+
+
     public void logout() {
         MchInfoLogic.loginOut();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -186,6 +188,9 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(MessageEvent messageEvent) {
         switch (messageEvent.getMessage()) {
+            case LOGOIN:
+                ((MeFragment) ViewManager.getInstance().getFragment(3)).login(messageEvent.getData());
+                break;
             case LOGOUT:
                 logout();
             case UNSHIPPINGORDER:
@@ -238,6 +243,6 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    private class APP_ID {
-    }
+
+
 }

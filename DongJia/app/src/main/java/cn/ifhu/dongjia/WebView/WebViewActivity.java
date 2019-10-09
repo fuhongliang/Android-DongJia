@@ -239,7 +239,7 @@ public class WebViewActivity extends BaseActivity {
     public void loadURL(boolean needToken){
         if (needToken) {
             HashMap<String, String> headers = new HashMap<String, String>();
-            String dataToken = UserLogic.getUser().getToken();
+            String dataToken = UserLogic.getUser().getAccess_token();
             headers.put("token", dataToken);
             mWvView.loadUrl(getIntent().getStringExtra(URL), headers);
         } else {

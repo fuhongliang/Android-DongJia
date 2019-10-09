@@ -24,6 +24,7 @@ public class Constants {
     public static final String CLASSLIST = "CLASSLIST";
     public static final String PRODUCTLIST = "PRODUCTLIST";
     public static final String LOGOUT = "logout_event";
+    public static final String LOGOIN = "login_event";
     public static final String UNPAYORDER = "unpay_order_event";
     public static final String UNSHIPPINGORDER = "unshipping_order_event";
     public static final String UNNORMALORDER = "unnormal_order_event";

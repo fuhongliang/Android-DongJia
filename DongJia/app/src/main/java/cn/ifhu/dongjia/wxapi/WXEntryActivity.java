@@ -19,7 +19,21 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.ifhu.dongjia.MainActivity;
+import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.MessageEvent;
+import cn.ifhu.dongjia.model.data.UserDataBean;
+import cn.ifhu.dongjia.model.post.BaseBean;
+import cn.ifhu.dongjia.model.post.UserPostBean;
+import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
+import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.net.UserService;
+import cn.ifhu.dongjia.utils.ToastHelper;
+
+import static cn.ifhu.dongjia.utils.Constants.LOGOIN;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
@@ -53,7 +67,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        Toast.makeText(WXEntryActivity.this, "回调", Toast.LENGTH_LONG).show();
+//        Toast.makeText(WXEntryActivity.this, Toast.LENGTH_LONG).show();
         if (baseResp.getType() == WX_LOGIN) {
             //登录回调
             resp = (SendAuth.Resp) baseResp;
@@ -63,7 +77,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     String code = String.valueOf(resp.code);
                     Log.d("微信登录", code);
                     //获取用户信息
-
+                    //TODO：调用登录接口
+                    EventBus.getDefault().post(new MessageEvent(LOGOIN,code));
                     break;
                 case BaseResp.ErrCode.ERR_AUTH_DENIED://用户拒绝授权
                     break;
@@ -75,4 +90,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             finish();
         }
     }
+
+
 }

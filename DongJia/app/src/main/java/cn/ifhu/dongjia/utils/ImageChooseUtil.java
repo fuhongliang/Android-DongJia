@@ -13,6 +13,7 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
 /**
+ * 图片上传
  * @author fuhongliang
  */
 public class ImageChooseUtil {
