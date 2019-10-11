@@ -76,124 +76,132 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!--图片-->
-            <com.stx.xhb.xbanner.XBanner
-                android:id="@+id/xbanner"
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_marginTop="15dp"
-                app:AutoPlayTime="6000"
-                app:isClipChildrenMode="false"
-                app:isShowIndicatorOnlyOne="true"
-                app:isShowNumberIndicator="true"
-                app:pageChangeDuration="800"
-                app:pointNormal="@drawable/shape_noraml"
-                app:pointSelect="@drawable/shape_selected"
-                app:pointsPosition="RIGHT"
-                app:pointsVisibility="false"
-                app:tipTextSize="12sp" />
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:scrollbars="none">
 
-            <!--分类-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_white_4">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--图片-->
+                <com.stx.xhb.xbanner.XBanner
+                    android:id="@+id/xbanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="15dp"
+                    app:AutoPlayTime="6000"
+                    app:isClipChildrenMode="false"
+                    app:isShowIndicatorOnlyOne="true"
+                    app:isShowNumberIndicator="true"
+                    app:pageChangeDuration="800"
+                    app:pointNormal="@drawable/shape_noraml"
+                    app:pointSelect="@drawable/shape_selected"
+                    app:pointsPosition="RIGHT"
+                    app:pointsVisibility="false"
+                    app:tipTextSize="12sp" />
+
+                <!--分类-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_white_4">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_nav_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        tools:listitem="@layout/item_home_classification" />
+                </RelativeLayout>
+
+                <!--限时抢购-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="11dp"
+                    android:text="限时抢购"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <!--限时抢购图片-->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_nav_icon"
+                    android:id="@+id/rv_panic_buy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    tools:listitem="@layout/item_home_classification" />
-            </RelativeLayout>
+                    android:background="@drawable/bg_white_3"
+                    android:orientation="vertical"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="10dp"
+                    tools:listitem="@layout/item_home_limited_time" />
+                <!--爆款热卖-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="11dp"
+                    android:text="爆款热卖"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <!--爆款热卖图片-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recommend_goods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_white_3"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    tools:listitem="@layout/item_home_best_selling" />
+                <!--超级品牌-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="11dp"
+                    android:text="超级品牌"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <!--超级品牌图片-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_super_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_white_4"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_home_super" />
+                <!--懂家臻选-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="11dp"
+                    android:text="懂家臻选"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <!--懂家臻选图片-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_white_3"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_home_selection" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <!--限时抢购-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="11dp"
-                android:text="限时抢购"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-            <!--限时抢购图片-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_panic_buy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_white_3"
-                android:orientation="vertical"
-                android:paddingTop="11dp"
-                android:paddingBottom="10dp"
-                tools:listitem="@layout/item_home_limited_time" />
-            <!--爆款热卖-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="11dp"
-                android:text="爆款热卖"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-            <!--爆款热卖图片-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recommend_goods"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_white_3"
-                android:orientation="vertical"
-                android:padding="8dp"
-                tools:listitem="@layout/item_home_best_selling" />
-            <!--超级品牌-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="11dp"
-                android:text="超级品牌"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-            <!--超级品牌图片-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_super_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_white_4"
-                android:orientation="vertical"
-                tools:listitem="@layout/item_home_super" />
-            <!--懂家臻选-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="11dp"
-                android:text="懂家臻选"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-            <!--懂家臻选图片-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recommend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_white_3"
-                android:orientation="vertical"
-                tools:listitem="@layout/item_home_selection" />
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

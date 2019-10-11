@@ -1,13 +1,20 @@
 package cn.ifhu.dongjia.activity.home;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,11 +28,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
-import cn.ifhu.dongjia.WebView.WebViewActivity;
+import cn.ifhu.dongjia.adapter.GoodsRecommendAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
+import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
-import cn.ifhu.dongjia.model.data.HomeDataBean;
+import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.post.GoodDetailsGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
@@ -33,23 +41,23 @@ import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DeviceUtil;
 import cn.ifhu.dongjia.utils.GlideRoundTransform;
-import cn.ifhu.dongjia.utils.StringUtils;
-import cn.ifhu.dongjia.utils.UserLogic;
+import cn.ifhu.dongjia.utils.X5WebView;
 
 /**
  * 商品详情
  */
 public class GoodDetailsActivity extends BaseActivity {
-    @BindView(R.id.tv_original_price)
-    TextView tvOriginalPrice;
-    @BindView(R.id.tv_current_price)
-    TextView tvCurrentPrice;
-    @BindView(R.id.tv_show_integral)
-    TextView tvShowIntegral;
+
+    @BindView(R.id.iv_bg)
+    ImageView ivBg;
+    @BindView(R.id.xbanner)
+    XBanner xbanner;
     @BindView(R.id.tv_price)
     TextView tvPrice;
-    @BindView(R.id.options1)
-    TextView options1;
+    @BindView(R.id.tv_show_integral)
+    TextView tvShowIntegral;
+    @BindView(R.id.tv_full)
+    TextView tvFull;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.ll_service1)
@@ -60,6 +68,8 @@ public class GoodDetailsActivity extends BaseActivity {
     LinearLayout llService3;
     @BindView(R.id.ll_service4)
     LinearLayout llService4;
+    @BindView(R.id.options1)
+    TextView options1;
     @BindView(R.id.iv_avatar)
     GlideImageView ivAvatar;
     @BindView(R.id.tv_store_name)
@@ -80,46 +90,63 @@ public class GoodDetailsActivity extends BaseActivity {
     TextView tvShopCart;
     @BindView(R.id.tv_buy)
     TextView tvBuy;
-    @BindView(R.id.xbanner)
-    XBanner xbanner;
-    @BindView(R.id.tv_full)
-    TextView tvFull;
+    @BindView(R.id.wv_detail)
+    X5WebView wvDetail;
+    @BindView(R.id.rv_recommend_goods)
+    RecyclerView rvRecommendGoods;
 
 
     //轮播图
     private List<GoodDetailsDataBean.PicListBean> banner_data = new ArrayList<>();
-
-    int id;
+    //爆款热卖
+    GoodsRecommendAdapter goodsRecommendAdapter;
+    private List<GoodsRecommendDataBean.ListBean> mDatas = new ArrayList<>();
+    String id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_good_details);
+        //状态栏设置为透明
+//StatusBarUtil.setTranslucentForImageView(GoodDetailsActivity.this,0,ivBg);
+        //状态栏设置为透明
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
         ButterKnife.bind(this);
         initBanner();
         Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
+        id = intent.getStringExtra("id");
         getGoods();
+        //爆款热卖
+        goodsRecommendAdapter = new GoodsRecommendAdapter(mDatas, this);
+        rvRecommendGoods.setNestedScrollingEnabled(false);
+        rvRecommendGoods.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        rvRecommendGoods.setAdapter(goodsRecommendAdapter);
+        rvRecommendGoods.setOnScrollListener(new LoadMoreScrollListener(rvRecommendGoods));
     }
 
     /**
      * banner图
      */
     public void initBanner() {
-        GoodDetailsDataBean.PicListBean picListBean = new GoodDetailsDataBean.PicListBean();
-        picListBean.getPic_url();
-        banner_data.add(picListBean);
-        banner_data.add(picListBean);
+        //banner图的数据
         xbanner.loadImage((banner, model, view, position) -> {
-            HomeDataBean.BannerListBean listBean = ((HomeDataBean.BannerListBean) model);
+            GoodDetailsDataBean.PicListBean listBean = ((GoodDetailsDataBean.PicListBean) model);
             loadRoundImage((ImageView) view, listBean.getPic_url());
         });
-        xbanner.setOnItemClickListener((banner, model, view, position) -> {
-            HomeDataBean.BannerListBean listBean = ((HomeDataBean.BannerListBean) model);
-            if (!StringUtils.isEmpty(listBean.getPic_url())) {
-                WebViewActivity.start(this, listBean.getPage_url(), "");
-            }
-        });
+        //banner图的点击事件
+//        xbanner.setOnItemClickListener((banner, model, view, position) -> {
+//            GoodDetailsDataBean.PicListBean listBean = ((GoodDetailsDataBean.PicListBean) model);
+//            if (!StringUtils.isEmpty(listBean.getPic_url())) {
+////                WebViewActivity.start(this, listBean.getPic_url(), "");
+//            }
+//        });
     }
 
     public static void loadRoundImage(ImageView view, String url) {
@@ -128,7 +155,6 @@ public class GoodDetailsActivity extends BaseActivity {
                         , GlideRoundTransform.CornerType.ALL));
         Glide.with(view.getContext()).load(url).apply(myOptions).into(view);
     }
-
 
 
     /**
@@ -150,13 +176,42 @@ public class GoodDetailsActivity extends BaseActivity {
                 banner_data = t.getData().getPic_list();
                 xbanner.setAutoPlayAble(banner_data.size() > 1);
                 xbanner.setBannerData(banner_data);
+                tvPrice.setText("￥" + t.getData().getPrice() + "");
+                tvName.setText(t.getData().getName());
+                ivAvatar.load(t.getData().getMch().getLogo());
+                tvStoreName.setText(t.getData().getMch().getName());
+                wvDetail.loadData(t.getData().getDetail(), "text/html", "UTF-8");
+                //TODO:webView自适应手机屏幕
+                wvDetail.getSettings().setUseWideViewPort(true);
+                wvDetail.getSettings().setLoadWithOverviewMode(true);
+                getRecommend();
             }
         });
+    }
 
+    /**
+     * 商品详情爆款推荐接口
+     */
+    public void getRecommend() {
+        setLoadingMessageIndicator(true);
+        RetrofitAPIManager.create(HomeService.class).GoodsRecommend(4, -1, -1, id)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodsRecommendDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<GoodsRecommendDataBean> t) throws Exception {
+                mDatas = t.getData().getList();
+                goodsRecommendAdapter.setData(mDatas);
+            }
+        });
     }
 
     @OnClick(R.id.tv_goto_store)
     public void onTvGotoStoreClicked() {
+        goToActivity(StoreHomeActivity.class);
     }
 
     @OnClick(R.id.iv_back)
@@ -174,5 +229,10 @@ public class GoodDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.tv_buy)
     public void onTvBuyClicked() {
+    }
+
+    @OnClick(R.id.rl_collection)
+    public void onRlCollectionClicked() {
+
     }
 }

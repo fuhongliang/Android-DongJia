@@ -4,9 +4,9 @@ import java.util.Map;
 
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
+import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
-import cn.ifhu.dongjia.model.post.GoodDetailsGetBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -35,5 +35,11 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/default/goods")
     public Observable<BaseEntity<GoodDetailsDataBean>> Goods(@QueryMap Map<String,Object> urlParam);
+
+    /**
+     * 商品详情爆款推荐
+     */
+    @GET("/index.php?r=api/default/goods-recommend")
+    public Observable<BaseEntity<GoodsRecommendDataBean>> GoodsRecommend(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("goods_id") String goods_id);
 
 }

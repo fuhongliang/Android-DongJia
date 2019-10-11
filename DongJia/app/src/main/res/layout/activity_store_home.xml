@@ -125,7 +125,7 @@
                             android:layout_height="wrap_content"
                             android:text="更多品牌信息"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="5dp"
                             android:textColor="@color/hint_text_color"
                             android:textSize="10sp" />
 

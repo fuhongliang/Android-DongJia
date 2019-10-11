@@ -28,6 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:maxLines="1"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:maxLength="6"
         android:textColor="@color/typed_text_color"
         android:textSize="13sp" />

@@ -33,6 +33,7 @@
             android:name=".activity.home.SearchActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".activity.home.GoodDetailsActivity" />
+        <activity android:name=".activity.home.StoreHomeActivity"/>
         <!--homeCase-->
         <activity android:name=".activity.homeCase.AddCallDesignerActivity" />
         <activity android:name=".activity.homeCase.CallDesignerActivity" />

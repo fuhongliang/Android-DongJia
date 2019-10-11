@@ -16,7 +16,7 @@
         android:id="@+id/tv_store_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:maxLength="6"
         android:text="北欧实木大床..."
         android:textColor="@color/typed_text_color"
         android:textSize="13sp" />

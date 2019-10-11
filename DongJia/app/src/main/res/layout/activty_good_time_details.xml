@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/category_color">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:scrollbars="none"
         android:layout_marginBottom="56dp"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical">
-
             <ImageView
                 android:id="@+id/iv_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:minHeight="30dp" />
-
             <com.stx.xhb.xbanner.XBanner
                 android:id="@+id/xbanner"
                 android:layout_width="match_parent"
@@ -39,43 +37,54 @@
                 app:pointsPosition="RIGHT"
                 app:pointsVisibility="false"
                 app:tipTextSize="12sp" />
-            <!--普通详情显示-->
+
+            <!--限时抢购详情显示-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="15dp">
+                android:layout_height="40dp"
+                android:background="@drawable/detail_bnt_qgsa"
+                android:paddingRight="15dp">
 
                 <TextView
-                    android:id="@+id/tv_price"
+                    android:id="@+id/tv_original_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:text="￥3398-5999"
-                    android:textColor="@color/home_16"
-                    android:textSize="17sp" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="11dp"
+                    android:text="￥3333"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:id="@id/tv_show_integral"
+                    android:id="@+id/tv_current_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_price"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@id/tv_original_price"
+                    android:text="$233"
+                    android:textColor="@color/white"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/tv_show_integral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_current_price"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/tv_original_price"
                     android:text="9999人已买"
-                    android:textColor="@color/hint_text_color"
-                    android:textSize="13sp" />
+                    android:textColor="@color/white"
+                    android:textSize="9sp" />
 
                 <TextView
-                    android:id="@+id/tv_full"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_price"
-                    android:layout_marginLeft="37dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@id/tv_show_integral"
-                    android:text="满200元包邮"
-                    android:textColor="@color/hint_text_color"
-                    android:textSize="13sp" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:text="距离结束仅剩"
+                    android:textColor="#242117"
+                    android:textSize="9sp" />
             </RelativeLayout>
 
             <TextView
@@ -84,8 +93,6 @@
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
-                android:maxLines="1"
-                android:paddingRight="15dp"
                 android:text="北欧实木黑胡桃漂浮双人床黑胡桃漂浮"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
@@ -134,8 +141,8 @@
                 </LinearLayout>
                 <!--送货上门-->
                 <LinearLayout
+                    android:layout_width="0dp"
                     android:id="@+id/ll_service2"
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
@@ -157,8 +164,8 @@
                 </LinearLayout>
                 <!--送货上门-->
                 <LinearLayout
+                    android:layout_width="0dp"
                     android:id="@+id/ll_service3"
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
@@ -180,9 +187,9 @@
                 </LinearLayout>
                 <!--送货上门-->
                 <LinearLayout
-                    android:id="@+id/ll_service4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/ll_service4"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:orientation="horizontal">
@@ -251,7 +258,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginRight="9dp"
                     android:layout_marginBottom="12dp"
-                    />
+                    android:background="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_store_name"
@@ -292,8 +299,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="15dp">
+                android:paddingLeft="15dp"
+                android:orientation="vertical">
                 <!--爆款热卖-->
                 <TextView
                     android:layout_width="wrap_content"
@@ -306,12 +313,10 @@
                     android:textStyle="bold" />
                 <!--爆款热卖图片-->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_recommend_goods"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="10dp"
                     android:background="@drawable/bg_white_3"
                     android:orientation="vertical"
-                    android:padding="8dp"
                     tools:listitem="@layout/item_home_best_selling" />
             </LinearLayout>
 
@@ -327,8 +332,7 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <cn.ifhu.dongjia.utils.X5WebView
-                android:id="@+id/wv_detail"
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

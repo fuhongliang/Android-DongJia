@@ -6,7 +6,7 @@ import java.util.Map;
 import cn.ifhu.dongjia.utils.UserLogic;
 
 public class GoodDetailsGetBean {
-    public int id;
+    public String id;
     private String access_token = UserLogic.getUser() != null ? UserLogic.getUser().getAccess_token() : "";
 
     public Map<String,Object> getPostParam() {
@@ -19,11 +19,11 @@ public class GoodDetailsGetBean {
         return map;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

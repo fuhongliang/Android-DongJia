@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sunfusheng.GlideImageView;
 
 import butterknife.BindView;
@@ -73,6 +75,7 @@ public class MeFragment extends BaseFragment {
     @BindView(R.id.iv_avatar)
     GlideImageView ivAvatar;
 
+
     public static BaseFragment newInstance() {
         return new MeFragment();
     }
@@ -121,7 +124,7 @@ public class MeFragment extends BaseFragment {
             /**
              * loadCircle:圆角图片
              */
-            ivAvatar.loadCircle(UserLogic.getUser().getAvatar_url(),R.drawable.me_tx_moren);
+            ivAvatar.loadCircle(UserLogic.getUser().getAvatar_url(), R.drawable.me_tx_moren);
             tvName.setText(UserLogic.getUser().getNickname());
         } else {
             rlNoLogin.setVisibility(View.VISIBLE);

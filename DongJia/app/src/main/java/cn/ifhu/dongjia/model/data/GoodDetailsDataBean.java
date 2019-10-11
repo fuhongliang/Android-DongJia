@@ -7,25 +7,25 @@ import java.util.List;
 public class GoodDetailsDataBean {
 
     /**
-     * coupon_title : ["100元优惠券","1111111"]
-     * coupon_list : [{"id":"11","store_id":"4","mch_id":"0","name":"100元优惠券","desc":"","pic_url":null,"discount_type":"2","min_price":"1.00","sub_price":100,"discount":"10.0","expire_type":"1","expire_day":"10","begin_time":"1562083200","end_time":"1562169599","addtime":"1562143730","is_delete":"0","total_count":"-1","is_join":"1","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.07.03","endtime":"2019.07.03","show_time":"2019.07.03-2019.07.03有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"9","store_id":"4","mch_id":"0","name":"新人专享","desc":"","pic_url":null,"discount_type":"2","min_price":100,"sub_price":"10.00","discount":"10.0","expire_type":"1","expire_day":"9","begin_time":"1561651200","end_time":"1561737599","addtime":"1561701123","is_delete":"0","total_count":"-1","is_join":"2","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.06.28","endtime":"2019.06.28","show_time":"2019.06.28-2019.06.28有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"12","store_id":"4","mch_id":"0","name":"100优惠","desc":"","pic_url":null,"discount_type":"2","min_price":"1.00","sub_price":100,"discount":"10.0","expire_type":"1","expire_day":"10","begin_time":"1562083200","end_time":"1562169599","addtime":"1562143799","is_delete":"0","total_count":"97","is_join":"2","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.07.03","endtime":"2019.07.03","show_time":"2019.07.03-2019.07.03有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"14","store_id":"4","mch_id":"0","name":"商品详情优惠券","desc":"","pic_url":null,"discount_type":"2","min_price":"0.00","sub_price":100,"discount":"10.0","expire_type":"1","expire_day":"100","begin_time":"1562083200","end_time":"1562169599","addtime":"1562145353","is_delete":"0","total_count":"-1","is_join":"1","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.07.03","endtime":"2019.07.03","show_time":"2019.07.03-2019.07.03有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"2","store_id":"4","mch_id":"0","name":"新人专享全场通用券","desc":"","pic_url":null,"discount_type":"2","min_price":"0.01","sub_price":"20.00","discount":"10.0","expire_type":"1","expire_day":"1","begin_time":"1561392000","end_time":"1561478399","addtime":"1561455349","is_delete":"0","total_count":"-1","is_join":"1","sort":"100","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.06.25","endtime":"2019.06.25","show_time":"2019.06.25-2019.06.25有效","content":"全场商品通用","goods":[],"cat":[]}]
-     * id : 95
-     * pic_list : [{"pic_url":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/44/44fbb2a1f0ade2054c7a71252d7f1b0781da3b2e.png"},{"pic_url":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/d5/d5d53f754d77fbe924797ac1eef026b62c4fd82c.png"},{"pic_url":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/a8/a8ea997205539cdd9f381a98df0315e394b4051d.png"}]
-     * attr : [{"attr_list":[{"attr_id":93,"attr_name":"四人位+贵妃榻"}],"num":999,"price":4550,"no":"","pic":""},{"attr_list":[{"attr_id":94,"attr_name":"三人位+贵妃榻"}],"num":995,"price":4550,"no":"","pic":""},{"attr_list":[{"attr_id":95,"attr_name":"五人位+贵妃榻"}],"num":999,"price":4550,"no":"","pic":""},{"attr_list":[{"attr_id":96,"attr_name":"四人位+贵妃榻+茶几"}],"num":995,"price":4550,"no":"","pic":""},{"attr_list":[{"attr_id":97,"attr_name":"三人位+贵妃榻+茶几"}],"num":998,"price":4550,"no":"","pic":""},{"attr_list":[{"attr_id":98,"attr_name":"五人位+贵妃榻+茶几"}],"num":999,"price":4550,"no":"","pic":""}]
-     * name : 丽巢 沙发 实木沙发冬夏两用沙发客厅家具实木布艺沙发组合中式储物沙发 27储物 四人位+贵妃榻(颜色备注) 沙发
-     * cat_id : 7
-     * price : 4550
-     * detail : <p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/2d/2d297037c4b280100eac129f8bc56f10c0ea9ffd.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/bc/bc9e50a42937f17f189b1f7938628553da0e11b3.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/1a/1a4046b000d531b17e82a8ffc38e2a80d4c46336.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/9f/9fefc4196852dc96eb299f52638b689f13b2da58.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/e3/e317625fedaa53f24f4cef90592c9bc240254b61.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/70/706d39a95ce23daf66493f921ae9b9ff98d90144.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/59/59a94c6efdfbae2bd9ae72861858229b74136f4a.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/6e/6e93e41365be3d77136138396c1fb47313f48aac.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/c6/c63057d073ff879964b869b8789f34fd21de9905.jpg"/></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/ee/eea9a8278f1ab161d0b8094d1155c7c0bd9e6ab2.jpg"/></p><p><br/></p>
-     * sales_volume : 8
-     * attr_group_list : [{"attr_group_id":5,"attr_group_name":"颜色","attr_list":[{"attr_id":93,"attr_name":"四人位+贵妃榻"},{"attr_id":94,"attr_name":"三人位+贵妃榻"},{"attr_id":95,"attr_name":"五人位+贵妃榻"},{"attr_id":96,"attr_name":"四人位+贵妃榻+茶几"},{"attr_id":97,"attr_name":"三人位+贵妃榻+茶几"},{"attr_id":98,"attr_name":"五人位+贵妃榻+茶几"}]}]
-     * num : 5985
+     * coupon_title : ["100优惠","商品详情优惠券"]
+     * coupon_list : [{"id":"12","store_id":"4","mch_id":"0","name":"100优惠","desc":"","pic_url":null,"discount_type":"2","min_price":"1.00","sub_price":"100.00","discount":"10.0","expire_type":"1","expire_day":"10","begin_time":"1562083200","end_time":"1562169599","addtime":"1562143799","is_delete":"0","total_count":"97","is_join":"2","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.07.03","endtime":"2019.07.03","show_time":"2019.07.03-2019.07.03有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"14","store_id":"4","mch_id":"0","name":"商品详情优惠券","desc":"","pic_url":null,"discount_type":"2","min_price":"0.00","sub_price":"100.00","discount":"10.0","expire_type":"1","expire_day":"100","begin_time":"1562083200","end_time":"1562169599","addtime":"1562145353","is_delete":"0","total_count":"-1","is_join":"1","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.07.03","endtime":"2019.07.03","show_time":"2019.07.03-2019.07.03有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"11","store_id":"4","mch_id":"0","name":"100元优惠券","desc":"","pic_url":null,"discount_type":"2","min_price":"1.00","sub_price":"100.00","discount":"10.0","expire_type":"1","expire_day":"10","begin_time":"1562083200","end_time":"1562169599","addtime":"1562143730","is_delete":"0","total_count":"-1","is_join":"1","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.07.03","endtime":"2019.07.03","show_time":"2019.07.03-2019.07.03有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"9","store_id":"4","mch_id":"0","name":"新人专享","desc":"","pic_url":null,"discount_type":"2","min_price":"100.00","sub_price":"10.00","discount":"10.0","expire_type":"1","expire_day":"9","begin_time":"1561651200","end_time":"1561737599","addtime":"1561701123","is_delete":"0","total_count":"-1","is_join":"2","sort":"10","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.06.28","endtime":"2019.06.28","show_time":"2019.06.28-2019.06.28有效","content":"全场商品通用","goods":[],"cat":[]},{"id":"2","store_id":"4","mch_id":"0","name":"新人专享全场通用券","desc":"","pic_url":null,"discount_type":"2","min_price":"0.01","sub_price":"20.00","discount":"10.0","expire_type":"1","expire_day":"1","begin_time":"1561392000","end_time":"1561478399","addtime":"1561455349","is_delete":"0","total_count":"-1","is_join":"1","sort":"100","cat_id_list":"null","appoint_type":"3","is_integral":"1","integral":"0","price":"0.00","total_num":"0","user_num":"0","goods_id_list":"null","user_type":"1","is_receive":"0","begintime":"2019.06.25","endtime":"2019.06.25","show_time":"2019.06.25-2019.06.25有效","content":"全场商品通用","goods":[],"cat":[]}]
+     * id : 102
+     * pic_list : [{"pic_url":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/30/302c4262c1e7e2d546048b9e77b634effd1907ca.png"}]
+     * attr : [{"attr_list":[{"attr_id":1,"attr_name":"默认"}],"num":59989,"price":0,"no":"","pic":""}]
+     * name : 黑色弧扇形淋浴房整体扇形浴屏卫生间隔断玻璃门简易干湿分离浴室
+     * cat_id : 3
+     * price : 1899.2
+     * detail : <meta charset="UTF-8"><style type="text/css">html{margin:0;padding:0;}body {margin: 0;padding: 0;}img{width: 100%;height: auto;display: block;margin-left: auto;margin-right: auto;}</style><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/37/37cca2467c74f9596004d3dbd8d0a82d64bf8fe0.jpg"></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/95/954da0a2cf1ff9542bf95d0ce139981eb2287eac.jpg"></p><p><img src="http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/43/43359aea9e65dc7fe17c9f4389ed88e46425569b.jpg"></p><p><img src="http://yiwuyimei-test.oss-cn-beijing.aliyuncs.com/app/upload/pic/sm/12cc57aee3c9fc5eeb332fb96241fd7e.jpg" alt=""></p><p><img src="http://yiwuyimei-test.oss-cn-beijing.aliyuncs.com/app/upload/pic/20/2cd7f9ddf416379c8968275c06fc8bd2.jpg" alt=""></p><p><br></p>
+     * sales_volume : 3
+     * attr_group_list : [{"attr_group_id":1,"attr_group_name":"规格","attr_list":[{"attr_id":1,"attr_name":"默认"}]}]
+     * num : 59989
      * is_favorite : 0
-     * service_list : ["商品保障","极速发货","免费送装","全屋定制"]
-     * original_price : 5999
-     * video_url :
+     * service_list : ["免费送装","三年质保","正品保障","极速发货"]
+     * original_price : 2899
+     * video_url : null
      * unit : 件
-     * use_attr : 1
-     * mch : {"id":10,"name":"丽巢家居","mch_desc":"丽巢以\u201c简约、时尚、实用、个性、低碳、环保\u201d为本的经营理念，专注于实木家具，突破时空限制，通过网络的便捷、经济、宽广的商品展示平台，为顾客提供更多商品种类，包括：客厅家具、卧室家具、餐厅家具、书房家具等，提供家具一站式购物平台，致力于家居文化的推广，设计精神的弘扬、并进而促进人们生活方式的改变与生活品质的提升。丽巢家具以loft文化为底蕴，利用厂房、仓库改建成家具仓储式实体展示厅，以节约更多成本，并让顾客更好的体验商品。","header_color":"#e8d697","mch_color":"#ECE1Df","logo":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/58/58ead9f8b38eb92609f484a42048c0d349e99f12.png","header_bg":"http://yiwuyimei-test.oss-cn-beijing.aliyuncs.com/app/upload/pic/l1/2cd01a54aca1b01e0fbcb7316adb67f2.jpg","goods_num":"7","sale_num":"37"}
+     * use_attr : 0
+     * mch : {"id":4,"name":"箭牌卫浴","mch_desc":"箭牌卫浴（ARROW）成立于1994年，隶属于广东省佛山市顺德区乐华陶瓷洁具有限公司，是国内具有实力与影响力的综合性卫浴品牌，是中国规模较大的建筑卫生陶瓷制造与销售企业之一。\r\n主要生产ARROW箭牌陶瓷卫生洁具、浴缸、淋浴房、智能便盖、智能坐便器、浴室柜、厨卫龙头、花洒及五金挂件等卫生间全配套产品。2014年，箭牌卫浴签约国际钢琴巨星郎朗为品牌形象代言人 [1] ，并提出品牌新主张\u201c舒适体验，箭牌时刻\u201d，进一步升华品牌形象，携手挺近国际市场，引领箭牌卫浴迈向行业的新高度也开启了箭牌卫浴国际化的进程。","header_color":"#B8DCC1","mch_color":"#DDE9E0","logo":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/09/092d926f9df2e61fd024772ad71735335fba212f.jpg","header_bg":"http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/7d/7d979d635d85f9bfad8ea8dedd002ef4cb06b3c4.png","goods_num":"17","sale_num":"59"}
      * show_integral : 0
      */
 
@@ -33,13 +33,13 @@ public class GoodDetailsDataBean {
     private String attr;
     private String name;
     private int cat_id;
-    private int price;
+    private double price;
     private String detail;
     private int sales_volume;
     private int num;
     private int is_favorite;
     private int original_price;
-    private String video_url;
+    private Object video_url;
     private String unit;
     private int use_attr;
     private MchBean mch;
@@ -82,11 +82,11 @@ public class GoodDetailsDataBean {
         this.cat_id = cat_id;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -130,11 +130,11 @@ public class GoodDetailsDataBean {
         this.original_price = original_price;
     }
 
-    public String getVideo_url() {
+    public Object getVideo_url() {
         return video_url;
     }
 
-    public void setVideo_url(String video_url) {
+    public void setVideo_url(Object video_url) {
         this.video_url = video_url;
     }
 
@@ -212,15 +212,16 @@ public class GoodDetailsDataBean {
 
     public static class MchBean {
         /**
-         * id : 10
-         * name : 丽巢家居
-         * mch_desc : 丽巢以“简约、时尚、实用、个性、低碳、环保”为本的经营理念，专注于实木家具，突破时空限制，通过网络的便捷、经济、宽广的商品展示平台，为顾客提供更多商品种类，包括：客厅家具、卧室家具、餐厅家具、书房家具等，提供家具一站式购物平台，致力于家居文化的推广，设计精神的弘扬、并进而促进人们生活方式的改变与生活品质的提升。丽巢家具以loft文化为底蕴，利用厂房、仓库改建成家具仓储式实体展示厅，以节约更多成本，并让顾客更好的体验商品。
-         * header_color : #e8d697
-         * mch_color : #ECE1Df
-         * logo : http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/58/58ead9f8b38eb92609f484a42048c0d349e99f12.png
-         * header_bg : http://yiwuyimei-test.oss-cn-beijing.aliyuncs.com/app/upload/pic/l1/2cd01a54aca1b01e0fbcb7316adb67f2.jpg
-         * goods_num : 7
-         * sale_num : 37
+         * id : 4
+         * name : 箭牌卫浴
+         * mch_desc : 箭牌卫浴（ARROW）成立于1994年，隶属于广东省佛山市顺德区乐华陶瓷洁具有限公司，是国内具有实力与影响力的综合性卫浴品牌，是中国规模较大的建筑卫生陶瓷制造与销售企业之一。
+         主要生产ARROW箭牌陶瓷卫生洁具、浴缸、淋浴房、智能便盖、智能坐便器、浴室柜、厨卫龙头、花洒及五金挂件等卫生间全配套产品。2014年，箭牌卫浴签约国际钢琴巨星郎朗为品牌形象代言人 [1] ，并提出品牌新主张“舒适体验，箭牌时刻”，进一步升华品牌形象，携手挺近国际市场，引领箭牌卫浴迈向行业的新高度也开启了箭牌卫浴国际化的进程。
+         * header_color : #B8DCC1
+         * mch_color : #DDE9E0
+         * logo : http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/09/092d926f9df2e61fd024772ad71735335fba212f.jpg
+         * header_bg : http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/7d/7d979d635d85f9bfad8ea8dedd002ef4cb06b3c4.png
+         * goods_num : 17
+         * sale_num : 59
          */
 
         private int id;
@@ -308,24 +309,24 @@ public class GoodDetailsDataBean {
 
     public static class CouponListBean {
         /**
-         * id : 11
+         * id : 12
          * store_id : 4
          * mch_id : 0
-         * name : 100元优惠券
+         * name : 100优惠
          * desc :
          * pic_url : null
          * discount_type : 2
          * min_price : 1.00
-         * sub_price : 100
+         * sub_price : 100.00
          * discount : 10.0
          * expire_type : 1
          * expire_day : 10
          * begin_time : 1562083200
          * end_time : 1562169599
-         * addtime : 1562143730
+         * addtime : 1562143799
          * is_delete : 0
-         * total_count : -1
-         * is_join : 1
+         * total_count : 97
+         * is_join : 2
          * sort : 10
          * cat_id_list : null
          * appoint_type : 3
@@ -353,7 +354,7 @@ public class GoodDetailsDataBean {
         private Object pic_url;
         private String discount_type;
         private String min_price;
-        private int sub_price;
+        private String sub_price;
         private String discount;
         private String expire_type;
         private String expire_day;
@@ -445,11 +446,11 @@ public class GoodDetailsDataBean {
             this.min_price = min_price;
         }
 
-        public int getSub_price() {
+        public String getSub_price() {
             return sub_price;
         }
 
-        public void setSub_price(int sub_price) {
+        public void setSub_price(String sub_price) {
             this.sub_price = sub_price;
         }
 
@@ -664,7 +665,7 @@ public class GoodDetailsDataBean {
 
     public static class PicListBean extends SimpleBannerInfo {
         /**
-         * pic_url : http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/44/44fbb2a1f0ade2054c7a71252d7f1b0781da3b2e.png
+         * pic_url : http://yiwuyimei.oss-cn-beijing.aliyuncs.com/web/uploads/image/30/302c4262c1e7e2d546048b9e77b634effd1907ca.png
          */
 
         private String pic_url;
@@ -679,15 +680,15 @@ public class GoodDetailsDataBean {
 
         @Override
         public Object getXBannerUrl() {
-            return null;
+            return getPic_url();
         }
     }
 
     public static class AttrGroupListBean {
         /**
-         * attr_group_id : 5
-         * attr_group_name : 颜色
-         * attr_list : [{"attr_id":93,"attr_name":"四人位+贵妃榻"},{"attr_id":94,"attr_name":"三人位+贵妃榻"},{"attr_id":95,"attr_name":"五人位+贵妃榻"},{"attr_id":96,"attr_name":"四人位+贵妃榻+茶几"},{"attr_id":97,"attr_name":"三人位+贵妃榻+茶几"},{"attr_id":98,"attr_name":"五人位+贵妃榻+茶几"}]
+         * attr_group_id : 1
+         * attr_group_name : 规格
+         * attr_list : [{"attr_id":1,"attr_name":"默认"}]
          */
 
         private int attr_group_id;
@@ -720,8 +721,8 @@ public class GoodDetailsDataBean {
 
         public static class AttrListBean {
             /**
-             * attr_id : 93
-             * attr_name : 四人位+贵妃榻
+             * attr_id : 1
+             * attr_name : 默认
              */
 
             private int attr_id;

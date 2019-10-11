@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.fragments.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -46,7 +48,6 @@ import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DeviceUtil;
-import cn.ifhu.dongjia.utils.DividerItemDecoration;
 import cn.ifhu.dongjia.utils.GlideRoundTransform;
 import cn.ifhu.dongjia.utils.GridDividerItemDecoration;
 import cn.ifhu.dongjia.utils.StringUtils;
@@ -79,6 +80,8 @@ public class HomeFragment extends BaseFragment {
      * 最多能显示五个
      */
     final int maxNavNumber = 5;
+    @BindView(R.id.layout_swipe_refresh)
+    SwipeRefreshLayout layoutSwipeRefresh;
 
 
     //轮播图
@@ -114,6 +117,9 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setRefreshLayout();
+        getData();
+        getRecommend(1);
         initBanner();
         /**
          * 分类
@@ -126,8 +132,8 @@ public class HomeFragment extends BaseFragment {
          * 限时抢购
          */
         newPanicBuyAdapter = new PanicBuyAdapter(panicBuyData, getActivity(), position -> {
-            Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
-            intent.putExtra("id",panicBuyData.get(position).getId());
+            Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
+            intent.putExtra("id", panicBuyData.get(position).getId());
             startActivity(intent);
         });
         rvPanicBuy.setNestedScrollingEnabled(false);
@@ -138,13 +144,14 @@ public class HomeFragment extends BaseFragment {
          * 爆款热卖
          */
         newRecommendGoodsAdapter = new RecommendGoodsAdapter(recommendGoodsData, getActivity(), position -> {
-            Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
-            intent.putExtra("id",recommendGoodsData.get(position).getId());
+            Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
+            intent.putExtra("id", recommendGoodsData.get(position).getId());
             startActivity(intent);
         });
         rvRecommendGoods.setNestedScrollingEnabled(false);
         //方格形布局
         rvRecommendGoods.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        //垂直间距
         rvRecommendGoods.addItemDecoration(new GridDividerItemDecoration(12));
         rvRecommendGoods.setAdapter(newRecommendGoodsAdapter);
         rvRecommendGoods.setOnScrollListener(new LoadMoreScrollListener(rvRecommendGoods));
@@ -154,8 +161,8 @@ public class HomeFragment extends BaseFragment {
         newSuperAdapter = new SuperAdapter(superData, getActivity(), new SuperAdapter.OnClickItem() {
             @Override
             public void llSuper(int position) {
-                Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
-                intent.putExtra("id",superData.get(position).getId());
+                Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
+                intent.putExtra("id", superData.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -170,8 +177,8 @@ public class HomeFragment extends BaseFragment {
         newRecommendAdapter = new RecommendAdapter(recommendData, getActivity(), new RecommendAdapter.OnClickItem() {
             @Override
             public void recommend(int position) {
-                Intent intent = new Intent(getActivity(),GoodDetailsActivity.class);
-                intent.putExtra("id",recommendData.get(position).getId());
+                Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
+                intent.putExtra("id", recommendData.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -179,9 +186,8 @@ public class HomeFragment extends BaseFragment {
             getRecommend(loadIndex);
         });
         rvRecommend.setNestedScrollingEnabled(false);
-        rvRecommend.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false));
+        rvRecommend.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         rvRecommend.setAdapter(newRecommendAdapter);
-//        rvRecommend.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST));
         rvRecommend.setOnScrollListener(new LoadMoreScrollListener(rvRecommend));
         getData();
     }
@@ -213,16 +219,26 @@ public class HomeFragment extends BaseFragment {
         Glide.with(view.getContext()).load(url).apply(myOptions).into(view);
     }
 
+    @SuppressLint("ResourceAsColor")
+    public void setRefreshLayout() {
+        layoutSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
+
+        layoutSwipeRefresh.setOnRefreshListener(() -> {
+            getData();
+            getRecommend(1);
+        });
+    }
+
     /**
      * 请求首页接口
      */
     public void getData() {
-        setLoadingMessageIndicator(true);
+        layoutSwipeRefresh.setRefreshing(true);
         RetrofitAPIManager.create(HomeService.class).index(4, -1, -1, "android", "陆丰市")
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<HomeDataBean>(true) {
             @Override
             protected void onApiComplete() {
-                setLoadingMessageIndicator(false);
+                layoutSwipeRefresh.setRefreshing(false);
             }
 
             @Override
@@ -250,25 +266,26 @@ public class HomeFragment extends BaseFragment {
      * 懂家臻选
      */
     public void getRecommend(int pages) {
-        setLoadingMessageIndicator(true);
+        layoutSwipeRefresh.setRefreshing(true);
         RetrofitAPIManager.create(HomeService.class).indexRecommend(pages, 4, -1, -1)
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<RecommendDataBean>(true) {
             @Override
             protected void onApiComplete() {
-                setLoadingMessageIndicator(false);
+                layoutSwipeRefresh.setRefreshing(false);
             }
 
             @Override
             protected void onSuccees(BaseEntity<RecommendDataBean> t) throws Exception {
-                if (pages == 1){
+                if (pages == 1) {
                     recommendData.clear();
                     recommendData.addAll(t.getData().getList());
                     newRecommendAdapter.setData(recommendData);
-                }else {
+                } else {
                     recommendData.addAll(t.getData().getList());
                     newRecommendAdapter.appendList(t.getData().getList());
                 }
             }
+
             @Override
             protected void onAPIError() {
                 super.onAPIError();
