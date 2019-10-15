@@ -42,20 +42,12 @@
         <activity android:name=".activity.me.AddressActivity" />
         <activity android:name=".activity.me.AddAddressActivity" />
         <!--shopCart-->
-
         <activity
             android:name="cn.ifhu.dongjia.wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--        <activity-->
-        <!--            android:name=".wxapi.WXEntryActivity"-->
-        <!--            android:exported="true"-->
-        <!--            android:label="微信分享回调"-->
-        <!--            android:launchMode="singleTop"-->
-        <!--            android:screenOrientation="portrait"-->
-        <!--            android:theme="@style/Theme.AppCompat.NoActionBar.Transparent" />-->
     </application>
 
     <dist:module dist:instant="true" />

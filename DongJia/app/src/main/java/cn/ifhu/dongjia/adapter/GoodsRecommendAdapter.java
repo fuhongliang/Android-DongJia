@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 
+/**
+ * 商品详情爆款推荐
+ */
 public class GoodsRecommendAdapter extends BaseLoadMoreAdapter<GoodsRecommendDataBean.ListBean, GoodsRecommendAdapter.ViewHolder> {
     private List<GoodsRecommendDataBean.ListBean> mDatas;
     private Context context;
@@ -48,9 +52,10 @@ public class GoodsRecommendAdapter extends BaseLoadMoreAdapter<GoodsRecommendDat
     public void bindOtherViewHolder(@NonNull GoodsRecommendAdapter.ViewHolder holder, int position) {
         if (position == mDatas.size()) return;
         holder.tvStoreName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText(mDatas.get(position).getPrice());
+        holder.tvPrice.setText("￥"+mDatas.get(position).getPrice());
         holder.ivStorePic.load(mDatas.get(position).getPic_url());
-        holder.tvOriginalPrice.setText(mDatas.get(position).getOriginal_price());
+        holder.tvOriginalPrice.setText("￥"+mDatas.get(position).getOriginal_price());
+        holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
 

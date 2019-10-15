@@ -34,7 +34,7 @@ import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
-import cn.ifhu.dongjia.model.post.GoodDetailsGetBean;
+import cn.ifhu.dongjia.model.get.GoodDetailsGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
@@ -101,6 +101,8 @@ public class GoodDetailsActivity extends BaseActivity {
     //爆款热卖
     GoodsRecommendAdapter goodsRecommendAdapter;
     private List<GoodsRecommendDataBean.ListBean> mDatas = new ArrayList<>();
+    //商品信息
+    private GoodDetailsDataBean.MchBean mch;
     String id;
 
     @Override
@@ -108,7 +110,7 @@ public class GoodDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_good_details);
         //状态栏设置为透明
-//StatusBarUtil.setTranslucentForImageView(GoodDetailsActivity.this,0,ivBg);
+        //StatusBarUtil.setTranslucentForImageView(GoodDetailsActivity.this,0,ivBg);
         //状态栏设置为透明
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
@@ -174,6 +176,8 @@ public class GoodDetailsActivity extends BaseActivity {
             @Override
             protected void onSuccees(BaseEntity<GoodDetailsDataBean> t) throws Exception {
                 banner_data = t.getData().getPic_list();
+                mch = t.getData().getMch();
+
                 xbanner.setAutoPlayAble(banner_data.size() > 1);
                 xbanner.setBannerData(banner_data);
                 tvPrice.setText("￥" + t.getData().getPrice() + "");
@@ -181,6 +185,7 @@ public class GoodDetailsActivity extends BaseActivity {
                 ivAvatar.load(t.getData().getMch().getLogo());
                 tvStoreName.setText(t.getData().getMch().getName());
                 wvDetail.loadData(t.getData().getDetail(), "text/html", "UTF-8");
+
                 //TODO:webView自适应手机屏幕
                 wvDetail.getSettings().setUseWideViewPort(true);
                 wvDetail.getSettings().setLoadWithOverviewMode(true);
@@ -211,7 +216,10 @@ public class GoodDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.tv_goto_store)
     public void onTvGotoStoreClicked() {
-        goToActivity(StoreHomeActivity.class);
+        Intent intent = new Intent(GoodDetailsActivity.this,StoreHomeActivity.class);
+        intent.putExtra("mch_id",mch.getId()+"");
+        startActivity(intent);
+
     }
 
     @OnClick(R.id.iv_back)

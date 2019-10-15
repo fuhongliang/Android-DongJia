@@ -1,16 +1,11 @@
 package cn.ifhu.dongjia.wxapi;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -22,16 +17,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.ifhu.dongjia.MainActivity;
-import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.MessageEvent;
-import cn.ifhu.dongjia.model.data.UserDataBean;
-import cn.ifhu.dongjia.model.post.BaseBean;
-import cn.ifhu.dongjia.model.post.UserPostBean;
-import cn.ifhu.dongjia.net.BaseObserver;
-import cn.ifhu.dongjia.net.RetrofitAPIManager;
-import cn.ifhu.dongjia.net.SchedulerUtils;
-import cn.ifhu.dongjia.net.UserService;
-import cn.ifhu.dongjia.utils.ToastHelper;
 
 import static cn.ifhu.dongjia.utils.Constants.LOGOIN;
 

@@ -1,4 +1,4 @@
-package cn.ifhu.dongjia.model.post;
+package cn.ifhu.dongjia.model.get;
 
 import java.util.HashMap;
 import java.util.Map;

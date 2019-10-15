@@ -1,12 +1,15 @@
 package cn.ifhu.dongjia.net;
 
+import java.util.List;
 import java.util.Map;
 
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
+import cn.ifhu.dongjia.model.data.MchArticleDataBean;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
+import cn.ifhu.dongjia.model.data.ShopDataBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -41,5 +44,18 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/default/goods-recommend")
     public Observable<BaseEntity<GoodsRecommendDataBean>> GoodsRecommend(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("goods_id") String goods_id);
+
+    /**
+     * 商品主页
+     */
+    @GET("/index.php?r=api/mch/index/shop")
+    public Observable<BaseEntity<ShopDataBean>> Shop(@QueryMap Map<String,Object> urlParam);
+
+    /**
+     * 商品精品案例
+     */
+    @GET("/index.php?r=api/default/mch-article")
+    public Observable<BaseEntity<List<MchArticleDataBean>>> MchArticle(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("mch_id") String mch_id);
+
 
 }

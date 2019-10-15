@@ -11,14 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:background="@color/white"
-        android:layout_marginRight="8dp"
         android:orientation="vertical">
 
         <com.sunfusheng.GlideImageView
             android:id="@+id/iv_cover_pic"
-            android:layout_width="match_parent"
+            android:layout_width="115dp"
             android:layout_height="110dp"
-            android:scaleType="fitXY"
             android:background="@drawable/bg_white_3"
             />
 
@@ -41,7 +39,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="30dp">
 
                 <TextView

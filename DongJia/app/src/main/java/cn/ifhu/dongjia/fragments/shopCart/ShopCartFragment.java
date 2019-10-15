@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseFragment;
@@ -34,6 +34,9 @@ public class ShopCartFragment extends BaseFragment {
     TextView tvOk;
     @BindView(R.id.tv_delete)
     TextView tvDelete;
+    @BindView(R.id.iv_isSelect)
+    ImageView ivIsSelect;
+
 
     public static BaseFragment newInstance() {
         return new ShopCartFragment();
@@ -47,5 +50,9 @@ public class ShopCartFragment extends BaseFragment {
         tvTitle.setText("购物车");
         ivBack.setVisibility(View.GONE);
         return view;
+    }
+
+    @OnClick(R.id.tv_ok)
+    public void onTvOkClicked() {
     }
 }

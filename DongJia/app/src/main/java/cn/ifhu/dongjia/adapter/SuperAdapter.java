@@ -26,6 +26,7 @@ import cn.ifhu.dongjia.model.data.HomeDataBean;
 public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBean, SuperAdapter.ViewHolder> {
 
 
+
     private List<HomeDataBean.NewMchListBean> mDatas;
     private Context mContext;
     private OnClickItem onClickItem;
@@ -63,14 +64,14 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
         if (mDatas.get(position).getGoods_list() != null && mDatas.get(position).getGoods_list().size() > 0) {
             switch (mDatas.size()) {
                 case 0:
-                    holder.llStore1.setVisibility(View.GONE);
-                    holder.llStore2.setVisibility(View.GONE);
-                    holder.llStore3.setVisibility(View.GONE);
+                    holder.llStore1.setVisibility(View.INVISIBLE);
+                    holder.llStore2.setVisibility(View.INVISIBLE);
+                    holder.llStore3.setVisibility(View.INVISIBLE);
                     break;
                 case 1:
                     holder.llStore1.setVisibility(View.VISIBLE);
-                    holder.llStore2.setVisibility(View.GONE);
-                    holder.llStore3.setVisibility(View.GONE);
+                    holder.llStore2.setVisibility(View.INVISIBLE);
+                    holder.llStore3.setVisibility(View.INVISIBLE);
                     holder.ivCoverPic0.load(mDatas.get(position).getGoods_list().get(0).getCover_pic());
                     holder.tvPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getPrice());
                     holder.tvOriginalPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getOriginal_price());
@@ -79,7 +80,7 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
                 case 2:
                     holder.llStore1.setVisibility(View.VISIBLE);
                     holder.llStore2.setVisibility(View.VISIBLE);
-                    holder.llStore3.setVisibility(View.GONE);
+                    holder.llStore3.setVisibility(View.INVISIBLE);
                     holder.ivCoverPic0.load(mDatas.get(position).getGoods_list().get(0).getCover_pic());
                     holder.tvPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getPrice());
                     holder.tvOriginalPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getOriginal_price());
@@ -117,6 +118,10 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
             holder.llSuper.setOnClickListener(v ->
                     onClickItem.llSuper(position));
         }
+        if (onClickItem != null) {
+            holder.llStore.setOnClickListener(v ->
+                    onClickItem.llStore(position));
+        }
     }
 
 
@@ -130,6 +135,8 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
 
     public interface OnClickItem {
         void llSuper(int position);
+
+        void llStore(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -163,6 +170,8 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
         TextView tvOriginalPrice2;
         @BindView(R.id.ll_store3)
         LinearLayout llStore3;
+        @BindView(R.id.ll_store)
+        LinearLayout llStore;
         @BindView(R.id.rl_mch_logo)
         RelativeLayout rlMchLogo;
         @BindView(R.id.ll_super)

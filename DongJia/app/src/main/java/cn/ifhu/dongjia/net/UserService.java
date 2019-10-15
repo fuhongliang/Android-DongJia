@@ -2,7 +2,7 @@ package cn.ifhu.dongjia.net;
 
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.UserDataBean;
-import cn.ifhu.dongjia.model.post.UserPostBean;
+import cn.ifhu.dongjia.model.get.UserPostBean;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

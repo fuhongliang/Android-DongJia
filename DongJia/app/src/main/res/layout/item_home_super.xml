@@ -42,6 +42,7 @@
             android:textSize="11sp" />
 
         <LinearLayout
+            android:id="@+id/ll_store"
             android:layout_below="@id/iv_mch_logo"
             android:layout_width="match_parent"
             android:paddingLeft="12dp"
@@ -51,6 +52,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_store1"
+                android:visibility="invisible"
                 android:gravity="left"
                 android:layout_width="102dp"
                 android:layout_height="127dp"
@@ -89,6 +91,7 @@
             <LinearLayout
                 android:id="@+id/ll_store2"
                 android:layout_width="102dp"
+                android:visibility="invisible"
                 android:layout_height="127dp"
                 android:layout_marginLeft="12dp"
                 android:orientation="vertical">
@@ -128,6 +131,7 @@
                 android:layout_width="102dp"
                 android:layout_marginLeft="12dp"
                 android:layout_height="127dp"
+                android:visibility="invisible"
                 android:orientation="vertical">
 
                 <com.sunfusheng.GlideImageView

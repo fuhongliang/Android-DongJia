@@ -19,6 +19,9 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
 
+/**
+ * 懂家臻选
+ */
 public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.ListBean, RecommendAdapter.ViewHolder> {
 
 
@@ -41,7 +44,7 @@ public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.List
 
     @Override
     public RecyclerView.ViewHolder getViewHolder() {
-        return new ViewHolder(View.inflate(mContext, R.layout.item_home_selection, null));
+        return new ViewHolder(View.inflate(mContext, R.layout.item_dj_selection, null));
     }
 
     @Override

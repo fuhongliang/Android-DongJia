@@ -1,4 +1,6 @@
-package cn.ifhu.dongjia.model.post;
+package cn.ifhu.dongjia.model.get;
+
+import cn.ifhu.dongjia.model.post.BaseBean;
 
 public class UserPostBean extends BaseBean {
     private String code;

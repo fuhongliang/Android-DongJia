@@ -35,11 +35,12 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="15dp"
-                    android:background="@color/black" />
+                    />
             </RelativeLayout>
 
             <!--名片-->
             <RelativeLayout
+                android:id="@+id/rl_header_color"
                 android:layout_width="158dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="30dp"
@@ -53,7 +54,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="7dp"
-                    android:background="@color/black" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_store_name"
@@ -103,7 +104,6 @@
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="3dp"
                     android:maxLines="3"
-                    android:text="南洋胡氏在家居鉴赏家眼中无与伦比的声誉和地位，不仅源于我们精致完美的家居作品以及丰富的制艺历史与技术。我们无可争议的领军地位同样来自公司始终秉承 1993年创立以来的卓越制造理..."
                     android:textColor="@color/typed_text_color"
                     android:textSize="11sp" />
                 <!--更多-->
@@ -114,26 +114,26 @@
                     android:layout_below="@id/tv_information">
 
                     <RelativeLayout
+                        android:id="@+id/rl_see_more"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        >
+                        android:gravity="center">
 
                         <TextView
                             android:id="@+id/options3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="更多品牌信息"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="5dp"
+                            android:text="更多品牌信息"
                             android:textColor="@color/hint_text_color"
                             android:textSize="10sp" />
 
                         <ImageView
                             android:layout_width="6dp"
                             android:layout_height="4dp"
-                            android:layout_toRightOf="@id/options3"
                             android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/options3"
                             android:background="@drawable/pickers_ic_jt" />
                     </RelativeLayout>
                 </RelativeLayout>
@@ -152,6 +152,7 @@
                 android:textStyle="bold" />
             <!--爆款推荐-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -175,6 +176,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_case_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -185,6 +187,7 @@
             </RelativeLayout>
             <!--精品案例-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_case"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -196,6 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="19dp"
+                android:visibility="gone"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="11dp">
 
@@ -221,6 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:visibility="gone"
                 android:layout_marginRight="15dp"
                 tools:listitem="@layout/item_home_design" />
 
@@ -237,6 +242,7 @@
                 android:textStyle="bold" />
             <!--精选必买-->
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_feature_buy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"

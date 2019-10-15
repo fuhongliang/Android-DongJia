@@ -18,10 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/line"
-        tools:listitem="@layout/item_shop_cart" />
+        tools:listitem="@layout/item_shop_cart_child" />
 
-    <View style="@style/line_fff"
-        android:layout_above="@id/options1"/>
+    <View
+        style="@style/line_fff"
+        android:layout_above="@id/options1" />
 
     <RelativeLayout
         android:id="@+id/options1"
@@ -29,23 +30,29 @@
         android:layout_height="54dp"
         android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:id="@+id/options2"
-            android:layout_width="47dp"
-            android:layout_height="47dp"
-            android:layout_centerVertical="true"
-            android:padding="15dp"
-            android:src="@drawable/select" />
+        <RelativeLayout
+            android:id="@+id/rl_select"
+            android:layout_width="70dp"
+            android:paddingLeft="15dp"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_toRightOf="@id/options2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="7dp"
-            android:text="全选"
-            android:textColor="@color/typed_text_color"
-            android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/iv_isSelect"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/select" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_isSelect"
+                android:text="全选"
+                android:textColor="@color/typed_text_color"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_ok"

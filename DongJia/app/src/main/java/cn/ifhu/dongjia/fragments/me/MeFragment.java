@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sunfusheng.GlideImageView;
 
 import butterknife.BindView;
@@ -24,9 +22,11 @@ import cn.ifhu.dongjia.activity.me.AboutUsActivity;
 import cn.ifhu.dongjia.activity.me.AddressActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.MeDataBean;
 import cn.ifhu.dongjia.model.data.UserDataBean;
-import cn.ifhu.dongjia.model.post.UserPostBean;
+import cn.ifhu.dongjia.model.get.UserPostBean;
 import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.MeServive;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.net.UserService;
@@ -74,6 +74,16 @@ public class MeFragment extends BaseFragment {
     TextView tvLogout;
     @BindView(R.id.iv_avatar)
     GlideImageView ivAvatar;
+    @BindView(R.id.tv_my_scores)
+    TextView tvMyScores;
+    @BindView(R.id.tv_my_balance)
+    TextView tvMyBalance;
+    @BindView(R.id.tv_my_furniture)
+    TextView tvMyFurniture;
+    @BindView(R.id.ll_furniture)
+    LinearLayout llFurniture;
+    @BindView(R.id.ll_coupon)
+    LinearLayout llCoupon;
 
 
     public static BaseFragment newInstance() {
@@ -86,18 +96,19 @@ public class MeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         unbinder = ButterKnife.bind(this, view);
         isLogin();
+        getMyData();
         return view;
 
     }
 
-    public void login(String code) {
-        UserLogin(code);
-
-    }
 
     /**
      * 登录接口
      */
+    public void login(String code) {
+        UserLogin(code);
+    }
+
     public void UserLogin(String code) {
         UserPostBean userPostBean = new UserPostBean();
         userPostBean.setCode(code);
@@ -116,6 +127,9 @@ public class MeFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 登录
+     */
     public void isLogin() {
         if (UserLogic.getUser() != null) {
             rlNoLogin.setVisibility(View.GONE);
@@ -131,6 +145,30 @@ public class MeFragment extends BaseFragment {
             rlLogin.setVisibility(View.GONE);
             tvLogout.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 我的接口
+     */
+    public void getMyData() {
+        setLoadingMessageIndicator(true);
+        RetrofitAPIManager.create(MeServive.class).Me(4, -1, -1, UserLogic.getUser().getAccess_token())
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<MeDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<MeDataBean> t) throws Exception {
+
+            }
+        });
+    }
+
+    //我的优惠券
+    @OnClick(R.id.ll_coupon)
+    public void onLlCouponClicked() {
     }
 
     //我的售后

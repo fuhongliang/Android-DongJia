@@ -33,6 +33,7 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.WebView.WebViewActivity;
 import cn.ifhu.dongjia.activity.home.GoodDetailsActivity;
 import cn.ifhu.dongjia.activity.home.SearchActivity;
+import cn.ifhu.dongjia.activity.home.StoreHomeActivity;
 import cn.ifhu.dongjia.adapter.NavIconAdapter;
 import cn.ifhu.dongjia.adapter.PanicBuyAdapter;
 import cn.ifhu.dongjia.adapter.RecommendAdapter;
@@ -133,7 +134,7 @@ public class HomeFragment extends BaseFragment {
          */
         newPanicBuyAdapter = new PanicBuyAdapter(panicBuyData, getActivity(), position -> {
             Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
-            intent.putExtra("id", panicBuyData.get(position).getId());
+            intent.putExtra("id",panicBuyData.get(position).getId());
             startActivity(intent);
         });
         rvPanicBuy.setNestedScrollingEnabled(false);
@@ -161,8 +162,15 @@ public class HomeFragment extends BaseFragment {
         newSuperAdapter = new SuperAdapter(superData, getActivity(), new SuperAdapter.OnClickItem() {
             @Override
             public void llSuper(int position) {
+                Intent intent = new Intent(getActivity(), StoreHomeActivity.class);
+                intent.putExtra("mch_id", superData.get(position).getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void llStore(int position) {
                 Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
-                intent.putExtra("id", superData.get(position).getId());
+                intent.putExtra("id", superData.get(position).getGoods_list().get(position).getId());
                 startActivity(intent);
             }
         });
@@ -246,11 +254,13 @@ public class HomeFragment extends BaseFragment {
                 banner_data = t.getData().getBanner_list();
                 xbanner.setAutoPlayAble(banner_data.size() > 1);
                 xbanner.setBannerData(banner_data);
+
                 navData = t.getData().getNav_icon_list();
                 newNavIconAdapter.setData(navData);
 
                 panicBuyData = t.getData().getMiaosha().getGoods_list();
                 newPanicBuyAdapter.setData(panicBuyData);
+
                 recommendGoodsData = t.getData().getRecommend_goods();
                 newRecommendGoodsAdapter.setData(recommendGoodsData);
 

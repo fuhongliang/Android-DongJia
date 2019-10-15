@@ -17,81 +17,75 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
-import cn.ifhu.dongjia.model.data.HomeDataBean;
+import cn.ifhu.dongjia.model.data.ShopDataBean;
 
-/**
- * 首页爆款热卖适配器
- */
-public class RecommendGoodsAdapter extends BaseLoadMoreAdapter<HomeDataBean.RecommendGoodsBean, RecommendGoodsAdapter.ViewHolder> {
+public class FeaturedBuyAdapter extends BaseLoadMoreAdapter<ShopDataBean.GoodsListBean, FeaturedBuyAdapter.ViewHolder> {
 
-    private List<HomeDataBean.RecommendGoodsBean> mDatas;
-    private Context mContext;
+    private List<ShopDataBean.GoodsListBean> mDatas;
+    private Context context;
     private OnClickItem onClickItem;
 
     @Override
-    public void setData(List<HomeDataBean.RecommendGoodsBean> data) {
+    public void setData(List<ShopDataBean.GoodsListBean> data) {
         mDatas = data;
         resetLodingMore();
         notifyDataSetChanged();
     }
 
-    public RecommendGoodsAdapter(List<HomeDataBean.RecommendGoodsBean> mDatas, Context mContext, OnClickItem onClickItem) {
+    public FeaturedBuyAdapter(List<ShopDataBean.GoodsListBean> mDatas, Context context, OnClickItem onClickItem) {
         this.mDatas = mDatas;
-        this.mContext = mContext;
+        this.context = context;
         this.onClickItem = onClickItem;
     }
 
     @Override
     public RecyclerView.ViewHolder getViewHolder() {
-        return new ViewHolder(View.inflate(mContext, R.layout.item_home_best_selling, null));
+        return new ViewHolder(View.inflate(context, R.layout.item_home_selection, null));
     }
 
     @Override
-    public List<HomeDataBean.RecommendGoodsBean> getDataList() {
+    public List<ShopDataBean.GoodsListBean> getDataList() {
         return mDatas;
     }
 
     @Override
     public void bindOtherViewHolder(@NonNull ViewHolder holder, int position) {
         if (position == mDatas.size()) return;
-
-        holder.ivStorePic.load(mDatas.get(position).getCover_pic());
-        holder.tvStoreName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText("￥" + mDatas.get(position).getPrice());
-        holder.tvOriginalPrice.setText("￥" + mDatas.get(position).getOriginal_price());
+        holder.ivCoverPic.load(mDatas.get(position).getCover_pic());
+        holder.tvName.setText(mDatas.get(position).getName());
+        holder.tvOriginalPrice.setText("￥"+mDatas.get(position).getOriginal_price());
         holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        if (onClickItem != null) {
-            holder.llRecommendGoods.setOnClickListener(v ->
-                    onClickItem.recommendGoods(position));
+        holder.tvPrice.setText("￥"+mDatas.get(position).getPrice());
+        holder.tvShowIntegral.setText(mDatas.get(position).getGoods_num()+"人购买");
+        if (onClickItem != null){
+            holder.llRecommend.setOnClickListener(v ->
+                    onClickItem.Recommend(position));
         }
     }
 
 
     @Override
     public int getItemCount() {
-        if (mDatas == null) {
-            return 0;
-        }
         return mDatas.size();
     }
 
     public interface OnClickItem {
-        void recommendGoods(int position);
+        void Recommend(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_store_pic)
-        GlideImageView ivStorePic;
-        @BindView(R.id.tv_store_name)
-        TextView tvStoreName;
+        @BindView(R.id.iv_cover_pic)
+        GlideImageView ivCoverPic;
+        @BindView(R.id.tv_name)
+        TextView tvName;
         @BindView(R.id.tv_price)
         TextView tvPrice;
         @BindView(R.id.tv_original_price)
         TextView tvOriginalPrice;
-
-        @BindView(R.id.ll_recommend_goods)
-        LinearLayout llRecommendGoods;
-
+        @BindView(R.id.tv_show_integral)
+        TextView tvShowIntegral;
+        @BindView(R.id.ll_recommend)
+        LinearLayout llRecommend;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
