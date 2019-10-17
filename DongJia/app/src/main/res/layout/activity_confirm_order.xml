@@ -8,14 +8,21 @@
         android:id="@+id/header"
         layout="@layout/layout_header" />
 
-    <!--    信息-->
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/header"
+        android:background="@drawable/center_bnt"/>
+    <!--信息-->
     <RelativeLayout
-        android:id="@+id/information"
+        android:id="@+id/rl_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header"
+        android:layout_below="@id/view_bg"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="-50dp"
         android:background="@drawable/bg_white_4"
         android:minHeight="71dp">
 
@@ -25,7 +32,7 @@
             android:layout_height="19dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:background="@color/black" />
+            android:background="@drawable/dingdan_ic_dw" />
 
         <RelativeLayout
             android:id="@+id/rl"
@@ -74,31 +81,34 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:background="@color/black" />
+            android:background="@drawable/center_ic_xuanze" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/information"
+        android:layout_below="@id/rl_address"
         android:layout_marginTop="15dp"
         android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_logo"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginLeft="15dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.sunfusheng.GlideImageView
+                android:id="@+id/iv_mch_logo"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:background="@color/black" />
+                />
 
             <TextView
+                android:id="@+id/tv_mch_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -112,7 +122,8 @@
                 android:layout_height="8dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="9dp"
-                android:background="@color/black" />
+                android:background="@drawable/center_ic_xuanze"
+                />
         </LinearLayout>
 
         <View
@@ -125,17 +136,17 @@
             android:padding="15dp">
 
             <com.yalantis.ucrop.view.GestureCropImageView
-                android:id="@+id/iv_pic"
+                android:id="@+id/iv_store_pic"
                 android:layout_width="77dp"
                 android:layout_height="77dp"
                 android:layout_marginRight="15dp"
-                android:background="@color/black" />
+                />
 
             <TextView
                 android:id="@+id/tv_store_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/iv_pic"
+                android:layout_toRightOf="@id/iv_store_pic"
                 android:text="暖眠北欧三人沙发橡木家具"
                 android:textColor="@color/typed_text_color"
                 android:textSize="15sp" />
@@ -146,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_store_name"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/iv_pic"
+                android:layout_toRightOf="@id/iv_store_pic"
                 android:text="白橡木 1800mm*2000mm"
                 android:textColor="@color/hint_text_color"
                 android:textSize="13sp" />
@@ -156,9 +167,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_specification"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/iv_pic">
+                android:layout_toRightOf="@id/iv_store_pic">
 
                 <TextView
+                    android:id="@+id/tv_store_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥5999.00"
@@ -166,6 +178,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_store_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -191,6 +204,7 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="25dp"
@@ -224,6 +238,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/tv_mch_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -252,11 +267,12 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:id="@+id/tv_freight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="￥5999.00"
+                android:text="￥0"
                 android:textColor="#010101"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -280,6 +296,7 @@
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -290,6 +307,7 @@
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/tv_ok"
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"

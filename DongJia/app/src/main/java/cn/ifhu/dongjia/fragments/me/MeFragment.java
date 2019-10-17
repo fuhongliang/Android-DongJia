@@ -102,6 +102,11 @@ public class MeFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        isLogin();
+    }
 
     /**
      * 登录接口

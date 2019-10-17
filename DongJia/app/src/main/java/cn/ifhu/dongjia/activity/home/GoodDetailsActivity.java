@@ -44,7 +44,9 @@ import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DeviceUtil;
 import cn.ifhu.dongjia.utils.GlideRoundTransform;
+import cn.ifhu.dongjia.utils.UserLogic;
 import cn.ifhu.dongjia.utils.X5WebView;
+import cn.ifhu.dongjia.wxapi.WXLoginUtils;
 
 /**
  * 商品详情
@@ -99,6 +101,8 @@ public class GoodDetailsActivity extends BaseActivity {
     RecyclerView rvRecommendGoods;
     @BindView(R.id.rl_specification)
     RelativeLayout rlSpecification;
+    @BindView(R.id.tv_specification)
+    TextView tvSpecification;
 
 
     //轮播图
@@ -244,6 +248,12 @@ public class GoodDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.tv_buy)
     public void onTvBuyClicked() {
+        if (UserLogic.getUser() != null) {
+//            Intent intent = new Intent(GoodDetailsActivity.this,ConfirmOrderActivity.class);
+            goToActivity(ConfirmOrderActivity.class);
+        } else {
+            WXLoginUtils.WxLogin(this);
+        }
     }
 
     @OnClick(R.id.rl_collection)
@@ -269,7 +279,7 @@ public class GoodDetailsActivity extends BaseActivity {
                 @Override
                 public void onSelect(String selected) {
                     //默认设置 有选的
-                    options1.setText(selected);
+                    tvSpecification.setText(selected);
                 }
 
                 @Override

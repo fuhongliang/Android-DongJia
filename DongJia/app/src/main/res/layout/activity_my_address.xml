@@ -15,6 +15,7 @@
         android:layout_below="@id/header" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_address"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rl_add_address"
