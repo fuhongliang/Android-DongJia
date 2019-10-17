@@ -37,6 +37,7 @@ import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.ProductData;
 import cn.ifhu.dongjia.model.data.Sku;
+import cn.ifhu.dongjia.model.data.SkuAttribute;
 import cn.ifhu.dongjia.model.get.GoodDetailsGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
@@ -112,6 +113,9 @@ public class GoodDetailsActivity extends BaseActivity {
     private List<GoodsRecommendDataBean.ListBean> mDatas = new ArrayList<>();
     //商品信息
     private GoodDetailsDataBean.MchBean mch;
+    //商品规格
+    private List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList = new ArrayList<>();
+    //商品id
     String id;
 
     //商品sku
@@ -188,6 +192,7 @@ public class GoodDetailsActivity extends BaseActivity {
             protected void onSuccees(BaseEntity<GoodDetailsDataBean> t) throws Exception {
                 banner_data = t.getData().getPic_list();
                 mch = t.getData().getMch();
+                attrGroupList = t.getData().getAttr_group_list();
 
                 xbanner.setAutoPlayAble(banner_data.size() > 1);
                 xbanner.setBannerData(banner_data);
@@ -268,8 +273,54 @@ public class GoodDetailsActivity extends BaseActivity {
 
     private void showSkuDialog() {
         if (dialog == null) {
-            dialog = new GoodDialogActivity(this);
-            dialog.setData(ProductData.get(this), new GoodDialogActivity.Callback() {
+            dialog = new GoodDialogActivity(this,id);
+
+            ProductData productData = new ProductData();
+            productData.setPid(Long.valueOf(id));
+            productData.setPictureUrl("");
+            productData.setMaxPrice(0);
+            productData.setMinPrice(0);
+            productData.setStockQuantity(0);
+            List<Sku> skuList = new ArrayList<>();
+            for (int i = 0; i < attrGroupList.size(); i++) {
+                GoodDetailsDataBean.AttrGroupListBean attrGroupListBean = attrGroupList.get(i);
+                Sku sku = new Sku();
+                sku.setSid(attrGroupListBean.getAttr_group_id());
+                sku.setPictureUrl("");
+                sku.setPrice(0);
+                sku.setStockQuantity(10);
+                List<SkuAttribute> skuAttributeList = new ArrayList<>();
+                for (GoodDetailsDataBean.AttrGroupListBean.AttrListBean attrListBean: attrGroupListBean.getAttr_list()){
+                    SkuAttribute attribute = new SkuAttribute();
+                    attribute.setKey(attrGroupListBean.getAttr_group_name());
+                    attribute.setValue(attrListBean.getAttr_name());
+                    attribute.setIndex(i);
+                    attribute.setId(attrListBean.getAttr_id());
+                    skuAttributeList.add(attribute);
+                }
+                sku.setAttributes(skuAttributeList);
+                skuList.add(sku);
+            }
+            productData.setSkus(skuList);
+//            dialog.setData(attrGroupList, new GoodDialogActivity.Callback() {
+//                @Override
+//                public void onAdded(Sku sku, int quantity) {
+//                    //立即购买再跳转到
+//                    Toast.makeText(GoodDetailsActivity.this, "添加购物车成功 " + sku.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onSelect(String selected) {
+////                    //默认设置 有选的
+//                    tvSpecification.setText(selected);
+//                }
+//
+//                @Override
+//                public void reUnSelect() {
+//
+//                }
+//            });
+            dialog.setData(productData, new GoodDialogActivity.Callback() {
                 @Override
                 public void onAdded(Sku sku, int quantity) {
                     //立即购买再跳转到
@@ -287,6 +338,7 @@ public class GoodDetailsActivity extends BaseActivity {
 
                 }
             });
+
         }
         dialog.show();
     }

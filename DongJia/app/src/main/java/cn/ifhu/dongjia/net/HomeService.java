@@ -5,6 +5,7 @@ import java.util.Map;
 
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
+import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
 import cn.ifhu.dongjia.model.data.MchArticleDataBean;
@@ -57,5 +58,10 @@ public interface HomeService {
     @GET("/index.php?r=api/default/mch-article")
     public Observable<BaseEntity<List<MchArticleDataBean>>> MchArticle(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("mch_id") String mch_id);
 
+    /**
+     * 商品精品案例
+     */
+    @GET("/index.php?r=api/default/goods-attr-info")
+    public Observable<BaseEntity<List<GoodsAttrInfoDataBean>>> GoodsAttrInfo(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("goods_id") String goods_id,@Query("attr_list") int[] attr_list);
 
 }

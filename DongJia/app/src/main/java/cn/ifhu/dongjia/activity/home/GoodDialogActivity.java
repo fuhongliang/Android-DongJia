@@ -3,6 +3,7 @@ package cn.ifhu.dongjia.activity.home;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,9 +26,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
+import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.model.data.ProductData;
 import cn.ifhu.dongjia.model.data.Sku;
 import cn.ifhu.dongjia.model.data.SkuAttribute;
+import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.HomeService;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
+import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.view.GoodView.OnSkuListener;
 import cn.ifhu.dongjia.view.GoodView.SkuSelectScrollView;
 
@@ -59,6 +67,9 @@ public class GoodDialogActivity extends Dialog {
     @BindView(R.id.tv_good_number)
     TextView tvGoodNumber;
 
+    //商品属性列表
+    List<GoodDetailsDataBean.AttrGroupListBean> goodsAttrList;
+
 
     private Context context;
     private Sku selectedSku;
@@ -68,12 +79,15 @@ public class GoodDialogActivity extends Dialog {
     private String priceFormat;
     private String stockQuantityFormat;
 
+    //当前已经选择的商品属性id
+    int[] chooseAttr;
 
-    public GoodDialogActivity(@NonNull Context context) {
-        this(context, R.style.CommonBottomDialogStyle);
+    String id;
+    public GoodDialogActivity(@NonNull Context context, String id) {
+        this(context, R.style.CommonBottomDialogStyle,id);
     }
 
-    public GoodDialogActivity(@NonNull Context context, int themeResId) {
+    public GoodDialogActivity(@NonNull Context context, int themeResId, String id) {
         super(context, themeResId);
         this.context = context;
         initView();
@@ -157,8 +171,8 @@ public class GoodDialogActivity extends Dialog {
             public void onUnselected(SkuAttribute unselectedAttribute) {
                 selectedSku = null;
                 //默认第一张照片
-                GlideApp.with(context).load(product.getPictureUrl()).into(ivAvatar);
-                tvInStock.setText(String.format(stockQuantityFormat, product.getStockQuantity()));
+//                GlideApp.with(context).load(product.getPictureUrl()).into(ivAvatar);
+//                tvInStock.setText(String.format(stockQuantityFormat, product.getStockQuantity()));
                 String selected = getSelected();
                 //设置回掉
                 callback.onSelect(selected);
@@ -173,6 +187,7 @@ public class GoodDialogActivity extends Dialog {
                 btnSubmit.setEnabled(false);
                 tvGoodNumber.setText("1");
                 updateQuantityOperator(1);
+                chooseAttr[unselectedAttribute.getIndex()] = 0;
             }
 
             @Override
@@ -190,6 +205,18 @@ public class GoodDialogActivity extends Dialog {
                 tvInfo.setText(selected);
                 tvGoodNumber.setText("1");
                 updateQuantityOperator(1);
+
+                chooseAttr[selectAttribute.getIndex()] = selectAttribute.getId();
+
+                //判断当前规格组是否选择
+                for (int value : chooseAttr) {
+                    if (value == 0) {
+                        return;
+                    }
+                }
+                //请求规格信息
+                getGoodsAttrData();
+
             }
 
             @Override
@@ -212,6 +239,7 @@ public class GoodDialogActivity extends Dialog {
                 callback.onSelect(builder.toString());
                 tvInStock.setText(String.format(stockQuantityFormat, selectedSku.getStockQuantity()));
                 btnSubmit.setEnabled(true);
+
                 if (sku.getStockQuantity() >= 1) {
                     tvGoodNumber.setText("1");
                     updateQuantityOperator(1);
@@ -240,6 +268,49 @@ public class GoodDialogActivity extends Dialog {
         });
     }
 
+    /**
+     * 请求规格数据
+     */
+    public void getGoodsAttrData(){
+        RetrofitAPIManager.create(HomeService.class).GoodsAttrInfo(4,-1,-1,id,chooseAttr)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodsAttrInfoDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                Log.d("规格数据", "onApiComplete: ");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Log.d("规格数据", "onSuccees: "+e.getMessage());
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<GoodsAttrInfoDataBean> t) throws Exception {
+                Log.d("规格数据", "onSuccees: "+t.getData());
+            }
+        });
+    }
+
+    /**
+     * 设置数据
+     *
+     * @param list
+     * @param callback
+     */
+    public void setData(final List<GoodDetailsDataBean.AttrGroupListBean> list, Callback callback) {
+
+        goodsAttrList = list;
+
+        //-----
+        this.product = product;
+        this.skuList = product.getSkus();
+        this.callback = callback;
+        priceFormat = context.getString(R.string.comm_price_format);
+        stockQuantityFormat = context.getString(R.string.sku_stock);
+        updateSkuData();
+        updateQuantityOperator(1);
+    }
 
     /**
      * 设置数据
@@ -248,6 +319,7 @@ public class GoodDialogActivity extends Dialog {
      * @param callback
      */
     public void setData(final ProductData product, Callback callback) {
+        chooseAttr = new int[product.getSkus().size()];
         this.product = product;
         this.skuList = product.getSkus();
         this.callback = callback;
