@@ -84,6 +84,8 @@ public class MeFragment extends BaseFragment {
     LinearLayout llFurniture;
     @BindView(R.id.ll_coupon)
     LinearLayout llCoupon;
+    @BindView(R.id.rl_order2)
+    RelativeLayout rlOrder2;
 
 
     public static BaseFragment newInstance() {
@@ -96,7 +98,6 @@ public class MeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         unbinder = ButterKnife.bind(this, view);
         isLogin();
-        getMyData();
         return view;
 
     }
@@ -123,6 +124,7 @@ public class MeFragment extends BaseFragment {
                 //TODO:保存用户信息
                 UserLogic.saveUser(t.getData());
                 isLogin();
+                getMyData();
             }
         });
     }
@@ -132,18 +134,24 @@ public class MeFragment extends BaseFragment {
      */
     public void isLogin() {
         if (UserLogic.getUser() != null) {
+            //登录状态
             rlNoLogin.setVisibility(View.GONE);
             rlLogin.setVisibility(View.VISIBLE);
             tvLogout.setVisibility(View.VISIBLE);
+            ivAvatar.setVisibility(View.VISIBLE);
+            rlOrder2.setVisibility(View.VISIBLE);
             /**
              * loadCircle:圆角图片
              */
             ivAvatar.loadCircle(UserLogic.getUser().getAvatar_url(), R.drawable.me_tx_moren);
             tvName.setText(UserLogic.getUser().getNickname());
         } else {
+            //未登录
             rlNoLogin.setVisibility(View.VISIBLE);
             rlLogin.setVisibility(View.GONE);
             tvLogout.setVisibility(View.GONE);
+            ivAvatar.setVisibility(View.GONE);
+            rlOrder2.setVisibility(View.GONE);
         }
     }
 

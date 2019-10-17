@@ -35,6 +35,7 @@ import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.DialogUtils;
 import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
@@ -200,4 +201,9 @@ public class StoreHomeActivity extends BaseActivity {
     @OnClick(R.id.rl_see_more)
     public void onRlSeeMoreClicked() {
     }
+
+    @OnClick(R.id.rl_more)
+    public void onRlMoreClicked() {
+    }
+
 }

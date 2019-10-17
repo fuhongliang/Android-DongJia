@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,8 @@ import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
+import cn.ifhu.dongjia.model.data.ProductData;
+import cn.ifhu.dongjia.model.data.Sku;
 import cn.ifhu.dongjia.model.get.GoodDetailsGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
@@ -94,6 +97,8 @@ public class GoodDetailsActivity extends BaseActivity {
     X5WebView wvDetail;
     @BindView(R.id.rv_recommend_goods)
     RecyclerView rvRecommendGoods;
+    @BindView(R.id.rl_specification)
+    RelativeLayout rlSpecification;
 
 
     //轮播图
@@ -105,7 +110,9 @@ public class GoodDetailsActivity extends BaseActivity {
     private GoodDetailsDataBean.MchBean mch;
     String id;
 
-    @Override
+    //商品sku
+    private GoodDialogActivity dialog;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_good_details);
@@ -216,8 +223,8 @@ public class GoodDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.tv_goto_store)
     public void onTvGotoStoreClicked() {
-        Intent intent = new Intent(GoodDetailsActivity.this,StoreHomeActivity.class);
-        intent.putExtra("mch_id",mch.getId()+"");
+        Intent intent = new Intent(GoodDetailsActivity.this, StoreHomeActivity.class);
+        intent.putExtra("mch_id", mch.getId() + "");
         startActivity(intent);
 
     }
@@ -243,4 +250,35 @@ public class GoodDetailsActivity extends BaseActivity {
     public void onRlCollectionClicked() {
 
     }
+
+    @OnClick(R.id.rl_specification)
+    public void onRlSpecificationClicked() {
+        showSkuDialog();
+    }
+
+    private void showSkuDialog() {
+        if (dialog == null) {
+            dialog = new GoodDialogActivity(this);
+            dialog.setData(ProductData.get(this), new GoodDialogActivity.Callback() {
+                @Override
+                public void onAdded(Sku sku, int quantity) {
+                    //立即购买再跳转到
+                    Toast.makeText(GoodDetailsActivity.this, "添加购物车成功 " + sku.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onSelect(String selected) {
+                    //默认设置 有选的
+                    options1.setText(selected);
+                }
+
+                @Override
+                public void reUnSelect() {
+
+                }
+            });
+        }
+        dialog.show();
+    }
 }
+

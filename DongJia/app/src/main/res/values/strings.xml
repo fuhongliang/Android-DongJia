@@ -34,4 +34,9 @@
 <!--    <string name="errcode_deny">发送被拒绝</string>-->
 <!--    <string name="errcode_unsupported">不支持错误</string>-->
 <!--    <string name="errcode_unknown">发送返回</string>-->
+
+
+    <string name="comm_price_format">¥ %s</string>
+    <string name="sku_stock">(库存:%1$s)</string>
+
 </resources>

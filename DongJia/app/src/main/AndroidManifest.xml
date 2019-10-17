@@ -37,6 +37,7 @@
         <!--homeCase-->
         <activity android:name=".activity.homeCase.AddCallDesignerActivity" />
         <activity android:name=".activity.homeCase.CallDesignerActivity" />
+
         <!--me-->
         <activity android:name=".activity.me.AboutUsActivity" />
         <activity android:name=".activity.me.AddressActivity" />

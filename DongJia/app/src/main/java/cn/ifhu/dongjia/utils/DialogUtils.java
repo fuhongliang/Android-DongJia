@@ -9,7 +9,7 @@ public class DialogUtils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-//    public static void showBuyDiscountDialog(FragmentManager manager, BuyDiscountDialog.ButtonOnclick buttonOnclick) {
+    //    public static void showBuyDiscountDialog(FragmentManager manager, BuyDiscountDialog.ButtonOnclick buttonOnclick) {
 //        BuyDiscountDialog confirmDialog = BuyDiscountDialog.newInstance();
 //        confirmDialog.setMargin(48);
 //        confirmDialog.setOutCancel(false);

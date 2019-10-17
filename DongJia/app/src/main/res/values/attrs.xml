@@ -38,4 +38,9 @@
         <attr name="rightButtonIcon" format="reference"/>
         <attr name="myTitle" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="SkuMaxHeightScrollView">
+        <attr name="maxSkuHeight" format="integer"/>
+        <attr name="minSkuHeight" format="integer"/>
+    </declare-styleable>
 </resources>

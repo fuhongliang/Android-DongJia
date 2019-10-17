@@ -204,6 +204,7 @@
             </LinearLayout>
             <!--选择-->
             <RelativeLayout
+                android:id="@+id/rl_specification"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginTop="15dp"

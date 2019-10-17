@@ -28,12 +28,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="134dp"
                 android:background="#0EC262" />
-            <!--我的订单-->
+            <!--我的订单 登录-->
             <RelativeLayout
                 android:id="@+id/rl_login"
                 android:layout_width="match_parent"
                 android:layout_height="136dp"
                 android:layout_marginLeft="15dp"
+                android:visibility="gone"
                 android:layout_marginTop="-55dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/bg_white_4">
@@ -148,7 +149,7 @@
                 android:layout_marginTop="-84dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/bg_white_4"
-                android:visibility="gone">
+                >
 
                 <TextView
                     android:id="@+id/dongjia"
@@ -200,6 +201,7 @@
 
             <!--我的订单-->
             <RelativeLayout
+                android:id="@+id/rl_order2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
