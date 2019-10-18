@@ -67,11 +67,11 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
         skuContainerLayout.removeAllViews();
 
         // 获取分组的sku集合
-        Map<String, List<String>> dataMap = getSkuGroupByName(skuList);
+        Map<String, List<SkuAttribute>> dataMap = getSkuGroupByName(skuList);
         selectedAttributeList = new LinkedList<>();
         int index = 0;
-        for (Iterator<Map.Entry<String, List<String>>> it = dataMap.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry<String, List<String>> entry = it.next();
+        for (Iterator<Map.Entry<String, List<SkuAttribute>>> it = dataMap.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, List<SkuAttribute>> entry = it.next();
 
             // 构建sku视图
             SkuItemLayout itemLayout = new SkuItemLayout(getContext());
@@ -105,18 +105,17 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
      * @param list
      * @return 如{ "颜色": {"白色", "红色", "黑色"}, "尺寸": {"XS","S","M", "L", "XL", "XXL"}}
      */
-    private Map<String, List<String>> getSkuGroupByName(List<Sku> list) {
-        Map<String, List<String>> dataMap = new LinkedHashMap<>();
+    private Map<String, List<SkuAttribute>> getSkuGroupByName(List<Sku> list) {
+        Map<String, List<SkuAttribute>> dataMap = new LinkedHashMap<>();
         for (Sku sku : list) {
             for (SkuAttribute attribute : sku.getAttributes()) {
                 String attributeName = attribute.getKey();
-                String attributeValue = attribute.getValue();
                 if (!dataMap.containsKey(attributeName)) {
-                    dataMap.put(attributeName, new LinkedList<String>());
+                    dataMap.put(attributeName, new LinkedList<>());
                 }
-                List<String> valueList = dataMap.get(attributeName);
-                if (!valueList.contains(attributeValue)) {
-                    dataMap.get(attributeName).add(attributeValue);
+                List<SkuAttribute> valueList = dataMap.get(attributeName);
+                if (!valueList.contains(attribute)) {
+                    dataMap.get(attributeName).add(attribute);
                 }
             }
         }
@@ -138,12 +137,13 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
      * 设置所有属性的Enable状态，即是否可点击
      */
     private void optionLayoutEnableStatus() {
-        int childCount = skuContainerLayout.getChildCount();
-        if (childCount <= 1) {
+        //如果当前属性超过1条则判断当前属性的可选状态
+//        int childCount = skuContainerLayout.getChildCount();
+//        if (childCount <= 1) {
             optionLayoutEnableStatusSingleProperty();
-        } else {
-            optionLayoutEnableStatusMultipleProperties();
-        }
+//        } else {
+//            optionLayoutEnableStatusMultipleProperties();
+//        }
     }
 
     private void optionLayoutEnableStatusSingleProperty() {
@@ -310,9 +310,11 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
         // 设置选中状态
         optionLayoutSelectStatus();
         // 回调接口
-        if (isSkuSelected()) {
-            listener.onSkuSelected(getSelectedSku());
-        } else if (selected) {
+//        if (isSkuSelected()) {
+//            listener.onSkuSelected(getSelectedSku());
+//            listener.onSelect(attribute);
+//        } else
+        if (selected) {
             listener.onSelect(attribute);
         } else {
             listener.onUnselected(attribute);

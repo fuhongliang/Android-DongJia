@@ -88,12 +88,14 @@ public class SkuItemLayout extends LinearLayout {
      * @param attributeName
      * @param attributeValueList
      */
-    public void buildItemLayout(int position, String attributeName, List<String> attributeValueList) {
+    public void buildItemLayout(int position, String attributeName, List<SkuAttribute> attributeValueList) {
         attributeNameTv.setText(attributeName);
         attributeValueLayout.removeAllViewsInLayout();
-        for (String attributeValue : attributeValueList) {
+        for (SkuAttribute attributeValue : attributeValueList) {
             SkuItemView itemView = new SkuItemView(getContext());
-            itemView.setAttributeValue(attributeValue);
+            itemView.setId(attributeValue.getId());
+            itemView.setIndex(attributeValue.getIndex());
+            itemView.setAttributeValue(attributeValue.getValue());
             itemView.setOnClickListener(new ItemClickListener(position, itemView));
             itemView.setLayoutParams(new FlowLayout.LayoutParams(
                     FlowLayout.LayoutParams.WRAP_CONTENT,
@@ -110,7 +112,7 @@ public class SkuItemLayout extends LinearLayout {
         for (int i = 0; i < attributeValueLayoutChildCount; i++) {
             SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
             itemView.setSelected(false);
-            itemView.setEnabled(false);
+//            itemView.setEnabled(false);
         }
     }
 
@@ -123,9 +125,9 @@ public class SkuItemLayout extends LinearLayout {
         int attributeValueLayoutChildCount = attributeValueLayout.getChildCount();
         for (int i = 0; i < attributeValueLayoutChildCount; i++) {
             SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
-            if (attributeValue.equals(itemView.getAttributeValue())) {
+//            if (attributeValue.equals(itemView.getAttributeValue())) {
                 itemView.setEnabled(true);
-            }
+//            }
         }
     }
 
@@ -178,6 +180,8 @@ public class SkuItemLayout extends LinearLayout {
     private void onSkuItemClicked(int position, SkuItemView view) {
         boolean selected = !view.isSelected();
         SkuAttribute attribute = new SkuAttribute();
+        attribute.setId(view.getId());
+        attribute.setIndex(view.getIndex());
         attribute.setKey(attributeNameTv.getText().toString());
         attribute.setValue(view.getAttributeValue());
         listener.onSelect(position, selected, attribute);

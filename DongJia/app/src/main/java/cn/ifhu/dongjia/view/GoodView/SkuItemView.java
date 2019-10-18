@@ -23,6 +23,8 @@ import cn.ifhu.dongjia.utils.DisplayUtil;
 @SuppressLint("AppCompatCustomView")
 public class SkuItemView extends TextView {
     private String attributeValue;
+    private int id;
+    private int index;
 
     public SkuItemView(Context context) {
         super(context);
@@ -59,4 +61,21 @@ public class SkuItemView extends TextView {
         setText(attributeValue);
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }

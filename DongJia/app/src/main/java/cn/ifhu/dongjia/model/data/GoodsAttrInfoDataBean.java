@@ -5,16 +5,16 @@ import java.util.List;
 public class GoodsAttrInfoDataBean {
 
     /**
-     * attr_list : [{"attr_id":8,"attr_name":"上午"},{"attr_id":7,"attr_name":"白色"}]
-     * num : 100
-     * price : 100
+     * attr_list : [{"attr_id":64,"attr_name":"床+床头柜*2"},{"attr_id":61,"attr_name":"1800*2000"}]
+     * num : 9999
+     * price : 3480
      * no :
      * pic :
      * miaosha : null
      */
 
     private int num;
-    private int price;
+    private String price;
     private String no;
     private String pic;
     private Object miaosha;
@@ -28,11 +28,11 @@ public class GoodsAttrInfoDataBean {
         this.num = num;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -70,8 +70,8 @@ public class GoodsAttrInfoDataBean {
 
     public static class AttrListBean {
         /**
-         * attr_id : 8
-         * attr_name : 上午
+         * attr_id : 64
+         * attr_name : 床+床头柜*2
          */
 
         private int attr_id;

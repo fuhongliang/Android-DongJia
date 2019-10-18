@@ -36,6 +36,7 @@ import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.GsonUtils;
 import cn.ifhu.dongjia.view.GoodView.OnSkuListener;
 import cn.ifhu.dongjia.view.GoodView.SkuSelectScrollView;
 
@@ -90,6 +91,7 @@ public class GoodDialogActivity extends Dialog {
     public GoodDialogActivity(@NonNull Context context, int themeResId, String id) {
         super(context, themeResId);
         this.context = context;
+        this.id = id;
         initView();
     }
 
@@ -222,7 +224,7 @@ public class GoodDialogActivity extends Dialog {
             @Override
             public void onSkuSelected(Sku sku) {
                 selectedSku = sku;
-                GlideApp.with(context).load(selectedSku.getPictureUrl()).into(ivAvatar);
+//                GlideApp.with(context).load(selectedSku.getPictureUrl()).into(ivAvatar);
                 List<SkuAttribute> attributeList = selectedSku.getAttributes();
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < attributeList.size(); i++) {
@@ -247,6 +249,8 @@ public class GoodDialogActivity extends Dialog {
                     tvGoodNumber.setText("0");
                     updateQuantityOperator(0);
                 }
+
+
             }
         });
         //添加
@@ -272,7 +276,9 @@ public class GoodDialogActivity extends Dialog {
      * 请求规格数据
      */
     public void getGoodsAttrData(){
-        RetrofitAPIManager.create(HomeService.class).GoodsAttrInfo(4,-1,-1,id,chooseAttr)
+        //设置一个String类型接受数组转换Gson
+        String json = GsonUtils.convertObject2Json(chooseAttr);
+        RetrofitAPIManager.create(HomeService.class).GoodsAttrInfo(4,-1,-1,id,json)
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodsAttrInfoDataBean>(true) {
             @Override
             protected void onApiComplete() {
@@ -288,29 +294,32 @@ public class GoodDialogActivity extends Dialog {
             @Override
             protected void onSuccees(BaseEntity<GoodsAttrInfoDataBean> t) throws Exception {
                 Log.d("规格数据", "onSuccees: "+t.getData());
+                ivAvatar.load(t.getData().getPic());
+                tvPrice.setText("￥"+t.getData().getPrice());
+                tvInStock.setText("库存"+t.getData().getNum()+"");
             }
         });
     }
 
-    /**
-     * 设置数据
-     *
-     * @param list
-     * @param callback
-     */
-    public void setData(final List<GoodDetailsDataBean.AttrGroupListBean> list, Callback callback) {
-
-        goodsAttrList = list;
-
-        //-----
-        this.product = product;
-        this.skuList = product.getSkus();
-        this.callback = callback;
-        priceFormat = context.getString(R.string.comm_price_format);
-        stockQuantityFormat = context.getString(R.string.sku_stock);
-        updateSkuData();
-        updateQuantityOperator(1);
-    }
+//    /**
+//     * 设置数据
+//     *
+//     * @param list
+//     * @param callback
+//     */
+//    public void setData(final List<GoodDetailsDataBean.AttrGroupListBean> list, Callback callback) {
+//
+//        goodsAttrList = list;
+//
+//        //-----
+//        this.product = product;
+//        this.skuList = product.getSkus();
+//        this.callback = callback;
+//        priceFormat = context.getString(R.string.comm_price_format);
+//        stockQuantityFormat = context.getString(R.string.sku_stock);
+//        updateSkuData();
+//        updateQuantityOperator(1);
+//    }
 
     /**
      * 设置数据

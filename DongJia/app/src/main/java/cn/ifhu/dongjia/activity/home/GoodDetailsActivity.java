@@ -254,7 +254,6 @@ public class GoodDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_buy)
     public void onTvBuyClicked() {
         if (UserLogic.getUser() != null) {
-//            Intent intent = new Intent(GoodDetailsActivity.this,ConfirmOrderActivity.class);
             goToActivity(ConfirmOrderActivity.class);
         } else {
             WXLoginUtils.WxLogin(this);
