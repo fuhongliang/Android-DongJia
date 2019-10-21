@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,14 @@ public class ShopCartFragment extends BaseFragment {
     TextView tvDelete;
     @BindView(R.id.iv_isSelect)
     ImageView ivIsSelect;
+    @BindView(R.id.tv_right_text)
+    TextView tvRightText;
+    @BindView(R.id.line)
+    View line;
+    @BindView(R.id.rl_select)
+    RelativeLayout rlSelect;
+    @BindView(R.id.options1)
+    RelativeLayout options1;
 
 
     public static BaseFragment newInstance() {
@@ -54,5 +63,14 @@ public class ShopCartFragment extends BaseFragment {
 
     @OnClick(R.id.tv_ok)
     public void onTvOkClicked() {
+
+    }
+
+    @OnClick(R.id.iv_isSelect)
+    public void onIvIsSelectClicked() {
+    }
+
+    @OnClick(R.id.rl_select)
+    public void onRlSelectClicked() {
     }
 }

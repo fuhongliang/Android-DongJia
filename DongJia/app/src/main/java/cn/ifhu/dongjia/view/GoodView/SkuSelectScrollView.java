@@ -87,9 +87,7 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
         // 一个sku时，默认选中
         if (skuList.size() == 1) {
             selectedAttributeList.clear();
-            for (SkuAttribute attribute : this.skuList.get(0).getAttributes()) {
-                selectedAttributeList.add(new SkuAttribute(attribute.getKey(), attribute.getValue()));
-            }
+            selectedAttributeList.addAll(this.skuList.get(0).getAttributes());
         }
         // 清除所有选中状态
         clearAllLayoutStatus();
@@ -138,12 +136,12 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
      */
     private void optionLayoutEnableStatus() {
         //如果当前属性超过1条则判断当前属性的可选状态
-//        int childCount = skuContainerLayout.getChildCount();
-//        if (childCount <= 1) {
+        int childCount = skuContainerLayout.getChildCount();
+        if (childCount <= 1) {
             optionLayoutEnableStatusSingleProperty();
-//        } else {
-//            optionLayoutEnableStatusMultipleProperties();
-//        }
+        } else {
+            optionLayoutEnableStatusMultipleProperties();
+        }
     }
 
     private void optionLayoutEnableStatusSingleProperty() {
@@ -272,9 +270,7 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
      */
     public void setSelectedSku(Sku sku) {
         selectedAttributeList.clear();
-        for (SkuAttribute attribute : sku.getAttributes()) {
-            selectedAttributeList.add(new SkuAttribute(attribute.getKey(), attribute.getValue()));
-        }
+        selectedAttributeList.addAll(sku.getAttributes());
         // 清除所有选中状态
         clearAllLayoutStatus();
         // 设置是否可点击
@@ -302,7 +298,7 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
             selectedAttributeList.set(position, attribute);
         } else {
             // 取消选中，清空保存的选中信息
-            selectedAttributeList.get(position).setValue("");
+            selectedAttributeList.set(position,null);//.setValue("");
         }
         clearAllLayoutStatus();
         // 设置是否可点击
@@ -310,10 +306,9 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
         // 设置选中状态
         optionLayoutSelectStatus();
         // 回调接口
-//        if (isSkuSelected()) {
-//            listener.onSkuSelected(getSelectedSku());
-//            listener.onSelect(attribute);
-//        } else
+        if (isSkuSelected()) {
+            listener.onSkuSelected(getSelectedSku());
+        }
         if (selected) {
             listener.onSelect(attribute);
         } else {

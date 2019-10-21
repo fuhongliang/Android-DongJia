@@ -79,6 +79,13 @@
                 android:layout_marginTop="5dp"
                 app:maxSkuHeight="230"
                 app:minSkuHeight="88"/>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rv_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:maxHeight="246dp"-->
+<!--                >-->
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
 
             <TextView
                 android:layout_width="wrap_content"

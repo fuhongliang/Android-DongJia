@@ -68,10 +68,6 @@ public class GoodDialogActivity extends Dialog {
     @BindView(R.id.tv_good_number)
     TextView tvGoodNumber;
 
-    //商品属性列表
-    List<GoodDetailsDataBean.AttrGroupListBean> goodsAttrList;
-
-
     private Context context;
     private Sku selectedSku;
     private ProductData product;
@@ -100,73 +96,62 @@ public class GoodDialogActivity extends Dialog {
         Window window = this.getWindow();
         window.setContentView(view);
         ButterKnife.bind(this, view);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        ivBack.setOnClickListener(v -> dismiss());
         //减少
-        ivDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String quantity = tvGoodNumber.getText().toString();
-                if (TextUtils.isEmpty(quantity)) {
-                    return;
-                }
-                int quantityInt = Integer.parseInt(quantity);
-                if (quantityInt > 1) {
-                    String newQuantity = String.valueOf(quantityInt - 1);
-                    tvGoodNumber.setText(newQuantity);
+        ivDelete.setOnClickListener(v -> {
+            String quantity = tvGoodNumber.getText().toString();
+            if (TextUtils.isEmpty(quantity)) {
+                return;
+            }
+            int quantityInt = Integer.parseInt(quantity);
+            if (quantityInt > 1) {
+                String newQuantity = String.valueOf(quantityInt - 1);
+                tvGoodNumber.setText(newQuantity);
 //                    tvGoodNumber.setSelection(newQuantity.length());
-                    updateQuantityOperator(quantityInt - 1);
-                }
+                updateQuantityOperator(quantityInt - 1);
             }
         });
         //增加
-        ivAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String quantity = tvGoodNumber.getText().toString();
-                if (TextUtils.isEmpty(quantity) || selectedSku == null) {
-                    return;
-                }
-                int quantityInt = Integer.parseInt(quantity);
-                if (quantityInt < selectedSku.getStockQuantity()) {
-                    String newQuantity = String.valueOf(quantityInt + 1);
-                    tvGoodNumber.setText(newQuantity);
-                    updateQuantityOperator(quantityInt + 1);
-                }
+        ivAdd.setOnClickListener(v -> {
+            String quantity = tvGoodNumber.getText().toString();
+            if (TextUtils.isEmpty(quantity) || selectedSku == null) {
+                return;
+            }
+            int quantityInt = Integer.parseInt(quantity);
+            if (quantityInt < selectedSku.getStockQuantity()) {
+                String newQuantity = String.valueOf(quantityInt + 1);
+                tvGoodNumber.setText(newQuantity);
+                updateQuantityOperator(quantityInt + 1);
             }
         });
-        //输入
-        tvGoodNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId != EditorInfo.IME_ACTION_DONE || selectedSku == null) {
-                    return false;
-                }
-                String quantity = tvGoodNumber.getText().toString();
-                if (TextUtils.isEmpty(quantity)) {
-                    return false;
-                }
-                int quantityInt = Integer.parseInt(quantity);
-                if (quantityInt <= 1) {
-                    tvGoodNumber.setText("1");
-//                    tvGoodNumber.setSelection(1);
-                    updateQuantityOperator(1);
-                } else if (quantityInt >= selectedSku.getStockQuantity()) {
-                    String newQuantity = String.valueOf(selectedSku.getStockQuantity());
-                    tvGoodNumber.setText(newQuantity);
-//                    tvGoodNumber.setSelection(newQuantity.length());
-                    updateQuantityOperator(selectedSku.getStockQuantity());
-                } else {
-//                    tvGoodNumber.setSelection(quantity.length());
-                    updateQuantityOperator(quantityInt);
-                }
-                return false;
-            }
-        });
+//        //输入
+//        tvGoodNumber.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId != EditorInfo.IME_ACTION_DONE || selectedSku == null) {
+//                    return false;
+//                }
+//                String quantity = tvGoodNumber.getText().toString();
+//                if (TextUtils.isEmpty(quantity)) {
+//                    return false;
+//                }
+//                int quantityInt = Integer.parseInt(quantity);
+//                if (quantityInt <= 1) {
+//                    tvGoodNumber.setText("1");
+////                    tvGoodNumber.setSelection(1);
+//                    updateQuantityOperator(1);
+//                } else if (quantityInt >= selectedSku.getStockQuantity()) {
+//                    String newQuantity = String.valueOf(selectedSku.getStockQuantity());
+//                    tvGoodNumber.setText(newQuantity);
+////                    tvGoodNumber.setSelection(newQuantity.length());
+//                    updateQuantityOperator(selectedSku.getStockQuantity());
+//                } else {
+////                    tvGoodNumber.setSelection(quantity.length());
+//                    updateQuantityOperator(quantityInt);
+//                }
+//                return false;
+//            }
+//        });
         //sku整体的点击事件
         scrollSkuList.setOnSkuListener(new OnSkuListener() {
             @Override
@@ -253,21 +238,19 @@ public class GoodDialogActivity extends Dialog {
 
             }
         });
-        //添加
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String quantity = tvGoodNumber.getText().toString();
-                if (TextUtils.isEmpty(quantity)) {
-                    return;
-                }
-                int quantityInt = Integer.parseInt(quantity);
-                if (quantityInt > 0 && quantityInt <= selectedSku.getStockQuantity()) {
-                    callback.onAdded(selectedSku, quantityInt);
-                    dismiss();
-                } else {
-                    Toast.makeText(getContext(), "商品数量超出库存，请修改数量", Toast.LENGTH_SHORT).show();
-                }
+
+        //确定购买
+        btnSubmit.setOnClickListener(v -> {
+            String quantity = tvGoodNumber.getText().toString();
+            if (TextUtils.isEmpty(quantity)) {
+                return;
+            }
+            int quantityInt = Integer.parseInt(quantity);
+            if (quantityInt > 0 && quantityInt <= selectedSku.getStockQuantity()) {
+                callback.onAdded(selectedSku, quantityInt);
+                dismiss();
+            } else {
+                Toast.makeText(getContext(), "商品数量超出库存，请修改数量", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -301,26 +284,6 @@ public class GoodDialogActivity extends Dialog {
         });
     }
 
-//    /**
-//     * 设置数据
-//     *
-//     * @param list
-//     * @param callback
-//     */
-//    public void setData(final List<GoodDetailsDataBean.AttrGroupListBean> list, Callback callback) {
-//
-//        goodsAttrList = list;
-//
-//        //-----
-//        this.product = product;
-//        this.skuList = product.getSkus();
-//        this.callback = callback;
-//        priceFormat = context.getString(R.string.comm_price_format);
-//        stockQuantityFormat = context.getString(R.string.sku_stock);
-//        updateSkuData();
-//        updateQuantityOperator(1);
-//    }
-
     /**
      * 设置数据
      *
@@ -349,7 +312,7 @@ public class GoodDialogActivity extends Dialog {
             selectedSku = firstSku;
             // 选中第一个sku
             scrollSkuList.setSelectedSku(selectedSku);
-            GlideApp.with(context).load(product.getPictureUrl()).into(ivAvatar);
+//            GlideApp.with(context).load(product.getPictureUrl()).into(ivAvatar);
             tvPrice.setText(String.format(priceFormat, selectedSku.getPrice()));
             tvInStock.setText(String.format(stockQuantityFormat, selectedSku.getStockQuantity()));
             btnSubmit.setEnabled(selectedSku.getStockQuantity() > 0);
@@ -378,9 +341,7 @@ public class GoodDialogActivity extends Dialog {
     }
 
     /**
-     * 获取已选中的
-     *
-     * @return
+     * 当前是否选中属性
      */
     public boolean isHaveSelect;
 
@@ -388,14 +349,15 @@ public class GoodDialogActivity extends Dialog {
         return isHaveSelect;
     }
 
+    /**
+     * 设置当前是否已选中
+     */
     public void setHaveSelect(boolean haveSelect) {
         isHaveSelect = haveSelect;
     }
 
     /**
-     * 获取显示的内容
-     *
-     * @return
+     * 获取选中的属性的内容
      */
     private String getSelected() {
         List<SkuAttribute> skuAttributeList = scrollSkuList.getSelectedAttributeList();
@@ -417,28 +379,28 @@ public class GoodDialogActivity extends Dialog {
                 }
             }
             return stringBuilder.toString();
-        } else
+        } else {
             return null;
+        }
     }
 
+    /**
+     * 修改加减的按钮可点击状态
+     * @param newQuantity 库存
+     */
     private void updateQuantityOperator(int newQuantity) {
-        if (selectedSku == null) {
+        if (newQuantity <= 1) {
             ivDelete.setEnabled(false);
+            ivAdd.setEnabled(true);
+        } else if (newQuantity >= 99) {
+            // TODO: 2019-10-18 取消判断是否选择sku 改为最大99
+            ivDelete.setEnabled(true);
             ivAdd.setEnabled(false);
-            tvGoodNumber.setEnabled(false);
         } else {
-            if (newQuantity <= 1) {
-                ivDelete.setEnabled(false);
-                ivAdd.setEnabled(true);
-            } else if (newQuantity >= selectedSku.getStockQuantity()) {
-                ivDelete.setEnabled(true);
-                ivAdd.setEnabled(false);
-            } else {
-                ivDelete.setEnabled(true);
-                ivAdd.setEnabled(true);
-            }
-            tvGoodNumber.setEnabled(true);
+            ivDelete.setEnabled(true);
+            ivAdd.setEnabled(true);
         }
+        tvGoodNumber.setEnabled(true);
     }
 
     @Override

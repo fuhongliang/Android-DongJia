@@ -30,6 +30,13 @@ public class SkuAttribute implements Parcelable {
         this.value = value;
     }
 
+    public SkuAttribute(String key, String value,int id,int index) {
+        this.key = key;
+        this.value = value;
+        this.id = id;
+        this.index = index;
+    }
+
     public int getIndex() {
         return index;
     }
