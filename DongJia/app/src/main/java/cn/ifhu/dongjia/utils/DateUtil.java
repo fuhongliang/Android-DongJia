@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
+ * 转换时间戳
  * @author tommy
  * @date 18/1/2
  */

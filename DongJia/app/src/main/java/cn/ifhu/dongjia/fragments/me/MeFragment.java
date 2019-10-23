@@ -30,6 +30,7 @@ import cn.ifhu.dongjia.net.MeServive;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.net.UserService;
+import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
 import cn.ifhu.dongjia.wxapi.WXLoginUtils;
 
@@ -198,7 +199,11 @@ public class MeFragment extends BaseFragment {
     //收货地址
     @OnClick(R.id.ll_address)
     public void onLlAddressClicked() {
-        goToActivity(AddressActivity.class);
+        if (UserLogic.getUser() != null) {
+            goToActivity(AddressActivity.class);
+        }else {
+            ToastHelper.makeText("请登录您的账号").show();
+        }
     }
 
     //关于我们

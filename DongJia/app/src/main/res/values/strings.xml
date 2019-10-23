@@ -39,4 +39,6 @@
     <string name="comm_price_format">¥ %s</string>
     <string name="sku_stock">(库存:%1$s)</string>
 
+
+
 </resources>

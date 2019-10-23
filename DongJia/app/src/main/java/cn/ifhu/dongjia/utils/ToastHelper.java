@@ -12,6 +12,7 @@ import cn.ifhu.dongjia.MyApplication;
 import cn.ifhu.dongjia.R;
 
 /**
+ * 提示ToastHelper
  * @author tony
  * @date 2018/7/17
  */

@@ -14,11 +14,22 @@
         android:layout_below="@id/header" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/iv_avatar"
+        android:id="@+id/rv_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/line"
+        android:visibility="gone"
         tools:listitem="@layout/item_shop_cart_child" />
+
+    <ExpandableListView
+        android:id="@+id/elv_shopping_car"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ededed"
+        android:divider="@null"
+        android:groupIndicator="@null"
+        android:scrollbars="none" />
 
     <View
         style="@style/line_fff"
@@ -31,13 +42,13 @@
         android:layout_alignParentBottom="true">
 
         <RelativeLayout
-            android:id="@+id/rl_select"
+            android:id="@+id/rl_select_all"
             android:layout_width="70dp"
-            android:paddingLeft="15dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp">
 
             <ImageView
-                android:id="@+id/iv_isSelect"
+                android:id="@+id/iv_Select_all"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:layout_centerVertical="true"
@@ -48,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_isSelect"
+                android:layout_toRightOf="@id/iv_Select_all"
                 android:text="全选"
                 android:textColor="@color/typed_text_color"
                 android:textSize="14sp" />
@@ -77,14 +88,36 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/rl_total_price"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
             android:layout_toLeftOf="@id/tv_delete"
-            android:text="总计：￥23"
-            android:textColor="@color/home_16"
-            android:textSize="15sp" />
+            android:layout_toRightOf="@id/rl_select_all">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="10dp"
+                android:maxLength="12"
+                android:singleLine="true"
+                android:text="￥0.00"
+                android:textColor="@color/home_16"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tv_price"
+                android:text="总计："
+                android:textColor="@color/typed_text_color"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
     </RelativeLayout>
 </RelativeLayout>

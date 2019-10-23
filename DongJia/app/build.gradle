@@ -90,7 +90,9 @@ android {
             java.srcDirs = ['src/main/java']
         }
     }
-
+    dataBinding {
+        enabled = true
+    }
 
 }
 
@@ -192,6 +194,18 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
 
     implementation 'com.wuhenzhizao:sku:1.0.4'
+    //图片加载库
+    implementation 'com.facebook.fresco:fresco:0.10.0'
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:0.10.0'
+    implementation 'com.facebook.fresco:drawee:0.10.0'
+    implementation 'com.facebook.fresco:fbcore:0.10.0'
+    implementation 'com.facebook.fresco:animated-gif:0.10.0'
+    //网络请求
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+    //标题库
+    implementation 'com.wuhenzhizao:titlebar:1.0.4'
+    //权限
+    implementation 'com.yanzhenjie:permission:1.1.0'
 
 
 }

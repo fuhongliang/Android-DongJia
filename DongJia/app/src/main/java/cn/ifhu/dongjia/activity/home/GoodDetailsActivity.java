@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.activity.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,9 +36,6 @@ import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
-import cn.ifhu.dongjia.model.data.ProductData;
-import cn.ifhu.dongjia.model.data.Sku;
-import cn.ifhu.dongjia.model.data.SkuAttribute;
 import cn.ifhu.dongjia.model.get.GoodDetailsGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
@@ -271,75 +269,29 @@ public class GoodDetailsActivity extends BaseActivity {
     }
 
     private void showSkuDialog() {
-        if (dialog == null) {
-            dialog = new GoodDialogActivity(this,id);
-
-            ProductData productData = new ProductData();
-            productData.setPid(Long.valueOf(id));
-            productData.setPictureUrl("");
-            productData.setMaxPrice(0);
-            productData.setMinPrice(0);
-            productData.setStockQuantity(0);
-            List<Sku> skuList = new ArrayList<>();
-            for (int i = 0; i < attrGroupList.size(); i++) {
-                GoodDetailsDataBean.AttrGroupListBean attrGroupListBean = attrGroupList.get(i);
-                Sku sku = new Sku();
-                sku.setSid(attrGroupListBean.getAttr_group_id());
-                sku.setPictureUrl("");
-                sku.setPrice(0);
-                sku.setStockQuantity(10);
-                List<SkuAttribute> skuAttributeList = new ArrayList<>();
-                for (GoodDetailsDataBean.AttrGroupListBean.AttrListBean attrListBean: attrGroupListBean.getAttr_list()){
-                    SkuAttribute attribute = new SkuAttribute();
-                    attribute.setKey(attrGroupListBean.getAttr_group_name());
-                    attribute.setValue(attrListBean.getAttr_name());
-                    attribute.setIndex(i);
-                    attribute.setId(attrListBean.getAttr_id());
-                    skuAttributeList.add(attribute);
-                }
-                sku.setAttributes(skuAttributeList);
-                skuList.add(sku);
-            }
-            productData.setSkus(skuList);
-//            dialog.setData(attrGroupList, new GoodDialogActivity.Callback() {
+//        if (dialog == null) {
+//            dialog = new GoodDialogActivity(this);
+//            dialog.setData(Product.get(this), new GoodDialogActivity.Callback() {
 //                @Override
 //                public void onAdded(Sku sku, int quantity) {
-//                    //立即购买再跳转到
-//                    Toast.makeText(GoodDetailsActivity.this, "添加购物车成功 " + sku.toString(), Toast.LENGTH_SHORT).show();
-//                }
+//                    shoppingCartNum += quantity;
+//                    cartBinding.tvShoppingCartNum.setVisibility(View.VISIBLE);
 //
-//                @Override
-//                public void onSelect(String selected) {
-////                    //默认设置 有选的
-//                    tvSpecification.setText(selected);
-//                }
+//                    // 获取SKU面板Logo拷贝
+//                    ImageView logoImageView = new ImageView(GoodDialogActivity.this);
+//                    binding.ivAddCartAnim.setDrawingCacheEnabled(true);
+//                    Bitmap bitmap = Bitmap.createBitmap(binding.ivAddCartAnim.getDrawingCache());
+//                    logoImageView.setImageBitmap(bitmap);
+//                    binding.ivAddCartAnim.setDrawingCacheEnabled(false);
 //
-//                @Override
-//                public void reUnSelect() {
-//
+//                    int[] startLocation = new int[2];
+//                    binding.ivAddCartAnim.getLocationOnScreen(startLocation);
+//                    // 执行动画
+//                    startAddToCartAnimation(logoImageView, startLocation);
 //                }
 //            });
-            dialog.setData(productData, new GoodDialogActivity.Callback() {
-                @Override
-                public void onAdded(Sku sku, int quantity) {
-                    //立即购买再跳转到
-                    Toast.makeText(GoodDetailsActivity.this, "添加购物车成功 " + sku.toString(), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onSelect(String selected) {
-                    //默认设置 有选的
-                    tvSpecification.setText(selected);
-                }
-
-                @Override
-                public void reUnSelect() {
-
-                }
-            });
-
-        }
-        dialog.show();
+//        }
+//        dialog.show();
     }
 }
 

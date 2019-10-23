@@ -83,8 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp"
                 android:maxLines="1"
+                android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="北欧实木黑胡桃漂浮双人床黑胡桃漂浮"
                 android:textColor="@color/black"
@@ -252,8 +252,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginRight="9dp"
-                    android:layout_marginBottom="12dp"
-                    />
+                    android:layout_marginBottom="12dp" />
 
                 <TextView
                     android:id="@+id/tv_store_name"

@@ -6,11 +6,12 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_select1"
+            android:id="@+id/iv_select"
             android:layout_width="47dp"
             android:layout_height="47dp"
             android:padding="15dp"
@@ -21,7 +22,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_select1"
+            android:layout_toRightOf="@id/iv_select"
             android:background="@color/black" />
 
         <TextView
@@ -47,4 +48,5 @@
     <View
         style="@style/line_fff"
         android:layout_marginLeft="15dp" />
+
 </LinearLayout>

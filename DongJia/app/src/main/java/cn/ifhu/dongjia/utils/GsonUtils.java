@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class GsonUtils {
     /**
-     *
+     *对象转换工具
      * @param json
      * @param cls
      * @param <T>
