@@ -2,7 +2,7 @@ package cn.ifhu.dongjia.model.post;
 
 import cn.ifhu.dongjia.utils.UserLogic;
 
-public class AddressSaveDataBean extends BaseBean{
+public class AddressSaveDataBean extends BaseBean {
     private String address_id;
     private String name;
     private String mobile;
@@ -11,6 +11,8 @@ public class AddressSaveDataBean extends BaseBean{
     private int district_id;
     private String detail;
     private String access_token = UserLogic.getUser().getAccess_token();
+    private String is_default;
+
 
     public String getIs_default() {
         return is_default;
@@ -19,8 +21,6 @@ public class AddressSaveDataBean extends BaseBean{
     public void setIs_default(String is_default) {
         this.is_default = is_default;
     }
-
-    private String is_default;
 
     public String getAddress_id() {
         return address_id;

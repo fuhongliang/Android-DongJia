@@ -2,7 +2,7 @@ package cn.ifhu.dongjia.model.data;
 
 import java.util.List;
 
-public class DistrictDataBean {
+public class DistrictDataBean implements IPickerViewData {
 
     /**
      * id : 2
@@ -56,6 +56,11 @@ public class DistrictDataBean {
 
     public void setList(List<ListBeanX> list) {
         this.list = list;
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return this.name;
     }
 
     public static class ListBeanX {

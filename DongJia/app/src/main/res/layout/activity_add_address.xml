@@ -117,7 +117,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:checked="true"
+            android:checked="false"
             android:textOff=""
             android:textOn=""
             android:thumb="@drawable/thumb"

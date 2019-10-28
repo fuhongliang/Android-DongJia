@@ -26,7 +26,7 @@ import cn.ifhu.dongjia.model.data.MeDataBean;
 import cn.ifhu.dongjia.model.data.UserDataBean;
 import cn.ifhu.dongjia.model.get.UserPostBean;
 import cn.ifhu.dongjia.net.BaseObserver;
-import cn.ifhu.dongjia.net.MeServive;
+import cn.ifhu.dongjia.net.MeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.net.UserService;
@@ -166,7 +166,7 @@ public class MeFragment extends BaseFragment {
      */
     public void getMyData() {
         setLoadingMessageIndicator(true);
-        RetrofitAPIManager.create(MeServive.class).Me(4, -1, -1, UserLogic.getUser().getAccess_token())
+        RetrofitAPIManager.create(MeService.class).Me(4, -1, -1, UserLogic.getUser().getAccess_token())
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<MeDataBean>(true) {
             @Override
             protected void onApiComplete() {
