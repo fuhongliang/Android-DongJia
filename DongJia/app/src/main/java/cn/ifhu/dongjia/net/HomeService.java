@@ -10,6 +10,7 @@ import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
 import cn.ifhu.dongjia.model.data.MchArticleDataBean;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
+import cn.ifhu.dongjia.model.data.SearchDataBean;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -63,5 +64,11 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/default/goods-attr-info")
     public Observable<BaseEntity<GoodsAttrInfoDataBean>> GoodsAttrInfo(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("goods_id") String goods_id,@Query("attr_list") String attr_list);
+
+    /**
+     * 商品搜索
+     */
+    @GET("/index.php?r=api/default/search")
+    public Observable<BaseEntity<SearchDataBean>> search(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("keyword") String keyword, @Query("page") int page);
 
 }
