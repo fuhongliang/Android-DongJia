@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.AddressListDataBean;
 import cn.ifhu.dongjia.model.data.DistrictDataBean;
 import cn.ifhu.dongjia.model.post.AddressSaveDataBean;
 import cn.ifhu.dongjia.net.BaseObserver;
@@ -73,14 +74,31 @@ public class AddAddressActivity extends BaseActivity {
     private int province_id;
     private int city_id;
     private int area_id;
-    int address_id;
+    private AddressListDataBean.ListBean listBean;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
-        tvTitle.setText("新增地址");
-        address_id= getDataInt();
+        listBean = (AddressListDataBean.ListBean)getIntent().getSerializableExtra("bean");
+        if (listBean == null){
+            tvTitle.setText("新增地址");
+        }else {
+            tvTitle.setText("编辑地址");
+            etName.setText(listBean.getName());
+            etHouseNumber.setText(listBean.getDetail());
+            etPhone.setText(listBean.getMobile());
+            tvAddress.setText(listBean.getProvince()+listBean.getCity()+listBean.getDistrict());
+            if (listBean.getIs_default().equals("0")){
+                swhAutoPrint.setChecked(false);
+            }else {
+                swhAutoPrint.setChecked(true);
+            }
+            //int转换String类型
+            province_id = Integer.parseInt(listBean.getProvince_id());
+            city_id = Integer.parseInt(listBean.getCity_id());
+            area_id = Integer.parseInt(listBean.getDistrict_id());
+        }
         getDistrict();
         settingSwitch();
     }
@@ -130,7 +148,9 @@ public class AddAddressActivity extends BaseActivity {
     public void getAddress() {
         setLoadingMessageIndicator(true);
         AddressSaveDataBean addressSaveDataBean = new AddressSaveDataBean();
-
+        if (listBean != null){
+            addressSaveDataBean.setAddress_id(listBean.getId());
+        }
         addressSaveDataBean.setAccess_token(UserLogic.getUser().getAccess_token());
         addressSaveDataBean.setName(etName.getText().toString());
         addressSaveDataBean.setMobile(etPhone.getText().toString());

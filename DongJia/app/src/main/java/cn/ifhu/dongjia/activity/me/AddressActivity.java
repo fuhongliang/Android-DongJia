@@ -92,9 +92,11 @@ public class AddressActivity extends BaseActivity {
 
             @Override
             public void Edit(int position) {
-//                Intent intent = new Intent(AddressActivity.this, AddAddressActivity.class);
-                // TODO: 2019-10-28 传输对象
-                goToActivity(AddAddressActivity.class);
+                Intent intent = new Intent(AddressActivity.this, AddAddressActivity.class);
+                AddressListDataBean.ListBean listBean = mData.get(position);
+                intent.putExtra("bean",listBean);
+                startActivity(intent);
+//                goToActivity(AddAddressActivity.class);
 
             }
 

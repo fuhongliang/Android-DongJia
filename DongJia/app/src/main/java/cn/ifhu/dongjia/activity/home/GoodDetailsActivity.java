@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,7 +23,10 @@ import com.stx.xhb.xbanner.XBanner;
 import com.sunfusheng.GlideImageView;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,9 @@ import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
+import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
+import cn.ifhu.dongjia.model.data.Sku;
 import cn.ifhu.dongjia.model.get.GoodDetailsGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
@@ -117,7 +121,7 @@ public class GoodDetailsActivity extends BaseActivity {
     String id;
 
     //商品sku
-    private GoodDialogActivity dialog;
+    private GoodDialog dialog;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -268,30 +272,50 @@ public class GoodDetailsActivity extends BaseActivity {
         showSkuDialog();
     }
 
-    private void showSkuDialog() {
-//        if (dialog == null) {
-//            dialog = new GoodDialogActivity(this);
-//            dialog.setData(Product.get(this), new GoodDialogActivity.Callback() {
-//                @Override
-//                public void onAdded(Sku sku, int quantity) {
-//                    shoppingCartNum += quantity;
-//                    cartBinding.tvShoppingCartNum.setVisibility(View.VISIBLE);
-//
-//                    // 获取SKU面板Logo拷贝
-//                    ImageView logoImageView = new ImageView(GoodDialogActivity.this);
-//                    binding.ivAddCartAnim.setDrawingCacheEnabled(true);
-//                    Bitmap bitmap = Bitmap.createBitmap(binding.ivAddCartAnim.getDrawingCache());
-//                    logoImageView.setImageBitmap(bitmap);
-//                    binding.ivAddCartAnim.setDrawingCacheEnabled(false);
-//
-//                    int[] startLocation = new int[2];
-//                    binding.ivAddCartAnim.getLocationOnScreen(startLocation);
-//                    // 执行动画
-//                    startAddToCartAnimation(logoImageView, startLocation);
-//                }
-//            });
-//        }
-//        dialog.show();
+    public void showSkuDialog() {
+        if (dialog == null) {
+            dialog = new GoodDialog(this);
+            dialog.setData(attrGroupList(), new GoodDialog.Callback() {
+                @Override
+                public void onAdded(GoodsAttrInfoDataBean goodsAttrInfoDataBean, int quantity) {
+
+                }
+            });
+        }
+        dialog.show();
     }
+
+    private Map<String, List<String>> attrGroupList() {
+        Map<String ,List<String>> dataMap = new LinkedHashMap<>();
+        for (int i = 0; i < attrGroupList.size(); i++) {
+            dataMap.put(attrGroupList.get(i).getAttr_group_name(),new LinkedList<String>());
+            List<GoodDetailsDataBean.AttrGroupListBean.AttrListBean> attrList = attrGroupList.get(i).getAttr_list();
+            for (int j = 0; j < attrList.size(); j++) {
+                dataMap.get(attrGroupList.get(i).getAttr_group_name()).add(attrList.get(j).getAttr_name());
+            }
+        }
+        return dataMap;
+    }
+
+//    /**
+//     * 根据属性名进行分组
+//     *
+//     * @return 如{ "颜色": {"白色", "红色", "黑色"}, "尺寸": {"M", "L", "XL", "XXL"}}
+//     */
+//    private Map<String, List<String>> getAttrGroupList() {
+//        Map<String, List<String>> dataMap = new LinkedHashMap<>();
+//
+//        dataMap.put("颜色", new LinkedList<String>());
+//        dataMap.get("颜色").add("红色");
+//        dataMap.get("颜色").add("白色");
+//        dataMap.get("颜色").add("黑色");
+//        dataMap.get("颜色").add("蓝色");
+//
+//        dataMap.put("尺寸", new LinkedList<String>());
+//        dataMap.get("尺寸").add("大码");
+//        dataMap.get("尺寸").add("中码");
+//        dataMap.get("尺寸").add("小码");
+//        return dataMap;
+//    }
 }
 
