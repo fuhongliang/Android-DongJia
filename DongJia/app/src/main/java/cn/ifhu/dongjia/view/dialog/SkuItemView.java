@@ -18,6 +18,7 @@ import cn.ifhu.dongjia.utils.ScreenUtils;
 
 public class SkuItemView extends TextView {
     private String attributeValue;
+    private String attributeId;
 
     public SkuItemView(Context context) {
         super(context);
@@ -50,8 +51,13 @@ public class SkuItemView extends TextView {
         return attributeValue;
     }
 
-    public void setAttributeValue(String attributeValue) {
+    public String getAttributeId() {
+        return attributeId;
+    }
+
+    public void setAttributeValue(String attributeValue, String attributeId) {
         this.attributeValue = attributeValue;
+        this.attributeId = attributeId;
         setText(attributeValue);
     }
 }

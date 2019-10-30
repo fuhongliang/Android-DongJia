@@ -33,6 +33,7 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.WebView.WebViewActivity;
 import cn.ifhu.dongjia.activity.home.GoodDetailsActivity;
 import cn.ifhu.dongjia.activity.home.SearchActivity;
+import cn.ifhu.dongjia.activity.home.SelectCityActivity;
 import cn.ifhu.dongjia.activity.home.StoreHomeActivity;
 import cn.ifhu.dongjia.adapter.NavIconAdapter;
 import cn.ifhu.dongjia.adapter.PanicBuyAdapter;
@@ -134,7 +135,7 @@ public class HomeFragment extends BaseFragment {
          */
         newPanicBuyAdapter = new PanicBuyAdapter(panicBuyData, getActivity(), position -> {
             Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
-            intent.putExtra("id",panicBuyData.get(position).getId());
+            intent.putExtra("id", panicBuyData.get(position).getId());
             startActivity(intent);
         });
         rvPanicBuy.setNestedScrollingEnabled(false);
@@ -331,4 +332,8 @@ public class HomeFragment extends BaseFragment {
         goToActivity(SearchActivity.class);
     }
 
+    @OnClick(R.id.tv_address)
+    public void onTvAddressClicked() {
+        goToActivity(SelectCityActivity.class);
+    }
 }

@@ -58,10 +58,8 @@
                             android:id="@+id/ll_sku_price"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/tv_sku_info"
-                            android:layout_marginRight="15dp"
+                            android:layout_marginRight="50dp"
                             android:layout_marginBottom="5dp"
-                            android:gravity="bottom"
                             android:orientation="horizontal">
 
                             <TextView
@@ -82,6 +80,16 @@
                                 android:textColor="@color/comm_text_gray"
                                 android:textSize="12dp" />
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_sku_quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/comm_text_gray"
+                            android:textSize="11dp" />
+
                     </RelativeLayout>
 
                     <View
@@ -113,16 +121,6 @@
                             android:text="购买数量"
                             android:textColor="@color/comm_text_gray_dark"
                             android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/tv_sku_quantity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/tv_sku_quantity_label"
-                            android:textColor="@color/comm_text_gray"
-                            android:textSize="11dp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -165,6 +163,7 @@
                                 android:textColor="@color/typed_text_color"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:id="@+id/tv_add"
                                 android:layout_width="28dp"
@@ -180,15 +179,36 @@
                         </LinearLayout>
                     </RelativeLayout>
 
-                    <Button
-                        android:id="@+id/btn_submit"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="46dp"
-                        android:layout_marginTop="30dp"
-                        android:background="@drawable/btn_green_22"
-                        android:text="确定购买"
-                        android:textColor="@color/comm_white"
-                        android:textSize="17dp" />
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_submit1"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_40"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_green_22"
+                            android:text="加入购物车"
+                            android:layout_marginRight="15dp"
+                            android:textColor="@color/white"
+                            android:textSize="17dp" />
+
+                        <Button
+                            android:id="@+id/btn_submit"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_green_22"
+                            android:text="立即购买"
+                            android:textColor="@color/comm_white"
+                            android:textSize="17dp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <com.sunfusheng.GlideImageView

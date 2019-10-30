@@ -2,6 +2,7 @@ package cn.ifhu.dongjia.activity.home;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,20 +50,22 @@ public class SearchActivity extends BaseActivity {
     EditText etDescription;
     @BindView(R.id.tv_search)
     TextView tvSearch;
-    @BindView(R.id.fl)
-    FlowLayout fl;
+    @BindView(R.id.flow)
+    FlowLayout flow;
     @BindView(R.id.options2)
     TextView options2;
     @BindView(R.id.ll)
     LinearLayout ll;
-
-    SearchAdapter searchAdapter;
     @BindView(R.id.rl_search)
     RecyclerView rlSearch;
     @BindView(R.id.iv_delete)
     ImageView ivDelete;
+
+    SearchAdapter searchAdapter;
     private List<SearchDataBean.ListBean> mDatas = new ArrayList<>();
 
+    private List<String> list = new ArrayList<>();
+    private FlowLayout flowLayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,10 @@ public class SearchActivity extends BaseActivity {
         rlSearch.addItemDecoration(new GridDividerItemDecoration(12));
         rlSearch.setAdapter(searchAdapter);
         rlSearch.setOnScrollListener(new LoadMoreScrollListener(rlSearch));
+        for (int i = 0; i < list.size(); i++) {
+            list.add(etDescription.getText().toString());
+        }
+        
     }
 
     /**

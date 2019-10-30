@@ -62,7 +62,7 @@
     </RelativeLayout>
 
     <cn.ifhu.dongjia.widget.FlowLayout
-        android:id="@+id/fl"
+        android:id="@+id/flow"
         android:layout_width="match_parent"
         android:layout_height="80dp" />
 

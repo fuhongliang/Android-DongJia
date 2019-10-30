@@ -24,5 +24,5 @@ public interface OnSkuListener {
      * sku选中
      *
      */
-    void onSkuSelected();
+    void onSkuSelected(int position,SkuItemView view);
 }

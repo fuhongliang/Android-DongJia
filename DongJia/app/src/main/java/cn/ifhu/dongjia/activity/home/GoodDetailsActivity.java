@@ -37,6 +37,7 @@ import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
+import cn.ifhu.dongjia.model.data.GoodDetailsDataBean.AttrGroupListBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.Sku;
@@ -116,7 +117,7 @@ public class GoodDetailsActivity extends BaseActivity {
     //商品信息
     private GoodDetailsDataBean.MchBean mch;
     //商品规格
-    private List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList = new ArrayList<>();
+    private List<AttrGroupListBean> attrGroupList = new ArrayList<>();
     //商品id
     String id;
 
@@ -275,7 +276,7 @@ public class GoodDetailsActivity extends BaseActivity {
     public void showSkuDialog() {
         if (dialog == null) {
             dialog = new GoodDialog(this);
-            dialog.setData(attrGroupList(), new GoodDialog.Callback() {
+            dialog.setData(attrGroupList(),id, new GoodDialog.Callback() {
                 @Override
                 public void onAdded(GoodsAttrInfoDataBean goodsAttrInfoDataBean, int quantity) {
 
@@ -285,37 +286,16 @@ public class GoodDetailsActivity extends BaseActivity {
         dialog.show();
     }
 
-    private Map<String, List<String>> attrGroupList() {
-        Map<String ,List<String>> dataMap = new LinkedHashMap<>();
-        for (int i = 0; i < attrGroupList.size(); i++) {
-            dataMap.put(attrGroupList.get(i).getAttr_group_name(),new LinkedList<String>());
-            List<GoodDetailsDataBean.AttrGroupListBean.AttrListBean> attrList = attrGroupList.get(i).getAttr_list();
-            for (int j = 0; j < attrList.size(); j++) {
-                dataMap.get(attrGroupList.get(i).getAttr_group_name()).add(attrList.get(j).getAttr_name());
-            }
-        }
-        return dataMap;
+    private List<AttrGroupListBean> attrGroupList() {
+//        Map<AttrGroupListBean> dataMap = new LinkedHashMap<>();
+//        dataMap
+//        for (int i = 0; i < attrGroupList.size(); i++) {
+//            dataMap.put(attrGroupList.get(i).getAttr_group_name(),new LinkedList<String>());
+//            List<GoodDetailsDataBean.AttrGroupListBean.AttrListBean> attrList = attrGroupList.get(i).getAttr_list();
+//            dataMap.get(attrGroupList.get(i).getAttr_group_name()).add(attrList.get(j).getAttr_name());
+//        }
+//        .
+        return attrGroupList;
     }
-
-//    /**
-//     * 根据属性名进行分组
-//     *
-//     * @return 如{ "颜色": {"白色", "红色", "黑色"}, "尺寸": {"M", "L", "XL", "XXL"}}
-//     */
-//    private Map<String, List<String>> getAttrGroupList() {
-//        Map<String, List<String>> dataMap = new LinkedHashMap<>();
-//
-//        dataMap.put("颜色", new LinkedList<String>());
-//        dataMap.get("颜色").add("红色");
-//        dataMap.get("颜色").add("白色");
-//        dataMap.get("颜色").add("黑色");
-//        dataMap.get("颜色").add("蓝色");
-//
-//        dataMap.put("尺寸", new LinkedList<String>());
-//        dataMap.get("尺寸").add("大码");
-//        dataMap.get("尺寸").add("中码");
-//        dataMap.get("尺寸").add("小码");
-//        return dataMap;
-//    }
 }
 

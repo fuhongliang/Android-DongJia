@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.utils.ScreenUtils;
 import cn.ifhu.dongjia.utils.ViewUtils;
@@ -79,13 +80,13 @@ public class SkuItemLayout extends LinearLayout {
         this.listener = listener;
     }
 
-    public void buildItemLayout(int position, String attributeName, List<String> attributeValueList) {
+    public void buildItemLayout(int position, String attributeName, List<GoodDetailsDataBean.AttrGroupListBean.AttrListBean> attributeValueList) {
         attributeNameTv.setText(attributeName);
         attributeValueLayout.removeAllViewsInLayout();
         for (int i = 0; i < attributeValueList.size(); i++) {
             SkuItemView itemView = new SkuItemView(getContext());
             itemView.setId(ViewUtils.generateViewId());
-            itemView.setAttributeValue(attributeValueList.get(i));
+            itemView.setAttributeValue(attributeValueList.get(i).getAttr_name(),attributeValueList.get(i).getAttr_id()+"");
             itemView.setOnClickListener(new ItemClickListener(position, itemView));
             itemView.setLayoutParams(new FlowLayout.LayoutParams(
                     FlowLayout.LayoutParams.WRAP_CONTENT,
@@ -102,33 +103,33 @@ public class SkuItemLayout extends LinearLayout {
         for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
             SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
             itemView.setSelected(false);
-            itemView.setEnabled(false);
+//            itemView.setEnabled(false);
         }
     }
 
-    /**
-     * 设置指定属性为可点击状态
-     *
-     * @param attributeValue
-     */
-    public void optionItemViewEnableStatus(String attributeValue) {
-        for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
-            SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
-            if (attributeValue.equals(itemView.getAttributeValue())) {
-                itemView.setEnabled(true);
-            }
-        }
-    }
+//    /**
+//     * 设置指定属性为可点击状态
+//     *
+//     * @param attributeValue
+//     */
+//    public void optionItemViewEnableStatus(String attributeValue) {
+//        for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
+//            SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
+//            if (attributeValue.equals(itemView.getAttributeValue())) {
+//                itemView.setEnabled(true);
+//            }
+//        }
+//    }
 
     /**
      * 设置指定属性为选中状态
      *
      * @param attrList
      */
-    public void optionItemViewSelectStatus(GoodsAttrInfoDataBean.AttrListBean attrList) {
+    public void optionItemViewSelectStatus(String attrList) {
         for (int i = 0; i < attributeValueLayout.getChildCount(); i++) {
             SkuItemView itemView = (SkuItemView) attributeValueLayout.getChildAt(i);
-            if (attrList.getAttr_name().equals(itemView.getAttributeValue())) {
+            if (attrList.equals(itemView.getAttributeValue())) {
                 itemView.setEnabled(true);
                 itemView.setSelected(true);
             }
@@ -159,7 +160,7 @@ public class SkuItemLayout extends LinearLayout {
 
     private void onSkuItemClicked(int position, SkuItemView view) {
         boolean selected = !view.isSelected();
-        listener.onSelect();
+        listener.onSelect(position,view);
     }
 
     //点击事件
@@ -180,6 +181,6 @@ public class SkuItemLayout extends LinearLayout {
 
     //点中属性回调接口
     interface OnSkuItemSelectListener {
-        void onSelect();
+        void onSelect(int position,SkuItemView view);
     }
 }

@@ -145,7 +145,7 @@ dependencies {
     implementation 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
     implementation 'com.orhanobut:logger:2.2.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
-    api 'com.bugtags.library:bugtags-lib:latest.integration'
+    api 'com.bugtags.library:bugtags-lib:3.1.1'
     api 'com.github.everhad:AndroidRatingStar:v1.0.4'
     api project(path: ':wheel_library')
 
@@ -186,7 +186,8 @@ dependencies {
     annotationProcessor 'androidx.annotation:annotation:1.0.0'
 
     //微信登录
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+//    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.6'
 
     //流式布局
     implementation 'com.hyman:flowlayout-lib:1.1.2'

@@ -3,6 +3,7 @@ package cn.ifhu.dongjia.activity.home;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,14 +23,22 @@ import com.sunfusheng.GlideImageView;
 import com.wuhenzhizao.titlebar.utils.AppUtils;
 
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
+import cn.ifhu.dongjia.model.post.AttrBeanPost;
+import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.HomeService;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
+import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.GsonUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.view.dialog.OnSkuListener;
+import cn.ifhu.dongjia.view.dialog.SkuItemView;
 import cn.ifhu.dongjia.view.dialog.SkuSelectScrollView;
 
 /**
@@ -37,18 +46,24 @@ import cn.ifhu.dongjia.view.dialog.SkuSelectScrollView;
  */
 public class GoodDialog extends Dialog {
 
-    private GoodsAttrInfoDataBean goodsAttrInfoDataBean;
+    GoodsAttrInfoDataBean attrInfoData;
     private Context context;
     private Callback callback;
     SkuSelectScrollView scrollSkuList;
-    private GoodsAttrInfoDataBean attrInfoData;
-    private GoodDetailsDataBean.AttrGroupListBean attrGroupList;
 
-    private String tvGoodNumberFormat;
     TextView tvDelete;
     TextView tvAdd;
     TextView tvGoodNumber;
+    TextView tvPrice;
+    TextView tvInfo;
+    TextView tvQuantity;
     private GlideImageView ivlogo;
+    private String good_id;
+    //已选的属性id
+    int[] attrId;
+    String[] attrString;
+    List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList;
+    List<AttrBeanPost> attrBeanPostList = new ArrayList<>();
 
     public GoodDialog(@NonNull Context context) {
         this(context, R.style.CommonBottomDialogStyle);
@@ -68,17 +83,13 @@ public class GoodDialog extends Dialog {
         tvAdd = findViewById(R.id.tv_add);
         tvGoodNumber = findViewById(R.id.tv_good_number);
         ivlogo = findViewById(R.id.iv_sku_logo);
-        TextView tvInfo = view.findViewById(R.id.tv_sku_info);
-        TextView tvQuantity = view.findViewById(R.id.tv_sku_quantity);
+        tvInfo = view.findViewById(R.id.tv_sku_info);
+        tvPrice = findViewById(R.id.tv_sku_selling_price);
+        tvQuantity = view.findViewById(R.id.tv_sku_quantity);
         Button btnSybmit = view.findViewById(R.id.btn_submit);
         scrollSkuList = view.findViewById(R.id.scroll_sku_list);
         //取消
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        imageButton.setOnClickListener(v -> dismiss());
         //减少
         tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +102,6 @@ public class GoodDialog extends Dialog {
                 if (quantityInt > 1) {
                     String newQuantity = String.valueOf(quantityInt - 1);
                     tvGoodNumber.setText(newQuantity);
-//                    tvGoodNumber.setSelection(newQuantity.length());
                     updateQuantityOperator(quantityInt - 1);
                 }
             }
@@ -108,7 +118,6 @@ public class GoodDialog extends Dialog {
                 if (quantityInt < attrInfoData.getNum()) {
                     String newQuantity = String.valueOf(quantityInt + 1);
                     tvGoodNumber.setText(newQuantity);
-//                    tvGoodNumber.setSelection(newQuantity.length());
                     updateQuantityOperator(quantityInt + 1);
                 }
             }
@@ -142,46 +151,52 @@ public class GoodDialog extends Dialog {
         scrollSkuList.setListener(new OnSkuListener() {
             @Override
             public void onUnselected() {
-                attrInfoData = null;
-                // TODO: 2019-10-28 默认图片
-                tvGoodNumber.setText(String.format(tvGoodNumberFormat, attrInfoData.getNum()));
-                String firstUnselectedAttributeName = scrollSkuList.getFirstUnelectedAttributeName();
-                tvInfo.setText("请选择: " + firstUnselectedAttributeName);
-                btnSybmit.setEnabled(false);
-                String quantity = tvGoodNumber.getText().toString();
-                if (!TextUtils.isEmpty(quantity)) {
-                    updateQuantityOperator(Integer.valueOf(quantity));
-                } else {
-                    updateQuantityOperator(0);
-                }
             }
 
             @Override
             public void onSelect() {
-                String firstUnselectedAttributeName = scrollSkuList.getFirstUnelectedAttributeName();
-                tvInfo.setText("请选择: " + firstUnselectedAttributeName);
             }
 
             @Override
-            public void onSkuSelected() {
-                List<GoodsAttrInfoDataBean.AttrListBean> attrList = attrInfoData.getAttr_list();
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < attrList.size(); i++) {
-                    if (i != 0) {
-                        builder.append("  ");
+            public void onSkuSelected(int position, SkuItemView view) {
+                attrId[position] = Integer.parseInt(view.getAttributeId());
+                attrString[position] = view.getAttributeValue();
+                StringBuilder attrInfo = new StringBuilder("已选: ");
+                for (String attr : attrString) {
+                    attrInfo.append(attr);
+                }
+                tvInfo.setText(attrInfo);
+                //数组转换为Gson数据
+                String attrData = GsonUtils.convertObject2Json(attrId);
+                //商品属性数组
+                attrGroupList.get(position);
+
+
+                RetrofitAPIManager.create(HomeService.class).GoodsAttrInfo(4, -1, -1, good_id, attrData)
+                        .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodsAttrInfoDataBean>(true) {
+                    @Override
+                    protected void onApiComplete() {
                     }
-                    GoodsAttrInfoDataBean.AttrListBean attr = attrList.get(i);
-                    builder.append("\"" + attr.getAttr_name() + "\"");
-                }
-                tvInfo.setText("已选: " + builder.toString());
-                tvQuantity.setText(String.format(tvGoodNumberFormat, attrInfoData.getNum()));
-                btnSybmit.setEnabled(true);
-                String quantity = tvGoodNumber.getText().toString();
-                if (!TextUtils.isEmpty(quantity)) {
-                    updateQuantityOperator(Integer.valueOf(quantity));
-                } else {
-                    updateQuantityOperator(0);
-                }
+
+                    @Override
+                    protected void onSuccees(BaseEntity<GoodsAttrInfoDataBean> t) throws Exception {
+                        tvQuantity.setText("库存: "+t.getData().getNum() + "");
+                        tvPrice.setText("￥"+t.getData().getPrice());
+                        ivlogo.load(t.getData().getPic());
+                        attrInfoData = t.getData();
+                    }
+                });
+
+
+//                AttrBeanPost attrBeanPost = new AttrBeanPost();
+//                attrBeanPost.setAttr_group_id(attrGroupList.get(position).getAttr_group_id());
+//                attrBeanPost.setAttr_group_name(attrGroupList.get(position).getAttr_group_name());
+//                attrBeanPost.setAttr_id(Integer.parseInt(view.getAttributeId()));
+//                attrBeanPost.setAttr_name(view.getAttributeValue());
+//                //加入购物车数组、声明一个数组来保存对象上传
+//                attrBeanPostList.set(position, attrBeanPost);
+
+
             }
         });
         //确定购买
@@ -203,9 +218,16 @@ public class GoodDialog extends Dialog {
         });
     }
 
-    public void setData(Map<String, List<String>> dataMap, Callback callback) {
+    public void setData(List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList, String id, Callback callback) {
         this.callback = callback;
-        scrollSkuList.setSkuList(dataMap);
+        this.good_id = id;
+        this.attrGroupList = attrGroupList;
+        //初始化
+        attrId = new int[attrGroupList.size()];
+        attrString = new String[attrGroupList.size()];
+
+        scrollSkuList.setSkuList(attrGroupList);
+
     }
 
     public void updateQuantityOperator(int newQuantity) {

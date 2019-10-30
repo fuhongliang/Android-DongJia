@@ -2,6 +2,7 @@ package cn.ifhu.dongjia.view.dialog;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -10,8 +11,12 @@ import com.wuhenzhizao.sku.widget.SkuMaxHeightScrollView;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
+import cn.ifhu.dongjia.net.HomeService;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.utils.ViewUtils;
 
 
@@ -44,32 +49,33 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
     /**
      * 设置属性
      *
-     * @param dataMap
+     * @param attrGroupList
      */
-    public void setSkuList(Map<String, List<String>> dataMap) {
+    public void setSkuList(List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList) {
         // 清空sku视图
         skuContainerLayout.removeAllViews();
         int index = 0;
-        for (Iterator<Map.Entry<String, List<String>>> it = dataMap.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry<String, List<String>> entry = it.next();
+        for (GoodDetailsDataBean.AttrGroupListBean it :attrGroupList ) {
             // 构建sku视图
             SkuItemLayout itemLayout = new SkuItemLayout(getContext());
             itemLayout.setId(ViewUtils.generateViewId());
             itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             ));
-            itemLayout.buildItemLayout(index++, entry.getKey(), entry.getValue());
+            itemLayout.buildItemLayout(index++, it.getAttr_group_name(), it.getAttr_list());
             itemLayout.setListener(this);
             skuContainerLayout.addView(itemLayout);
-            //初始化状态下，所有属性信息设置为空
-//            attrList.add(new GoodsAttrInfoDataBean.AttrListBean(entry.getKey(),""));
         }
 
     }
 
     @Override
-    public void onSelect() {
-
+    public void onSelect(int position,SkuItemView view) {
+        //打印
+        Log.d("分组位置position = ",position+"属性id =" + view.getAttributeId()+"属性值="+view.getAttributeValue());
+        ((SkuItemLayout)skuContainerLayout.getChildAt(position)).clearItemViewStatus();
+        ((SkuItemLayout)skuContainerLayout.getChildAt(position)).optionItemViewSelectStatus(view.getAttributeValue());
+        listener.onSkuSelected(position,view);
     }
 
 
@@ -98,15 +104,15 @@ public class SkuSelectScrollView extends SkuMaxHeightScrollView implements SkuIt
     }
 
 
-    /**
-     * 重置所有属性的选中状态
-     */
-    private void clearAllLayoutStatus() {
-        for (int i = 0; i < skuContainerLayout.getChildCount(); i++) {
-            SkuItemLayout itemLayout = (SkuItemLayout) skuContainerLayout.getChildAt(i);
-            itemLayout.clearItemViewStatus();
-        }
-    }
+//    /**
+//     * 重置所有属性的选中状态
+//     */
+//    private void clearAllLayoutStatus() {
+//        for (int i = 0; i < skuContainerLayout.getChildCount(); i++) {
+//            SkuItemLayout itemLayout = (SkuItemLayout) skuContainerLayout.getChildAt(i);
+//            itemLayout.clearItemViewStatus();
+//        }
+//    }
 
 
 }
