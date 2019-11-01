@@ -19,9 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.model.data.CartListDataBean;
+import cn.ifhu.dongjia.model.post.CartListPost;
+import cn.ifhu.dongjia.utils.GsonUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 
 import static cn.ifhu.dongjia.R.drawable.gwc_ic_xuanze;
+import static cn.ifhu.dongjia.R.drawable.gwc_ic_xuanze1;
 
 /**
  * 购物车的adapter
@@ -35,10 +38,11 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
      */
     private List<CartListDataBean.MchListBean> mData;
     //店铺选择
-    private boolean isSelect_shop = false;
+//    private boolean isSelect_shop = false;
     //全部选中
     private boolean isSelectAll = false;
     private double total_price;
+
     /**
      * 声明控件
      */
@@ -48,14 +52,18 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
     private TextView tvOk;
     private TextView tvDelete;
     private TextView tvPrice;
+    private TextView tvEdit;
+    private TextView tvSettlement;
 
-    public ShoppingCarAdapter(Context context, ImageView ivSelectAll, RelativeLayout rlSelectAll, TextView tvOk, TextView tvDelete, TextView tvPrice) {
+    public ShoppingCarAdapter(Context context, ImageView ivSelectAll, RelativeLayout rlSelectAll, TextView tvOk, TextView tvDelete, TextView tvPrice, TextView tvEdit, TextView tvSettlement) {
         this.context = context;
         this.ivSelectAll = ivSelectAll;
         this.rlSelectAll = rlSelectAll;
         this.tvOk = tvOk;
         this.tvDelete = tvDelete;
         this.tvPrice = tvPrice;
+        this.tvEdit = tvEdit;
+        this.tvSettlement = tvSettlement;
     }
 
     /**
@@ -105,36 +113,41 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         //商家数据声明
         CartListDataBean.MchListBean mchList = mData.get(groupPosition);
         //赋值
-        // TODO: 2019-10-23 是否需要判空
         groupViewHolder.ivAvatar.load(mchList.getLogo());
         groupViewHolder.tvStoreName.setText(mchList.getName());
+
+
         //店铺内的商品都选中的时候，店铺的也要选中
         for (int i = 0; i < mchList.getList().size(); i++) {
             CartListDataBean.MchListBean.ListBeanX goodsList = mchList.getList().get(i);
             boolean isSelect = goodsList.isDisabled();
             if (isSelect) {
-                goodsList.setDisabled(true);
+                mchList.setIsSelect_shop(true);
             } else {
-                goodsList.setDisabled(false);
+                mchList.setIsSelect_shop(false);
+                break;
             }
         }
         //因为set之后要重新get，所以这一块代码要放到一起执行
         //店铺是否在购物车中被选中
+        boolean isSelect_shop = mchList.getIsSelect_shop();
         if (isSelect_shop) {
-            groupViewHolder.ivSelect.setImageResource(R.drawable.gwc_ic_xuanze1);
+            groupViewHolder.ivSelect.setSelected(true);
         } else {
-            groupViewHolder.ivSelect.setImageResource(gwc_ic_xuanze);
+            groupViewHolder.ivSelect.setSelected(false);
         }
+
         //店铺选择框的点击事件
         groupViewHolder.rlStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019-10-23 可能会出现问题
-                isSelect_shop = true;
+                mchList.setIsSelect_shop(!isSelect_shop);
+
                 List<CartListDataBean.MchListBean.ListBeanX> goodsList = mchList.getList();
                 for (int i = 0; i < goodsList.size(); i++) {
                     CartListDataBean.MchListBean.ListBeanX listBeanX = goodsList.get(i);
-                    listBeanX.setDisabled(true);
+                    // TODO: 2019-10-31 警告
+                    listBeanX.setDisabled(!isSelect_shop);
                 }
                 notifyDataSetChanged();
             }
@@ -144,6 +157,7 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         for (int i = 0; i < mData.size(); i++) {
             List<CartListDataBean.MchListBean.ListBeanX> goods = mData.get(i).getList();
             for (int y = 0; y < goods.size(); y++) {
+
                 CartListDataBean.MchListBean.ListBeanX goodsBean = goods.get(y);
                 boolean isSelect = goodsBean.isDisabled();
                 if (isSelect) {
@@ -154,10 +168,11 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
                 }
             }
         }
+        //全选
         if (isSelectAll) {
-            ivSelectAll.setBackgroundResource(gwc_ic_xuanze);
+            ivSelectAll.setSelected(true);
         } else {
-            ivSelectAll.setBackgroundResource(R.drawable.gwc_ic_xuanze1);
+            ivSelectAll.setSelected(false);
         }
         //全选点击事件
         rlSelectAll.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +224,7 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
             }
         }
         //结算点击事件
-        tvOk.setOnClickListener(new View.OnClickListener() {
+        tvSettlement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //创建临时的list，用于存储被选中的商品
@@ -238,6 +253,24 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 if (mDeleteListener != null) {
                     mDeleteListener.onDelete();
+                }
+            }
+        });
+        //编辑点击事件
+        tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnEditListener != null) {
+                    mOnEditListener.onEdit();
+                }
+            }
+        });
+        //完成点击事件
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnOkListener != null) {
+                    mOnOkListener.OnOK();
                 }
             }
         });
@@ -304,47 +337,56 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         }
         //声明数据
         CartListDataBean.MchListBean mchList = mData.get(groupPosition);
-        CartListDataBean.MchListBean.ListBeanX goodsList = mchList.getList().get(groupPosition);
+        CartListDataBean.MchListBean.ListBeanX goodsList = mchList.getList().get(childPosition);
         boolean isSelect = goodsList.isDisabled();
         String goods_id = goodsList.getGoods_id() + "";
 
         // 2019-10-23 塞入数据
         childViewHolder.ivGoodPic.load(goodsList.getGoods_pic());
         childViewHolder.tvGoodName.setText(goodsList.getGoods_name());
-        childViewHolder.tvSpecification.setText(goodsList.getAttr_list().get(childPosition).getAttr_group_name() + goodsList.getAttr_list().get(childPosition).getAttr_name());
+        // TODO: 2019-11-01 缺少规格名称和属性名称
+//        childViewHolder.tvSpecification.setText(attrList.getAttr_group_name()+attrList.getAttr_name());
         childViewHolder.tvNumber.setText(goodsList.getNum() + "");
-        childViewHolder.tvPrice.setText(goodsList.getPrice() + "");
-        //商品是否被选中
+        childViewHolder.tvPrice.setText(goodsList.getUnitPrice() + "");
+//        //商品是否被选中
         if (isSelect) {
-            childViewHolder.ivSelect.setImageResource(R.drawable.gwc_ic_xuanze);
+            childViewHolder.ivSelect.setSelected(true);
         } else {
-            childViewHolder.ivSelect.setImageResource(R.drawable.gwc_ic_xuanze1);
+            childViewHolder.ivSelect.setSelected(false);
         }
         //商品选择框的点击事件
         childViewHolder.ivSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019-10-23 警告
                 goodsList.setDisabled(!isSelect);
                 if (!isSelect == false) {
-                    goodsList.setDisabled(false);
+                    mchList.setIsSelect_shop(false);
                 }
                 notifyDataSetChanged();
             }
         });
+        List<CartListPost> cartListPostList = new ArrayList<>();
+
         //加号点击事件
         childViewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2019-10-23 警告
+                CartListPost cartListPost = new CartListPost();
                 String num = goodsList.getNum() + "";
+                String cartId = goodsList.getCart_id()+"";
+                cartListPost.setCart_id(cartId);
+                cartListPostList.add(cartListPost);
                 Integer integer = Integer.valueOf(num);
                 integer++;
                 goodsList.setNum(integer);
+                // TODO: 2019-11-01 显示商品数量与后台数量不同
+                cartListPost.setNum(num);
+                String cartList = GsonUtils.convertObject2Json(cartListPostList);
                 notifyDataSetChanged();
                 //回调请求后台接口实现数量的加减
                 if (mChangeCountListener != null) {
-                    mChangeCountListener.onChangeCount(goods_id);
+                    mChangeCountListener.onChangeCount(cartList);
                 }
             }
         });
@@ -352,14 +394,20 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         childViewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CartListPost cartListPost = new CartListPost();
                 String num = goodsList.getNum() + "";
+                String cartId = goodsList.getCart_id()+"";
+                cartListPost.setCart_id(cartId);
+                cartListPost.setNum(num);
+                String cartList = GsonUtils.convertObject2Json(cartListPostList);
                 Integer integer = Integer.valueOf(num);
                 if (integer > 1) {
                     integer--;
                     goodsList.setNum(integer);
+                    cartListPostList.add(cartListPost);
                     //回调请求后台接口实现数量的加减
                     if (mChangeCountListener != null) {
-                        mChangeCountListener.onChangeCount(goods_id);
+                        mChangeCountListener.onChangeCount(cartList);
                     }
                 } else {
                     ToastHelper.makeText("商品不能再减少了").show();
@@ -370,6 +418,7 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
 
         return convertView;
     }
+
 
     static class ChildViewHolder {
         @BindView(R.id.iv_select)
@@ -407,6 +456,7 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    //删除回调
     public interface OnDeleteListener {
         void onDelete();
     }
@@ -427,4 +477,37 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
     }
 
     private OnChangeCountListener mChangeCountListener;
+
+    //编辑回调
+    public interface OnEdit {
+        void onEdit();
+    }
+
+    private OnEdit mOnEditListener;
+
+    public void setmOnEdit(OnEdit mOnEdit) {
+        mOnEditListener = mOnEdit;
+    }
+
+    //结算回调
+    public interface OnSettlement {
+        void OnSettlement();
+    }
+
+    private OnSettlement mOnSettlementListener;
+
+    public void setOnSettlement(OnSettlement mOnSettlement) {
+        mOnSettlementListener = mOnSettlement;
+    }
+
+    //完成回调
+    public interface OnOk {
+        void OnOK();
+    }
+
+    private OnOk mOnOkListener;
+
+    public void setmOnOk(OnOk mOnOk) {
+        mOnOkListener = mOnOk;
+    }
 }

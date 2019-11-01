@@ -30,13 +30,16 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
+import cn.ifhu.dongjia.model.post.AddCartPostData;
 import cn.ifhu.dongjia.model.post.AttrBeanPost;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.net.ShopCartService;
 import cn.ifhu.dongjia.utils.GsonUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
+import cn.ifhu.dongjia.utils.UserLogic;
 import cn.ifhu.dongjia.view.dialog.OnSkuListener;
 import cn.ifhu.dongjia.view.dialog.SkuItemView;
 import cn.ifhu.dongjia.view.dialog.SkuSelectScrollView;
@@ -58,6 +61,7 @@ public class GoodDialog extends Dialog {
     TextView tvInfo;
     TextView tvQuantity;
     private GlideImageView ivlogo;
+    //商品详情里传过来的商品id
     private String good_id;
     //已选的属性id
     int[] attrId;
@@ -87,6 +91,7 @@ public class GoodDialog extends Dialog {
         tvPrice = findViewById(R.id.tv_sku_selling_price);
         tvQuantity = view.findViewById(R.id.tv_sku_quantity);
         Button btnSybmit = view.findViewById(R.id.btn_submit);
+        Button btnShopCart = view.findViewById(R.id.btn_shop_cart);
         scrollSkuList = view.findViewById(R.id.scroll_sku_list);
         //取消
         imageButton.setOnClickListener(v -> dismiss());
@@ -161,6 +166,7 @@ public class GoodDialog extends Dialog {
             public void onSkuSelected(int position, SkuItemView view) {
                 attrId[position] = Integer.parseInt(view.getAttributeId());
                 attrString[position] = view.getAttributeValue();
+
                 StringBuilder attrInfo = new StringBuilder("已选: ");
                 for (String attr : attrString) {
                     attrInfo.append(attr);
@@ -170,8 +176,9 @@ public class GoodDialog extends Dialog {
                 String attrData = GsonUtils.convertObject2Json(attrId);
                 //商品属性数组
                 attrGroupList.get(position);
-
-
+                /**
+                 * 商品属性选择接口
+                 */
                 RetrofitAPIManager.create(HomeService.class).GoodsAttrInfo(4, -1, -1, good_id, attrData)
                         .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodsAttrInfoDataBean>(true) {
                     @Override
@@ -180,26 +187,66 @@ public class GoodDialog extends Dialog {
 
                     @Override
                     protected void onSuccees(BaseEntity<GoodsAttrInfoDataBean> t) throws Exception {
-                        tvQuantity.setText("库存: "+t.getData().getNum() + "");
-                        tvPrice.setText("￥"+t.getData().getPrice());
+                        tvQuantity.setText("库存: " + t.getData().getNum() + "");
+                        tvPrice.setText("￥" + t.getData().getPrice());
                         ivlogo.load(t.getData().getPic());
                         attrInfoData = t.getData();
                     }
                 });
+            }
+        });
+        //加入购物车
+        btnShopCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String quantity = tvGoodNumber.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+                    return;
+                }
+                int quantityInt = Integer.valueOf(quantity);
+                if (quantityInt > 0 && quantityInt <= attrInfoData.getNum()) {
+                    callback.onAdded(attrInfoData, quantityInt);
+                    dismiss();
+                } else {
+                    ToastHelper.makeText("商品数量超出库存，请修改数量").show();
+                }
+                for (int i = 0; i < attrId.length; i++) {
+                    AttrBeanPost attrBeanPost = new AttrBeanPost();
+                    attrBeanPost.setAttr_group_id(attrGroupList.get(i).getAttr_group_id());
+                    attrBeanPost.setAttr_group_name(attrGroupList.get(i).getAttr_group_name());
+                    attrBeanPost.setAttr_id(attrId[i]);
+                    attrBeanPost.setAttr_name(attrString[i]);
+                    //加入购物车数组、声明一个数组来保存对象上传
+                    attrBeanPostList.add(attrBeanPost);
+                }
+                /**
+                 * 添加购物车接口
+                 */
+                AttrBeanPost attrBeanPost = new AttrBeanPost();
+                String attr = GsonUtils.convertObject2Json(attrBeanPost);
+                AddCartPostData addCartPostData = new AddCartPostData();
+                addCartPostData.setAccess_token(UserLogic.getUser().getAccess_token());
+                addCartPostData.setAttr(attr);
+                addCartPostData.setGoods_id(good_id);
+                addCartPostData.setNum(quantity);
+                RetrofitAPIManager.create(ShopCartService.class).addCart(addCartPostData)
+                        .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
+                    @Override
+                    protected void onApiComplete() {
 
+                    }
 
-//                AttrBeanPost attrBeanPost = new AttrBeanPost();
-//                attrBeanPost.setAttr_group_id(attrGroupList.get(position).getAttr_group_id());
-//                attrBeanPost.setAttr_group_name(attrGroupList.get(position).getAttr_group_name());
-//                attrBeanPost.setAttr_id(Integer.parseInt(view.getAttributeId()));
-//                attrBeanPost.setAttr_name(view.getAttributeValue());
-//                //加入购物车数组、声明一个数组来保存对象上传
-//                attrBeanPostList.set(position, attrBeanPost);
+                    @Override
+                    protected void onSuccees(BaseEntity t) throws Exception {
+                        ToastHelper.makeText(t.getMessage()).show();
+                    }
+
+                });
 
 
             }
         });
-        //确定购买
+        //立即购买
         btnSybmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

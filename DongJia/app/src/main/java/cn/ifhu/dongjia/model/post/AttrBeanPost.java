@@ -1,5 +1,7 @@
 package cn.ifhu.dongjia.model.post;
 
+import cn.ifhu.dongjia.utils.UserLogic;
+
 public class AttrBeanPost {
 
     /**
@@ -8,7 +10,6 @@ public class AttrBeanPost {
      * attr_id : 72
      * attr_name : 机械锁【左右开向】
      */
-
     private int attr_group_id;
     private String attr_group_name;
     private int attr_id;

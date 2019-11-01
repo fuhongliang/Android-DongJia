@@ -188,7 +188,7 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btn_submit1"
+                            android:id="@+id/btn_shop_cart"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dp_40"
                             android:layout_weight="1"

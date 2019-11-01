@@ -192,6 +192,15 @@ public class CartListDataBean {
         private String name;
         private String logo;
         private List<ListBeanX> list;
+        private boolean isSelect_shop;      //店铺是否在购物车中被选中
+
+        public boolean getIsSelect_shop() {
+            return isSelect_shop;
+        }
+
+        public void setIsSelect_shop(boolean select_shop) {
+            isSelect_shop = select_shop;
+        }
 
         public int getId() {
             return id;

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <include
         android:id="@+id/header"
         layout="@layout/layout_header" />
@@ -13,27 +14,28 @@
         style="@style/line_fff"
         android:layout_below="@id/header" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cart"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/line"
-        android:visibility="gone"
-        tools:listitem="@layout/item_shop_cart_child" />
+        android:layout_marginBottom="55dp">
 
-    <ExpandableListView
-        android:id="@+id/elv_shopping_car"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ededed"
-        android:divider="@null"
-        android:groupIndicator="@null"
-        android:scrollbars="none" />
+        <ExpandableListView
+            android:id="@+id/elv_shopping_car"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#ededed"
+            android:divider="@null"
+            android:groupIndicator="@null"
+            android:scrollbars="none" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <View
         style="@style/line_fff"
-        android:layout_above="@id/options1" />
+        android:layout_above="@+id/options1" />
 
     <RelativeLayout
         android:id="@+id/options1"
@@ -69,22 +71,44 @@
             android:id="@+id/tv_ok"
             android:layout_width="69dp"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:background="@color/green"
+            android:background="#F7C62F"
+            android:layout_toLeftOf="@id/tv_delete"
             android:gravity="center"
             android:text="完成"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="15sp" />
-
         <TextView
             android:id="@+id/tv_delete"
             android:layout_width="69dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_toLeftOf="@id/tv_ok"
-            android:background="#F7C62F"
+            android:layout_alignParentEnd="true"
+            android:background="@color/green"
             android:gravity="center"
             android:text="删除"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="69dp"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/tv_settlement"
+            android:background="#F7C62F"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_settlement"
+            android:layout_width="69dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@color/green"
+            android:gravity="center"
+            android:text="结算"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -92,7 +116,7 @@
             android:id="@+id/rl_total_price"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/tv_delete"
+            android:layout_marginRight="138dp"
             android:layout_toRightOf="@id/rl_select_all">
 
             <TextView
@@ -119,5 +143,8 @@
                 android:textSize="15sp" />
         </RelativeLayout>
 
+
     </RelativeLayout>
+
+
 </RelativeLayout>
