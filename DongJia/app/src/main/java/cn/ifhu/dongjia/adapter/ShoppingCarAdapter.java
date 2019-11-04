@@ -365,58 +365,44 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             }
         });
-        List<CartListPost> cartListPostList = new ArrayList<>();
 
         //加号点击事件
         childViewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019-10-23 警告
-                CartListPost cartListPost = new CartListPost();
-                String num = goodsList.getNum() + "";
-                String cartId = goodsList.getCart_id()+"";
-                cartListPost.setCart_id(cartId);
-                cartListPostList.add(cartListPost);
-                Integer integer = Integer.valueOf(num);
-                integer++;
-                goodsList.setNum(integer);
-                // TODO: 2019-11-01 显示商品数量与后台数量不同
-                cartListPost.setNum(num);
-                String cartList = GsonUtils.convertObject2Json(cartListPostList);
-                notifyDataSetChanged();
-                //回调请求后台接口实现数量的加减
-                if (mChangeCountListener != null) {
-                    mChangeCountListener.onChangeCount(cartList);
-                }
+                editGoodsNumber(goodsList,1);
             }
         });
         //减号点击事件
         childViewHolder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CartListPost cartListPost = new CartListPost();
-                String num = goodsList.getNum() + "";
-                String cartId = goodsList.getCart_id()+"";
-                cartListPost.setCart_id(cartId);
-                cartListPost.setNum(num);
-                String cartList = GsonUtils.convertObject2Json(cartListPostList);
-                Integer integer = Integer.valueOf(num);
-                if (integer > 1) {
-                    integer--;
-                    goodsList.setNum(integer);
-                    cartListPostList.add(cartListPost);
-                    //回调请求后台接口实现数量的加减
-                    if (mChangeCountListener != null) {
-                        mChangeCountListener.onChangeCount(cartList);
-                    }
+                if (goodsList.getNum() > 1) {
+                   editGoodsNumber(goodsList,-1);
                 } else {
                     ToastHelper.makeText("商品不能再减少了").show();
                 }
-                notifyDataSetChanged();
             }
         });
 
         return convertView;
+    }
+
+
+    public void editGoodsNumber(CartListDataBean.MchListBean.ListBeanX goodsList,int changeNumber){
+        List<CartListPost> cartListPostList = new ArrayList<>();
+        CartListPost cartListPost = new CartListPost();
+        String cartId = goodsList.getCart_id()+"";
+        cartListPost.setCart_id(cartId);
+        cartListPost.setNum((goodsList.getNum() + changeNumber)+"");
+        cartListPostList.add(cartListPost);
+        String cartList = GsonUtils.convertObject2Json(cartListPostList);
+        //回调请求后台接口实现数量的加减
+        if (mChangeCountListener != null) {
+            mChangeCountListener.onChangeCount(cartList);
+        }
+        goodsList.setNum(goodsList.getNum()+changeNumber);
+        notifyDataSetChanged();
     }
 
 

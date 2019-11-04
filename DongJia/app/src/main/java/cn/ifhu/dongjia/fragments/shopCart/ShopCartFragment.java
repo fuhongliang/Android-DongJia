@@ -189,10 +189,6 @@ public class ShopCartFragment extends BaseFragment {
 //                    for (int j = 0; j < listData.size(); j++) {
 //                        settlementPost.setGoods_id(listData.get(j).getGoods_id()+"");
 //                        settlementPost.setNum(listData.get(j).getNum());
-//                        List<CartListDataBean.MchListBean.ListBeanX.AttrListBeanX> attrListData = listData.get(j).getAttr_list();
-//                        for (int k = 0; k < attrListData.size(); k++) {
-//                        }
-//
 //                    }
 //                }
 

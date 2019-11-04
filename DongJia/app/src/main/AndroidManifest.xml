@@ -36,6 +36,7 @@
         <activity android:name=".activity.home.StoreHomeActivity"/>
         <activity android:name=".activity.home.ConfirmOrderActivity"/>
         <activity android:name=".activity.home.SelectCityActivity"/>
+        <activity android:name=".activity.home.CatListActivity"/>
         <!--homeCase-->
         <activity android:name=".activity.homeCase.AddCallDesignerActivity" />
         <activity android:name=".activity.homeCase.CallDesignerActivity" />

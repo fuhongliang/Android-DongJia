@@ -32,6 +32,7 @@ import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.WebView.WebViewActivity;
 import cn.ifhu.dongjia.activity.home.GoodDetailsActivity;
+import cn.ifhu.dongjia.activity.home.CatListActivity;
 import cn.ifhu.dongjia.activity.home.SearchActivity;
 import cn.ifhu.dongjia.activity.home.SelectCityActivity;
 import cn.ifhu.dongjia.activity.home.StoreHomeActivity;
@@ -126,7 +127,32 @@ public class HomeFragment extends BaseFragment {
         /**
          * 分类
          */
-        newNavIconAdapter = new NavIconAdapter(navData, getActivity());
+        newNavIconAdapter = new NavIconAdapter(navData, getActivity(), new NavIconAdapter.OnClickItem() {
+            @Override
+            public void Classification(int position) {
+                String url = navData.get(position).getUrl();
+                if(!StringUtils.isEmpty(url)){
+                    if (url.contains("cat")){
+                        goToActivity(CatListActivity.class);
+                    }else {
+                        // to-do 商品列表
+                        try{
+                            int beginIndex = url.indexOf("cat_id=")+7;
+                            String id = url.substring(beginIndex,url.length());
+
+
+
+                        }catch (Exception e){
+                            //异常处理  系统不会崩溃
+                            e.printStackTrace();
+                        }
+
+                    }
+
+
+                }
+            }
+        });
         rvNavIcon.setLayoutManager(new GridLayoutManager(getActivity(), 5));
         rvNavIcon.setAdapter(newNavIconAdapter);
         rvNavIcon.setOnScrollListener(new LoadMoreScrollListener(rvNavIcon));

@@ -257,6 +257,9 @@ public class GoodDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_buy)
     public void onTvBuyClicked() {
         if (UserLogic.getUser() != null) {
+//            Intent intent = new Intent(GoodDetailsActivity.this,ConfirmOrderActivity.class);
+//            intent.putExtra("goodId" ,id);
+//            intent.putExtra("attr",)
             goToActivity(ConfirmOrderActivity.class);
         } else {
             WXLoginUtils.WxLogin(this);
@@ -276,7 +279,7 @@ public class GoodDetailsActivity extends BaseActivity {
     public void showSkuDialog() {
         if (dialog == null) {
             dialog = new GoodDialog(this);
-            dialog.setData(attrGroupList(),id, new GoodDialog.Callback() {
+            dialog.setData(attrGroupList(), id, new GoodDialog.Callback() {
                 @Override
                 public void onAdded(GoodsAttrInfoDataBean goodsAttrInfoDataBean, int quantity) {
 
@@ -287,14 +290,6 @@ public class GoodDetailsActivity extends BaseActivity {
     }
 
     private List<AttrGroupListBean> attrGroupList() {
-//        Map<AttrGroupListBean> dataMap = new LinkedHashMap<>();
-//        dataMap
-//        for (int i = 0; i < attrGroupList.size(); i++) {
-//            dataMap.put(attrGroupList.get(i).getAttr_group_name(),new LinkedList<String>());
-//            List<GoodDetailsDataBean.AttrGroupListBean.AttrListBean> attrList = attrGroupList.get(i).getAttr_list();
-//            dataMap.get(attrGroupList.get(i).getAttr_group_name()).add(attrList.get(j).getAttr_name());
-//        }
-//        .
         return attrGroupList;
     }
 }

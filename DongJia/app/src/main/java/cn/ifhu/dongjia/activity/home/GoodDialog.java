@@ -32,6 +32,7 @@ import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.model.post.AddCartPostData;
 import cn.ifhu.dongjia.model.post.AttrBeanPost;
+import cn.ifhu.dongjia.model.post.GoodsInfoPost;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
@@ -68,6 +69,7 @@ public class GoodDialog extends Dialog {
     String[] attrString;
     List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList;
     List<AttrBeanPost> attrBeanPostList = new ArrayList<>();
+
 
     public GoodDialog(@NonNull Context context) {
         this(context, R.style.CommonBottomDialogStyle);
@@ -243,7 +245,6 @@ public class GoodDialog extends Dialog {
 
                 });
 
-
             }
         });
         //立即购买
@@ -257,12 +258,33 @@ public class GoodDialog extends Dialog {
                 int quantityInt = Integer.valueOf(quantity);
                 if (quantityInt > 0 && quantityInt <= attrInfoData.getNum()) {
                     callback.onAdded(attrInfoData, quantityInt);
+                    getGoodsInfo();
                     dismiss();
                 } else {
                     ToastHelper.makeText("商品数量超出库存，请修改数量").show();
                 }
+
             }
         });
+    }
+    public void getGoodsInfo(){
+        /**
+         * 立即购买接口
+         */
+        GoodsInfoPost goodsInfoPost = new GoodsInfoPost();
+        goodsInfoPost.setGoods_id(good_id);
+        goodsInfoPost.setNum(Integer.parseInt(tvGoodNumber.getText().toString()));
+        List<GoodsInfoPost.AttrBean> attrBeanList = new ArrayList<>();
+        GoodsInfoPost.AttrBean attrBean = new GoodsInfoPost.AttrBean();
+        for (int i = 0; i < attrId.length; i++) {
+            attrBean.setAttr_group_id(attrGroupList.get(i).getAttr_group_id());
+            attrBean.setAttr_group_name(attrGroupList.get(i).getAttr_group_name());
+            attrBean.setAttr_id(attrId[i]);
+            attrBean.setAttr_name(attrString[i]);
+            //加入购物车数组、声明一个数组来保存对象上传
+            attrBeanList.add(attrBean);
+        }
+        goodsInfoPost.setAttr(attrBeanList);
     }
 
     public void setData(List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList, String id, Callback callback) {

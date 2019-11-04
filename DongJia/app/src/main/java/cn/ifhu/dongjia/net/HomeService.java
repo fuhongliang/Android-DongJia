@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.CatListDataBean;
 import cn.ifhu.dongjia.model.data.DistrictDataBean;
 import cn.ifhu.dongjia.model.data.DistrivtListDataBean;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
@@ -78,5 +79,10 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/map/district-list")
     public Observable<BaseEntity<List<DistrivtListDataBean>>> districtList(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid);
+    /**
+     * 分类列表
+     */
+    @GET("/index.php?r=api/default/cat-list")
+    public Observable<BaseEntity<CatListDataBean>> catList(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("cid") int cid);
 
 }
