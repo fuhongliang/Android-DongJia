@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/category_color">
@@ -13,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@id/header"
-        android:background="@drawable/center_bnt"/>
+        android:background="@drawable/center_bnt" />
     <!--信息-->
     <RelativeLayout
         android:id="@+id/rl_address"
@@ -21,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/view_bg"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="-50dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/bg_white_4"
         android:minHeight="71dp">
 
@@ -46,7 +47,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="长密码"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -56,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="31dp"
                 android:layout_toRightOf="@id/tv_name"
-                android:text="13763016638"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="17sp" />
         </RelativeLayout>
@@ -69,7 +70,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="11dp"
             android:layout_toRightOf="@id/address"
-            android:text="广东省深圳市宝安区新安三路28号16楼1610"
+            android:text=""
             android:textColor="@color/navigation_color"
             android:textSize="13sp" />
 
@@ -84,142 +85,21 @@
             android:background="@drawable/center_ic_xuanze" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_store"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rl_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_address"
         android:layout_marginTop="15dp"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/ll_logo"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginLeft="15dp"
-            android:orientation="horizontal">
-
-            <com.sunfusheng.GlideImageView
-                android:id="@+id/iv_mch_logo"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/tv_mch_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="7dp"
-                android:text="凯鹰厨卫"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-
-            <ImageView
-                android:layout_width="5dp"
-                android:layout_height="8dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="9dp"
-                android:background="@drawable/center_ic_xuanze"
-                />
-        </LinearLayout>
-
-        <View
-            style="@style/line_fff"
-            android:layout_marginLeft="15dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp">
-
-            <com.yalantis.ucrop.view.GestureCropImageView
-                android:id="@+id/iv_store_pic"
-                android:layout_width="77dp"
-                android:layout_height="77dp"
-                android:layout_marginRight="15dp"
-                />
-
-            <TextView
-                android:id="@+id/tv_store_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/iv_store_pic"
-                android:text="暖眠北欧三人沙发橡木家具"
-                android:textColor="@color/typed_text_color"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tv_specification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_store_name"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/iv_store_pic"
-                android:text="白橡木 1800mm*2000mm"
-                android:textColor="@color/hint_text_color"
-                android:textSize="13sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_specification"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/iv_store_pic">
-
-                <TextView
-                    android:id="@+id/tv_store_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥5999.00"
-                    android:textColor="#FD5757"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_store_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="15dp"
-                    android:text="1"
-                    android:textColor="@color/hint_text_color"
-                    android:textSize="15sp" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="留言："
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/et_description"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="25dp"
-                android:background="@null"
-                android:hint="点击填写留言"
-                android:textColor="@color/hint_text_color"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_marginBottom="55dp"
+        tools:listitem="@layout/item_mch" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_store"
+        android:layout_below="@id/rl_store"
         android:layout_marginTop="15dp"
+        android:visibility="gone"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -277,7 +157,7 @@
                 android:textSize="15sp" />
         </RelativeLayout>
     </LinearLayout>
-
+    <!--总结-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="54dp"
@@ -302,7 +182,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/zong"
-            android:text="￥5999.00"
+            android:text=""
             android:textColor="#FD5757"
             android:textSize="17sp" />
 

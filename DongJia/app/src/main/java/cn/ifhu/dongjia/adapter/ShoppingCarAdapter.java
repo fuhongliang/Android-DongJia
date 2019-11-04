@@ -370,7 +370,7 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         childViewHolder.ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editGoodsNumber(goodsList,1);
+                editGoodsNumber(goodsList, 1);
             }
         });
         //减号点击事件
@@ -378,7 +378,7 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 if (goodsList.getNum() > 1) {
-                   editGoodsNumber(goodsList,-1);
+                    editGoodsNumber(goodsList, -1);
                 } else {
                     ToastHelper.makeText("商品不能再减少了").show();
                 }
@@ -388,20 +388,27 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-
-    public void editGoodsNumber(CartListDataBean.MchListBean.ListBeanX goodsList,int changeNumber){
+    /**
+     * 编辑商品
+     *
+     * @param goodsList    商品数据
+     * @param changeNumber 加减数量
+     */
+    public void editGoodsNumber(CartListDataBean.MchListBean.ListBeanX goodsList, int changeNumber) {
         List<CartListPost> cartListPostList = new ArrayList<>();
         CartListPost cartListPost = new CartListPost();
-        String cartId = goodsList.getCart_id()+"";
+        String cartId = goodsList.getCart_id() + "";
         cartListPost.setCart_id(cartId);
-        cartListPost.setNum((goodsList.getNum() + changeNumber)+"");
+        cartListPost.setNum((goodsList.getNum() + changeNumber) + "");
         cartListPostList.add(cartListPost);
+        // 转换json数据
         String cartList = GsonUtils.convertObject2Json(cartListPostList);
         //回调请求后台接口实现数量的加减
         if (mChangeCountListener != null) {
             mChangeCountListener.onChangeCount(cartList);
         }
-        goodsList.setNum(goodsList.getNum()+changeNumber);
+        // TODO: 2019-11-04 回调成功再去刷新数据
+        goodsList.setNum(goodsList.getNum() + changeNumber);
         notifyDataSetChanged();
     }
 

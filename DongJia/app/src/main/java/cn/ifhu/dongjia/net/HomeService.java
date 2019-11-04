@@ -15,6 +15,7 @@ import cn.ifhu.dongjia.model.data.MchArticleDataBean;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
 import cn.ifhu.dongjia.model.data.SearchDataBean;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
+import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -84,5 +85,11 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/default/cat-list")
     public Observable<BaseEntity<CatListDataBean>> catList(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("cid") int cid);
+    /**
+     * 下单预览
+     */
+    @GET("/index.php?r=api/order/submit-preview")
+    public Observable<BaseEntity<SubmitPreviewDataBean>> submitPreview(@QueryMap Map<String,Object> urlParam);
+
 
 }

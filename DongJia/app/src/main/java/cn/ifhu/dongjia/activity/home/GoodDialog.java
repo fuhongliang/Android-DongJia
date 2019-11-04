@@ -2,6 +2,7 @@ package cn.ifhu.dongjia.activity.home;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
+import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
 import cn.ifhu.dongjia.model.post.AddCartPostData;
 import cn.ifhu.dongjia.model.post.AttrBeanPost;
 import cn.ifhu.dongjia.model.post.GoodsInfoPost;
@@ -81,6 +83,7 @@ public class GoodDialog extends Dialog {
         initView();
     }
 
+    //初始化
     public void initView() {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_goods, null, false);
         setContentView(view);
@@ -221,30 +224,7 @@ public class GoodDialog extends Dialog {
                     //加入购物车数组、声明一个数组来保存对象上传
                     attrBeanPostList.add(attrBeanPost);
                 }
-                /**
-                 * 添加购物车接口
-                 */
-                AttrBeanPost attrBeanPost = new AttrBeanPost();
-                String attr = GsonUtils.convertObject2Json(attrBeanPost);
-                AddCartPostData addCartPostData = new AddCartPostData();
-                addCartPostData.setAccess_token(UserLogic.getUser().getAccess_token());
-                addCartPostData.setAttr(attr);
-                addCartPostData.setGoods_id(good_id);
-                addCartPostData.setNum(quantity);
-                RetrofitAPIManager.create(ShopCartService.class).addCart(addCartPostData)
-                        .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
-                    @Override
-                    protected void onApiComplete() {
-
-                    }
-
-                    @Override
-                    protected void onSuccees(BaseEntity t) throws Exception {
-                        ToastHelper.makeText(t.getMessage()).show();
-                    }
-
-                });
-
+                getGoodsCart(quantity);
             }
         });
         //立即购买
@@ -259,7 +239,6 @@ public class GoodDialog extends Dialog {
                 if (quantityInt > 0 && quantityInt <= attrInfoData.getNum()) {
                     callback.onAdded(attrInfoData, quantityInt);
                     getGoodsInfo();
-                    dismiss();
                 } else {
                     ToastHelper.makeText("商品数量超出库存，请修改数量").show();
                 }
@@ -267,10 +246,37 @@ public class GoodDialog extends Dialog {
             }
         });
     }
-    public void getGoodsInfo(){
-        /**
-         * 立即购买接口
-         */
+
+    /**
+     * 添加购物车接口
+     */
+    public void getGoodsCart(String quantity) {
+        AttrBeanPost attrBeanPost = new AttrBeanPost();
+        String attr = GsonUtils.convertObject2Json(attrBeanPost);
+        AddCartPostData addCartPostData = new AddCartPostData();
+        addCartPostData.setAccess_token(UserLogic.getUser().getAccess_token());
+        addCartPostData.setAttr(attr);
+        addCartPostData.setGoods_id(good_id);
+        addCartPostData.setNum(quantity);
+        RetrofitAPIManager.create(ShopCartService.class).addCart(addCartPostData)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
+            @Override
+            protected void onApiComplete() {
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity t) throws Exception {
+                ToastHelper.makeText(t.getMessage()).show();
+            }
+
+        });
+
+    }
+
+    /**
+     * 立即购买接口
+     */
+    public void getGoodsInfo() {
         GoodsInfoPost goodsInfoPost = new GoodsInfoPost();
         goodsInfoPost.setGoods_id(good_id);
         goodsInfoPost.setNum(Integer.parseInt(tvGoodNumber.getText().toString()));
@@ -285,8 +291,21 @@ public class GoodDialog extends Dialog {
             attrBeanList.add(attrBean);
         }
         goodsInfoPost.setAttr(attrBeanList);
+        String goodsInfoData = GsonUtils.convertObject2Json(goodsInfoPost);
+        dismiss();
+        Intent intent = new Intent(context,ConfirmOrderActivity.class);
+        intent.putExtra("goodsInfoData",goodsInfoData);
+        context.startActivity(intent);
+
     }
 
+    /**
+     * 设置数据
+     *
+     * @param attrGroupList 商品详情里的规格数据
+     * @param id            商家ID
+     * @param callback      回调数据
+     */
     public void setData(List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList, String id, Callback callback) {
         this.callback = callback;
         this.good_id = id;

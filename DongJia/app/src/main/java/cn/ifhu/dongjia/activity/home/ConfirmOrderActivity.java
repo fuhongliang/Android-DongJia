@@ -3,25 +3,39 @@ package cn.ifhu.dongjia.activity.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.sunfusheng.GlideImageView;
-import com.yalantis.ucrop.view.GestureCropImageView;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.activity.me.AddressActivity;
+import cn.ifhu.dongjia.adapter.ConfirmOrderAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
+import cn.ifhu.dongjia.base.LoadMoreScrollListener;
+import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
+import cn.ifhu.dongjia.model.get.SubmitPreviewGetBean;
+import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.HomeService;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
+import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.UserLogic;
 
+/**
+ * 下单预览页面
+ */
 public class ConfirmOrderActivity extends BaseActivity {
+
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
@@ -42,26 +56,10 @@ public class ConfirmOrderActivity extends BaseActivity {
     TextView tvAddress;
     @BindView(R.id.expand)
     ImageView expand;
-    @BindView(R.id.iv_mch_logo)
-    GlideImageView ivMchLogo;
-    @BindView(R.id.tv_mch_name)
-    TextView tvMchName;
-    @BindView(R.id.ll_logo)
-    LinearLayout llLogo;
-    @BindView(R.id.iv_store_pic)
-    GestureCropImageView ivStorePic;
-    @BindView(R.id.tv_store_name)
-    TextView tvStoreName;
-    @BindView(R.id.tv_specification)
-    TextView tvSpecification;
-    @BindView(R.id.tv_store_price)
-    TextView tvStorePrice;
-    @BindView(R.id.tv_store_number)
-    TextView tvStoreNumber;
-    @BindView(R.id.et_description)
-    EditText etDescription;
-    @BindView(R.id.ll_store)
-    LinearLayout llStore;
+    @BindView(R.id.rl_address)
+    RelativeLayout rlAddress;
+    @BindView(R.id.rl_store)
+    RecyclerView rlStore;
     @BindView(R.id.tv_mch_price)
     TextView tvMchPrice;
     @BindView(R.id.tv_freight)
@@ -73,23 +71,96 @@ public class ConfirmOrderActivity extends BaseActivity {
     @BindView(R.id.tv_ok)
     TextView tvOk;
 
+
+    //从商品详情传过来的json数据
+    String goodsInfoData;
+    //创建String接受数据
+    String address_id;
+    String cart_id_list;
+    String mch_list;
+    int payment;
+
+    ConfirmOrderAdapter confirmOrderAdapter;
+    List<SubmitPreviewDataBean.MchListBean> mchList = new ArrayList<>();
+
+    SubmitPreviewDataBean mData = new SubmitPreviewDataBean();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         ButterKnife.bind(this);
         tvTitle.setText("确认订单");
+        Intent intent = getIntent();
+        goodsInfoData = intent.getStringExtra("goodsInfoData");
+        getSubmitPreview();
+        confirmOrderAdapter = new ConfirmOrderAdapter(mchList, this);
+        rlStore.setNestedScrollingEnabled(false);
+        rlStore.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rlStore.setAdapter(confirmOrderAdapter);
+        rlStore.setOnScrollListener(new LoadMoreScrollListener(rlStore));
     }
+
+    /**
+     * 下单预览接口
+     */
+    public void getSubmitPreview() {
+        setLoadingMessageIndicator(true);
+        SubmitPreviewGetBean submitPreviewGetBean = new SubmitPreviewGetBean();
+        submitPreviewGetBean.setAccess_token(UserLogic.getUser().getAccess_token());
+        if (goodsInfoData != null) {
+            submitPreviewGetBean.setGoods_info(goodsInfoData);
+        } else {
+            submitPreviewGetBean.setGoods_info("");
+        }
+        submitPreviewGetBean.setCart_id_list("");
+        submitPreviewGetBean.setMch_list("");
+        RetrofitAPIManager.create(HomeService.class).submitPreview(submitPreviewGetBean.getPostParam())
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<SubmitPreviewDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<SubmitPreviewDataBean> t) throws Exception {
+                mData = t.getData();
+
+                mchList = t.getData().getMch_list();
+                confirmOrderAdapter.setData(mchList);
+                setSubmitPreview();
+            }
+        });
+    }
+
+    /**
+     * 设置数据
+     */
+    public void setSubmitPreview() {
+        tvName.setText(mData.getAddress().getName());
+        tvPhone.setText(mData.getAddress().getMobile());
+        tvAddress.setText(mData.getAddress().getProvince() + mData.getAddress().getCity() + mData.getAddress().getDistrict()+mData.getAddress().getDetail());
+        address_id = mData.getAddress().getId();
+        double pri = mData.getTotal_price();
+        double mchTotalPrice = 0;
+        double mchExpressPrice = 0;
+        for (int i = 0; i < mchList.size(); i++) {
+            mchList = mData.getMch_list();
+            mchTotalPrice += mchList.get(i).getTotal_price();
+            mchExpressPrice += mchList.get(i).getExpress_price();
+
+        }
+        double totalPrice = pri + mchTotalPrice + mchExpressPrice;
+
+        tvTotal.setText("￥"+totalPrice + "");
+    }
+
 
     @OnClick(R.id.iv_back)
     public void onIvBackClicked() {
         finish();
     }
 
-    @OnClick(R.id.ll_logo)
-    public void onLlLogoClicked() {
-        goToActivity(StoreHomeActivity.class);
-    }
 
     @OnClick(R.id.tv_ok)
     public void onTvOkClicked() {

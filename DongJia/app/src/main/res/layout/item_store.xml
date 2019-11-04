@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <com.sunfusheng.GlideImageView
+        android:id="@+id/iv_store_pic"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_marginRight="15dp" />
+
+    <TextView
+        android:id="@+id/tv_store_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_store_pic"
+        android:text=""
+        android:textColor="@color/typed_text_color"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_specification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_store_name"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/iv_store_pic"
+        android:text=""
+        android:textColor="@color/hint_text_color"
+        android:textSize="13sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_specification"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/iv_store_pic">
+
+        <TextView
+            android:id="@+id/tv_store_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#FD5757"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_store_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            android:text=""
+            android:textColor="@color/hint_text_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

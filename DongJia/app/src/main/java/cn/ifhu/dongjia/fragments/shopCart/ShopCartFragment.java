@@ -182,15 +182,15 @@ public class ShopCartFragment extends BaseFragment {
             @Override
             public void OnSettlement() {
 //                //创建一个对象去接收数据
-//                SettlementPost settlementPost = new SettlementPost();
-//                //遍历数据
-//                for (int i = 0; i < mData.size(); i++) {
-//                    List<CartListDataBean.MchListBean.ListBeanX> listData = mData.get(i).getList();
-//                    for (int j = 0; j < listData.size(); j++) {
-//                        settlementPost.setGoods_id(listData.get(j).getGoods_id()+"");
-//                        settlementPost.setNum(listData.get(j).getNum());
-//                    }
-//                }
+                SettlementPost settlementPost = new SettlementPost();
+                //遍历数据
+                for (int i = 0; i < mData.size(); i++) {
+                    List<CartListDataBean.MchListBean.ListBeanX> listData = mData.get(i).getList();
+                    for (int j = 0; j < listData.size(); j++) {
+                        settlementPost.setGoods_id(listData.get(j).getGoods_id()+"");
+                        settlementPost.setNum(listData.get(j).getNum());
+                    }
+                }
 
             }
         });
