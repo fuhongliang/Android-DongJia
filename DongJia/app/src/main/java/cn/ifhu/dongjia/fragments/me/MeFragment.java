@@ -20,6 +20,7 @@ import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.activity.me.AboutUsActivity;
 import cn.ifhu.dongjia.activity.me.AddressActivity;
+import cn.ifhu.dongjia.activity.me.ContentActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.MeDataBean;
@@ -194,6 +195,11 @@ public class MeFragment extends BaseFragment {
     //我的收藏
     @OnClick(R.id.ll_content)
     public void onLlContentClicked() {
+        if (UserLogic.getUser() != null) {
+            goToActivity(ContentActivity.class);
+        } else {
+            ToastHelper.makeText("请登录您的账号").show();
+        }
     }
 
     //收货地址
@@ -201,7 +207,7 @@ public class MeFragment extends BaseFragment {
     public void onLlAddressClicked() {
         if (UserLogic.getUser() != null) {
             goToActivity(AddressActivity.class);
-        }else {
+        } else {
             ToastHelper.makeText("请登录您的账号").show();
         }
     }

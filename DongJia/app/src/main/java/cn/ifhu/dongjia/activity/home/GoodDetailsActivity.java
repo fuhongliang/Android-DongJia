@@ -42,12 +42,14 @@ import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.Sku;
 import cn.ifhu.dongjia.model.get.GoodDetailsGetBean;
+import cn.ifhu.dongjia.model.post.FavoriteAddPostBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DeviceUtil;
 import cn.ifhu.dongjia.utils.GlideRoundTransform;
+import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
 import cn.ifhu.dongjia.utils.X5WebView;
 import cn.ifhu.dongjia.wxapi.WXLoginUtils;
@@ -263,9 +265,37 @@ public class GoodDetailsActivity extends BaseActivity {
         }
     }
 
+    //收藏
     @OnClick(R.id.rl_collection)
     public void onRlCollectionClicked() {
+        if (UserLogic.getUser() == null){
+            WXLoginUtils.WxLogin(this);
+        }else {
+            getFavoriteAdd();
+        }
+    }
 
+    /**
+     * 添加收藏商品接口
+     */
+    public void getFavoriteAdd(){
+        FavoriteAddPostBean favoriteAddPostBean = new FavoriteAddPostBean();
+        favoriteAddPostBean.setAccess_token(UserLogic.getUser().getAccess_token());
+        favoriteAddPostBean.setGoods_id(id);
+        RetrofitAPIManager.create(HomeService.class).favoriteAdd(favoriteAddPostBean)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
+            @Override
+            protected void onApiComplete() {
+
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity t) throws Exception {
+                ToastHelper.makeText(t.getMessage()).show();
+                options2.setSelected(true);
+            }
+
+        });
     }
 
     @OnClick(R.id.rl_specification)

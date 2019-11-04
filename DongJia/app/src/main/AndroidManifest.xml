@@ -45,6 +45,7 @@
         <activity android:name=".activity.me.AboutUsActivity" />
         <activity android:name=".activity.me.AddressActivity" />
         <activity android:name=".activity.me.AddAddressActivity" />
+        <activity android:name=".activity.me.ContentActivity"/>
         <!--shopCart-->
         <activity
             android:name="cn.ifhu.dongjia.wxapi.WXEntryActivity"

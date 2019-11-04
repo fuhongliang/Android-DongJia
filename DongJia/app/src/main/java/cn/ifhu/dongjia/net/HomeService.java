@@ -16,8 +16,12 @@ import cn.ifhu.dongjia.model.data.RecommendDataBean;
 import cn.ifhu.dongjia.model.data.SearchDataBean;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
 import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
+import cn.ifhu.dongjia.model.post.AddressSaveDataBean;
+import cn.ifhu.dongjia.model.post.FavoriteAddPostBean;
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -90,6 +94,12 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/order/submit-preview")
     public Observable<BaseEntity<SubmitPreviewDataBean>> submitPreview(@QueryMap Map<String,Object> urlParam);
+    /**
+     * 添加收藏商品
+     *
+     */
+    @POST("/index.php?r=api/user/favorite-add")
+    public Observable<BaseEntity<Object>> favoriteAdd(@Body FavoriteAddPostBean favoriteAddPostBean);
 
 
 }

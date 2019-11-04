@@ -5,6 +5,7 @@ import java.util.List;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.AddressListDataBean;
 import cn.ifhu.dongjia.model.data.DistrictDataBean;
+import cn.ifhu.dongjia.model.data.FavoriteListDataBean;
 import cn.ifhu.dongjia.model.data.MeDataBean;
 import cn.ifhu.dongjia.model.post.AddressSaveDataBean;
 import io.reactivex.Observable;
@@ -44,6 +45,12 @@ public interface MeService {
      * 删除地址
      */
     @GET("/index.php?r=api/user/address-delete")
-    public Observable<BaseEntity<Object>> addressDelete(@Query("address_id") int address_id,@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("access_token") String access_token);
+    public Observable<BaseEntity<Object>> addressDelete(@Query("address_id") int address_id, @Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("access_token") String access_token);
+
+    /**
+     * 我的收藏商品列表
+     */
+    @GET("/index.php?r=api/user/favorite-list")
+    public Observable<BaseEntity<FavoriteListDataBean>> favoriteList(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("access_token") String access_token, @Query("page") int page);
 
 }
