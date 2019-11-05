@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.activity.me;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +40,13 @@ public class ContentActivity extends BaseActivity {
     TextView tvRightText;
     @BindView(R.id.rv_content)
     RecyclerView rvContent;
+    @BindView(R.id.layout_swipe_refresh)
+    SwipeRefreshLayout layoutSwipeRefresh;
+
 
     FavoriteListAdpter favoriteListAdpter;
     List<FavoriteListDataBean.ListBean> mData = new ArrayList<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,12 +68,12 @@ public class ContentActivity extends BaseActivity {
      * @param page 分页
      */
     public void getFavoriteList(int page) {
-        setLoadingMessageIndicator(true);
+        layoutSwipeRefresh.setRefreshing(true);
         RetrofitAPIManager.create(MeService.class).favoriteList(4, -1, -1, UserLogic.getUser().getAccess_token(), page)
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<FavoriteListDataBean>(true) {
             @Override
             protected void onApiComplete() {
-                setLoadingMessageIndicator(false);
+                layoutSwipeRefresh.setRefreshing(false);
             }
 
             @Override
@@ -75,6 +81,15 @@ public class ContentActivity extends BaseActivity {
                 mData = t.getData().getList();
                 favoriteListAdpter.setData(mData);
             }
+        });
+    }
+
+    @SuppressLint("ResourceAsColor")
+    public void setRefreshLayout() {
+        layoutSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark);
+
+        layoutSwipeRefresh.setOnRefreshListener(() -> {
+            getFavoriteList(1);
         });
     }
 

@@ -8,9 +8,15 @@
 
     <View style="@style/dividing_line" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_content"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/layout_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="15dp" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
