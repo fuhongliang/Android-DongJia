@@ -13,7 +13,7 @@ public class SubmitPreviewGetBean extends BaseBean {
     private String goods_info;
 
     public String getCart_id_list() {
-        return cart_id_list;
+        return cart_id_list == null ? "" : cart_id_list;
     }
 
     public void setCart_id_list(String cart_id_list) {
@@ -21,7 +21,7 @@ public class SubmitPreviewGetBean extends BaseBean {
     }
 
     public String getMch_list() {
-        return mch_list;
+        return mch_list == null ? "" : mch_list;
     }
 
     public void setMch_list(String mch_list) {
@@ -37,7 +37,7 @@ public class SubmitPreviewGetBean extends BaseBean {
     }
 
     public String getGoods_info() {
-        return goods_info;
+        return goods_info == null ? "" : goods_info;
     }
 
     public void setGoods_info(String goods_info) {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.sunfusheng.GlideImageView;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.activity.home.ConfirmOrderActivity;
 import cn.ifhu.dongjia.model.data.CartListDataBean;
 import cn.ifhu.dongjia.model.post.CartListPost;
+import cn.ifhu.dongjia.model.post.MchListPost;
 import cn.ifhu.dongjia.utils.GsonUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 
@@ -146,7 +149,6 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
                 List<CartListDataBean.MchListBean.ListBeanX> goodsList = mchList.getList();
                 for (int i = 0; i < goodsList.size(); i++) {
                     CartListDataBean.MchListBean.ListBeanX listBeanX = goodsList.get(i);
-                    // TODO: 2019-10-31 警告
                     listBeanX.setDisabled(!isSelect_shop);
                 }
                 notifyDataSetChanged();
@@ -208,7 +210,6 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
                 CartListDataBean.MchListBean.ListBeanX goodsList = goods.get(j);
                 boolean isSelect = goodsList.isDisabled();
                 if (isSelect) {
-                    // TODO: 2019-10-23 警告
                     String num = goodsList.getNum() + "";
                     String price = goodsList.getUnitPrice() + "";
 
@@ -241,7 +242,8 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
                 }
                 //如果有被选中的
                 if (temp != null && temp.size() > 0) {
-                    ToastHelper.makeText("跳转到确认订单页面,完成后续订单流程").show();
+//                    ToastHelper.makeText("跳转到确认订单页面,完成后续订单流程").show();
+                    gotoConfirm();
                 } else {
                     ToastHelper.makeText("请选择要购买的商品").show();
                 }
@@ -276,6 +278,26 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         });
         return convertView;
 
+    }
+    //去购物车结算
+    public void gotoConfirm() {
+        MchListPost mch = new MchListPost();
+        List<MchListPost.MchListBean> list = new ArrayList<>();
+        for (int i = 0; i < mData.size(); i++) {
+            MchListPost.MchListBean mchListPost = new MchListPost.MchListBean();
+
+            List<Integer> cart_id_list = new ArrayList<>();
+            mchListPost.setId(mData.get(i).getId());
+            for (CartListDataBean.MchListBean.ListBeanX listBean : mData.get(i).getList()) {
+                cart_id_list.add(listBean.getCart_id());
+            }
+            mchListPost.setCart_id_list(cart_id_list);
+            list.add(mchListPost);
+        }
+        mch.setMchListBeans(list);
+        Intent intent = new Intent(context, ConfirmOrderActivity.class);
+        intent.putExtra("mch_list", mch);
+        context.startActivity(intent);
     }
 
     static class GroupViewHolder {
@@ -344,8 +366,10 @@ public class ShoppingCarAdapter extends BaseExpandableListAdapter {
         // 2019-10-23 塞入数据
         childViewHolder.ivGoodPic.load(goodsList.getGoods_pic());
         childViewHolder.tvGoodName.setText(goodsList.getGoods_name());
-        // TODO: 2019-11-01 缺少规格名称和属性名称
-//        childViewHolder.tvSpecification.setText(attrList.getAttr_group_name()+attrList.getAttr_name());
+        List<CartListDataBean.MchListBean.ListBeanX.AttrListBeanX> attrList = goodsList.getAttr_list();
+        for (int i = 0; i < attrList.size(); i++) {
+            childViewHolder.tvSpecification.setText(attrList.get(i).getAttr_group_name() + attrList.get(i).getAttr_name());
+        }
         childViewHolder.tvNumber.setText(goodsList.getNum() + "");
         childViewHolder.tvPrice.setText(goodsList.getUnitPrice() + "");
 //        //商品是否被选中

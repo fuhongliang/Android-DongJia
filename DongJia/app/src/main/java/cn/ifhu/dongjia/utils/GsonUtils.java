@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GsonUtils {
     /**
@@ -41,6 +42,15 @@ public class GsonUtils {
      * @return String:Json格式的字符串
      */
     public static String convertObject2Json(Object object) {
+        gson=new Gson();
+        return gson.toJson(object);
+    }
+    /**
+     * 将List转换成Json格式的字符串
+     * @param object 要转换成Json的对象
+     * @return String:Json格式的字符串
+     */
+    public static String convertList2Json(List object) {
         gson=new Gson();
         return gson.toJson(object);
     }

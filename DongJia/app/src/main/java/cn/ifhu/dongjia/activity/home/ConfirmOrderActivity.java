@@ -25,10 +25,12 @@ import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
 import cn.ifhu.dongjia.model.get.SubmitPreviewGetBean;
+import cn.ifhu.dongjia.model.post.MchListPost;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.GsonUtils;
 import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
@@ -75,9 +77,10 @@ public class ConfirmOrderActivity extends BaseActivity {
     //从商品详情传过来的json数据
     String goodsInfoData;
     //创建String接受数据
+    //地址ID
     String address_id;
-    String cart_id_list;
-    String mch_list;
+    //购物车ID
+    List<MchListPost.MchListBean> mch_list;
     int payment;
 
     ConfirmOrderAdapter confirmOrderAdapter;
@@ -93,6 +96,9 @@ public class ConfirmOrderActivity extends BaseActivity {
         tvTitle.setText("确认订单");
         Intent intent = getIntent();
         goodsInfoData = intent.getStringExtra("goodsInfoData");
+        try {
+            mch_list = ((MchListPost) intent.getSerializableExtra("mch_list")).getMchListBeans();
+        } catch (Exception ignored){}
         getSubmitPreview();
         confirmOrderAdapter = new ConfirmOrderAdapter(mchList, this);
         rlStore.setNestedScrollingEnabled(false);
@@ -114,7 +120,12 @@ public class ConfirmOrderActivity extends BaseActivity {
             submitPreviewGetBean.setGoods_info("");
         }
         submitPreviewGetBean.setCart_id_list("");
-        submitPreviewGetBean.setMch_list("");
+        if (mch_list != null) {
+            String mchListJson = GsonUtils.convertList2Json(mch_list);
+            submitPreviewGetBean.setMch_list(mchListJson);
+        } else {
+            submitPreviewGetBean.setCart_id_list("");
+        }
         RetrofitAPIManager.create(HomeService.class).submitPreview(submitPreviewGetBean.getPostParam())
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<SubmitPreviewDataBean>(true) {
             @Override
@@ -125,7 +136,6 @@ public class ConfirmOrderActivity extends BaseActivity {
             @Override
             protected void onSuccees(BaseEntity<SubmitPreviewDataBean> t) throws Exception {
                 mData = t.getData();
-
                 mchList = t.getData().getMch_list();
                 confirmOrderAdapter.setData(mchList);
                 setSubmitPreview();
@@ -139,7 +149,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     public void setSubmitPreview() {
         tvName.setText(mData.getAddress().getName());
         tvPhone.setText(mData.getAddress().getMobile());
-        tvAddress.setText(mData.getAddress().getProvince() + mData.getAddress().getCity() + mData.getAddress().getDistrict()+mData.getAddress().getDetail());
+        tvAddress.setText(mData.getAddress().getProvince() + mData.getAddress().getCity() + mData.getAddress().getDistrict() + mData.getAddress().getDetail());
         address_id = mData.getAddress().getId();
         double pri = mData.getTotal_price();
         double mchTotalPrice = 0;
@@ -148,11 +158,18 @@ public class ConfirmOrderActivity extends BaseActivity {
             mchList = mData.getMch_list();
             mchTotalPrice += mchList.get(i).getTotal_price();
             mchExpressPrice += mchList.get(i).getExpress_price();
-
+            MchListPost.MchListBean mchListPost = new MchListPost.MchListBean();
+            mchListPost.setId(mchList.get(i).getId());
+            List<SubmitPreviewDataBean.MchListBean.ListBean> listBeanList = mchList.get(i).getList();
+            List<Integer> cartIdList = new ArrayList<>();
+            for (int j = 0; j < listBeanList.size(); j++) {
+                cartIdList.add(listBeanList.get(j).getCat_id());
+            }
+            mchListPost.setCart_id_list(cartIdList);
         }
         double totalPrice = pri + mchTotalPrice + mchExpressPrice;
 
-        tvTotal.setText("￥"+totalPrice + "");
+        tvTotal.setText("￥" + totalPrice + "");
     }
 
 

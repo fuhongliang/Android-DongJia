@@ -29,7 +29,6 @@ public class SubmitPreviewDataBean {
     private GoodsInfoBean goods_info;
     private AddressBean address;
     private double express_price;
-    private int integral;
     private OfferRuleBean offer_rule;
     private IsShopBean is_shop;
     private Object level;
@@ -74,14 +73,6 @@ public class SubmitPreviewDataBean {
 
     public void setExpress_price(double express_price) {
         this.express_price = express_price;
-    }
-
-    public int getIntegral() {
-        return integral;
-    }
-
-    public void setIntegral(int integral) {
-        this.integral = integral;
     }
 
     public OfferRuleBean getOffer_rule() {
