@@ -5,19 +5,22 @@ import java.util.Map;
 
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.CatListDataBean;
-import cn.ifhu.dongjia.model.data.DistrictDataBean;
 import cn.ifhu.dongjia.model.data.DistrivtListDataBean;
+import cn.ifhu.dongjia.model.data.FavoriteListDataBean;
 import cn.ifhu.dongjia.model.data.GoodDetailsDataBean;
 import cn.ifhu.dongjia.model.data.GoodsAttrInfoDataBean;
+import cn.ifhu.dongjia.model.data.GoodsListDataBean;
 import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
 import cn.ifhu.dongjia.model.data.MchArticleDataBean;
+import cn.ifhu.dongjia.model.data.MchListDataBean;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
 import cn.ifhu.dongjia.model.data.SearchDataBean;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
+import cn.ifhu.dongjia.model.data.SubmitDataBean;
 import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
-import cn.ifhu.dongjia.model.post.AddressSaveDataBean;
 import cn.ifhu.dongjia.model.post.FavoriteAddPostBean;
+import cn.ifhu.dongjia.model.post.SubmitPostBean;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -95,11 +98,35 @@ public interface HomeService {
     @GET("/index.php?r=api/order/submit-preview")
     public Observable<BaseEntity<SubmitPreviewDataBean>> submitPreview(@QueryMap Map<String,Object> urlParam);
     /**
+     * 订单提交
+     *
+     * @return
+     */
+    @POST("/index.php?r=api/order/submit")
+    public Observable<BaseEntity<SubmitDataBean>> submit(@Body SubmitPostBean submitPostBean);
+    /**
      * 添加收藏商品
      *
      */
     @POST("/index.php?r=api/user/favorite-add")
     public Observable<BaseEntity<Object>> favoriteAdd(@Body FavoriteAddPostBean favoriteAddPostBean);
 
+    /**
+     * 取消收藏接口
+     *
+     */
+    @POST("/index.php?r=api/user/favorite-remove")
+    public Observable<BaseEntity<Object>> favoriteRemove(@Body FavoriteAddPostBean favoriteAddPostBean);
+    /**
+     * 商品列表
+     */
+    @GET("/index.php?r=api/default/goods-list")
+    public Observable<BaseEntity<GoodsListDataBean>> GoodsList(@QueryMap Map<String,Object> urlParam);
+
+    /**
+     * 商家列表
+     */
+    @GET("/index.php?r=api/default/mch-list")
+    public Observable<BaseEntity<MchListDataBean>> MchList(@QueryMap Map<String,Object> urlParam);
 
 }

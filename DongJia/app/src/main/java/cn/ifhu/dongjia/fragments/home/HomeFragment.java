@@ -140,15 +140,12 @@ public class HomeFragment extends BaseFragment {
                             int beginIndex = url.indexOf("cat_id=")+7;
                             String id = url.substring(beginIndex,url.length());
 
-
-
                         }catch (Exception e){
                             //异常处理  系统不会崩溃
                             e.printStackTrace();
                         }
 
                     }
-
 
                 }
             }

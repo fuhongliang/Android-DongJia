@@ -23,14 +23,17 @@ import cn.ifhu.dongjia.adapter.ConfirmOrderAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.SubmitDataBean;
 import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
 import cn.ifhu.dongjia.model.get.SubmitPreviewGetBean;
 import cn.ifhu.dongjia.model.post.MchListPost;
+import cn.ifhu.dongjia.model.post.SubmitPostBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.GsonUtils;
+import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
@@ -81,7 +84,9 @@ public class ConfirmOrderActivity extends BaseActivity {
     String address_id;
     //购物车ID
     List<MchListPost.MchListBean> mch_list;
-    int payment;
+    int payment = 0;
+    //商品ID
+    String goodsId;
 
     ConfirmOrderAdapter confirmOrderAdapter;
     List<SubmitPreviewDataBean.MchListBean> mchList = new ArrayList<>();
@@ -98,13 +103,24 @@ public class ConfirmOrderActivity extends BaseActivity {
         goodsInfoData = intent.getStringExtra("goodsInfoData");
         try {
             mch_list = ((MchListPost) intent.getSerializableExtra("mch_list")).getMchListBeans();
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         getSubmitPreview();
         confirmOrderAdapter = new ConfirmOrderAdapter(mchList, this);
         rlStore.setNestedScrollingEnabled(false);
         rlStore.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rlStore.setAdapter(confirmOrderAdapter);
         rlStore.setOnScrollListener(new LoadMoreScrollListener(rlStore));
+    }
+
+    @Override
+    //两个页面回转数据
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100){
+            address_id = data.getStringExtra("address_id");
+
+        }
     }
 
     /**
@@ -158,17 +174,20 @@ public class ConfirmOrderActivity extends BaseActivity {
             mchList = mData.getMch_list();
             mchTotalPrice += mchList.get(i).getTotal_price();
             mchExpressPrice += mchList.get(i).getExpress_price();
+
+
             MchListPost.MchListBean mchListPost = new MchListPost.MchListBean();
             mchListPost.setId(mchList.get(i).getId());
+
             List<SubmitPreviewDataBean.MchListBean.ListBean> listBeanList = mchList.get(i).getList();
             List<Integer> cartIdList = new ArrayList<>();
             for (int j = 0; j < listBeanList.size(); j++) {
                 cartIdList.add(listBeanList.get(j).getCat_id());
+                goodsId = listBeanList.get(j).getGoods_id()+"";
             }
             mchListPost.setCart_id_list(cartIdList);
         }
         double totalPrice = pri + mchTotalPrice + mchExpressPrice;
-
         tvTotal.setText("￥" + totalPrice + "");
     }
 
@@ -181,7 +200,36 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @OnClick(R.id.tv_ok)
     public void onTvOkClicked() {
+        submitPost("app");
+    }
 
+    public void submitPost(String app) {
+        setLoadingMessageIndicator(true);
+        SubmitPostBean submitPostBean = new SubmitPostBean();
+        submitPostBean.setAccess_token(UserLogic.getUser().getAccess_token());
+        submitPostBean.setAddress_id(address_id);
+        submitPostBean.setApp_key(app);
+        submitPostBean.setCart_id_list("");
+        if (mch_list == null){
+            submitPostBean.setMch_list(goodsId);
+        }else {
+            String mchListJson = GsonUtils.convertList2Json(mch_list);
+            submitPostBean.setMch_list(mchListJson);
+        }
+        submitPostBean.setPayment(payment + "");
+        RetrofitAPIManager.create(HomeService.class).submit(submitPostBean)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<SubmitDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<SubmitDataBean> t) throws Exception {
+                ToastHelper.makeText(t.getMessage()).show();
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.rl_address)

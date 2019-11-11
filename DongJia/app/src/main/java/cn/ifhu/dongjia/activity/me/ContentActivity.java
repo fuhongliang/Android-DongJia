@@ -54,6 +54,7 @@ public class ContentActivity extends BaseActivity {
         setContentView(R.layout.activity_content);
         ButterKnife.bind(this);
         tvTitle.setText("我的收藏");
+        setRefreshLayout();
         favoriteListAdpter = new FavoriteListAdpter(mData, this);
         rvContent.setNestedScrollingEnabled(false);
         rvContent.setLayoutManager(new GridLayoutManager(this, 2));

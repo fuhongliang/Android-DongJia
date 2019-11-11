@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.marshalchen.ultimaterecyclerview.expanx.Util.DataUtil;
 import com.sunfusheng.GlideImageView;
 
 import java.util.List;

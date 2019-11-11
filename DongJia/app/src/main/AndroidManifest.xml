@@ -34,9 +34,11 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".activity.home.GoodDetailsActivity" />
         <activity android:name=".activity.home.StoreHomeActivity"/>
-        <activity android:name=".activity.home.ConfirmOrderActivity"/>
+        <activity android:name=".activity.home.ConfirmOrderActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <activity android:name=".activity.home.SelectCityActivity"/>
         <activity android:name=".activity.home.CatListActivity"/>
+        <activity android:name=".activity.home.GoodsListActivity"/>
         <!--homeCase-->
         <activity android:name=".activity.homeCase.AddCallDesignerActivity" />
         <activity android:name=".activity.homeCase.CallDesignerActivity" />

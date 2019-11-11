@@ -259,7 +259,6 @@ public class GoodDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_buy)
     public void onTvBuyClicked() {
         if (UserLogic.getUser() != null) {
-            goToActivity(ConfirmOrderActivity.class);
         } else {
             WXLoginUtils.WxLogin(this);
         }
@@ -268,17 +267,19 @@ public class GoodDetailsActivity extends BaseActivity {
     //收藏
     @OnClick(R.id.rl_collection)
     public void onRlCollectionClicked() {
-        if (UserLogic.getUser() == null){
+        if (UserLogic.getUser() == null) {
             WXLoginUtils.WxLogin(this);
-        }else {
+        } else if (UserLogic.getUser().getAccess_token() != null) {
             getFavoriteAdd();
+        } else {
+            getFavoriteRemove();
         }
     }
 
     /**
      * 添加收藏商品接口
      */
-    public void getFavoriteAdd(){
+    public void getFavoriteAdd() {
         FavoriteAddPostBean favoriteAddPostBean = new FavoriteAddPostBean();
         favoriteAddPostBean.setAccess_token(UserLogic.getUser().getAccess_token());
         favoriteAddPostBean.setGoods_id(id);
@@ -297,6 +298,31 @@ public class GoodDetailsActivity extends BaseActivity {
 
         });
     }
+
+    /**
+     * 取消收藏接口
+     */
+    public void getFavoriteRemove() {
+        setLoadingMessageIndicator(true);
+        FavoriteAddPostBean favoriteAddPostBean = new FavoriteAddPostBean();
+        favoriteAddPostBean.setAccess_token(UserLogic.getUser().getAccess_token());
+        favoriteAddPostBean.setGoods_id(id);
+        RetrofitAPIManager.create(HomeService.class).favoriteRemove(favoriteAddPostBean)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity t) throws Exception {
+                ToastHelper.makeText(t.getMessage()).show();
+                options2.setSelected(false);
+            }
+
+        });
+    }
+
 
     @OnClick(R.id.rl_specification)
     public void onRlSpecificationClicked() {

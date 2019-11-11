@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.activity.homeCase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseActivity;
+import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.TopicDataBean;
+import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.HomeCaseService;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
+import cn.ifhu.dongjia.net.SchedulerUtils;
 
 /**
  * 增加联系设计师
@@ -28,8 +35,8 @@ public class CallDesignerActivity extends BaseActivity {
     GlideImageView ivAvatar;
     @BindView(R.id.tv_name)
     TextView tvName;
-    @BindView(R.id.tv_store_time)
-    TextView tvStoreTime;
+    @BindView(R.id.tv_store_title)
+    TextView tvStoreTitle;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.options1)
@@ -39,14 +46,41 @@ public class CallDesignerActivity extends BaseActivity {
     @BindView(R.id.rl_call_designer)
     RelativeLayout rlCallDesigner;
 
+    String id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_designer_btn);
         ButterKnife.bind(this);
-
-
+        id = getIntent().getStringExtra("id");
+        getTopicShow();
     }
+
+    /**
+     * 方案详情
+     */
+    public void getTopicShow() {
+        setLoadingMessageIndicator(true);
+        RetrofitAPIManager.create(HomeCaseService.class).Topic(4, -1, -1, id)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<TopicDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<TopicDataBean> t) throws Exception {
+                ivAvatarBg.load(t.getData().getCover_pic());
+                ivAvatar.load(t.getData().getAuthor_logo());
+                tvName.setText(t.getData().getAuthor());
+                tvStoreTitle.setText(t.getData().getTitle());
+                tvTime.setText(t.getData().getAddtime());
+                tvContent.setText(t.getData().getSub_title());
+            }
+        });
+    }
+
 
     @OnClick(R.id.iv_back)
     public void onIvBackClicked() {

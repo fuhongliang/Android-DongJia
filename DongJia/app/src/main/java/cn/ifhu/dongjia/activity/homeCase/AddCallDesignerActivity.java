@@ -12,6 +12,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseActivity;
+import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.get.CreateUserMessageGetBean;
+import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.HomeCaseService;
+import cn.ifhu.dongjia.net.RetrofitAPIManager;
+import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.StringUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 
@@ -60,6 +66,31 @@ public class AddCallDesignerActivity extends BaseActivity {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 联系设计师
+     */
+    public void getCreateUserMessage(){
+        setLoadingMessageIndicator(true);
+        CreateUserMessageGetBean createUserMessageGetBean = new CreateUserMessageGetBean();
+        RetrofitAPIManager.create(HomeCaseService.class).CreateUserMessage(createUserMessageGetBean.getPostParam())
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver(true) {
+            @Override
+            protected void onApiComplete() {
+
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity t) throws Exception {
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+
+            }
+        });
     }
 
     @OnClick(R.id.iv_back)

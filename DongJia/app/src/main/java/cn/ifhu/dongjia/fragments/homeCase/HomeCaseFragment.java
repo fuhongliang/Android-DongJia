@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.fragments.homeCase;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.activity.homeCase.CallDesignerActivity;
 import cn.ifhu.dongjia.adapter.HomeCaseAdpter;
 import cn.ifhu.dongjia.base.BaseFragment;
 import cn.ifhu.dongjia.base.LoadMoreScrollListener;
@@ -72,7 +74,9 @@ public class HomeCaseFragment extends BaseFragment {
         homeCaseAdpter = new HomeCaseAdpter(mData, getContext(), new HomeCaseAdpter.OnClickItem() {
             @Override
             public void llHomeCase(int position) {
-
+                Intent intent = new Intent(getContext(), CallDesignerActivity.class);
+                intent.putExtra("id",mData.get(position).getId());
+                startActivity(intent);
             }
         });
         rvHomeCase.setNestedScrollingEnabled(false);
@@ -89,6 +93,12 @@ public class HomeCaseFragment extends BaseFragment {
         layoutSwipeRefresh.setOnRefreshListener(() -> {
             getTopicList(1);
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTopicList(1);
     }
 
     /**

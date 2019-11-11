@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,8 +45,9 @@ public class CatListActivity extends BaseActivity {
     LinearLayout llContent;
     @BindView(R.id.lv_category)
     ListView lvCategory;
-
-    public int mCatId = 0;
+    //分类ID
+    public String mCatId = "0";
+    //选中
     public int classPosition = 0;
     CategoryAdapter categoryAdapter;
     List<CatListDataBean.ListBeanX> listBeanData = new ArrayList<>();
@@ -63,18 +65,23 @@ public class CatListActivity extends BaseActivity {
         tvTitle.setText("分类列表");
         getCatListData();
         //商品左边
-        categoryAdapter = new CategoryAdapter(listBeanData, this, new CategoryAdapter.ItemOnclick() {
-            @Override
-            public void onClickItem(int position) {
-                mCatId = Integer.parseInt(listBeanData.get(position).getId());
-                classPosition = position;
-                categoryAdapter.notifyDataSetChanged();
-                showGoodslist();
-            }
+        categoryAdapter = new CategoryAdapter(listBeanData, this, position -> {
+            mCatId = listBeanData.get(position).getId();
+            classPosition = position;
+            categoryAdapter.notifyDataSetChanged();
+            showGoodslist();
         });
         lvCategory.setAdapter(categoryAdapter);
+
         //商品右边
-        productAdapter = new ProductAdapter(listData, this);
+        productAdapter = new ProductAdapter(listData, this, position -> {
+//            for (int i = 0; i < listBeanData.size(); i++) {
+//                mCatId = Integer.parseInt(listBeanData.get(i).getId());
+//            }
+            Intent intent = new Intent(this, GoodsListActivity.class);
+            intent.putExtra("CatId", mCatId);
+            startActivity(intent);
+        });
         rvProduct.setNestedScrollingEnabled(false);
         rvProduct.setLayoutManager(new GridLayoutManager(this, 3));
         rvProduct.setAdapter(productAdapter);
@@ -98,12 +105,13 @@ public class CatListActivity extends BaseActivity {
                 listBeanData = t.getData().getList();
                 categoryAdapter.setData(listBeanData);
                 showGoodslist();
+                mCatId = listBeanData.get(classPosition).getId();
             }
         });
     }
 
-    public void showGoodslist(){
-        if (classPosition < listBeanData.size()){
+    public void showGoodslist() {
+        if (classPosition < listBeanData.size()) {
             listData = listBeanData.get(classPosition).getList();
         }
         productAdapter.setData(listData);

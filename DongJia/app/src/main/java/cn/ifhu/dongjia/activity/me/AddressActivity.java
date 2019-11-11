@@ -50,6 +50,8 @@ public class AddressActivity extends BaseActivity {
     @BindView(R.id.rl_add_address)
     RelativeLayout rlAddAddress;
 
+
+
     AddressAdapter addressAdapter;
     private List<AddressListDataBean.ListBean> mData = new ArrayList<>();
 
@@ -98,6 +100,15 @@ public class AddressActivity extends BaseActivity {
                 startActivity(intent);
 //                goToActivity(AddAddressActivity.class);
 
+            }
+
+            @Override
+            public void RlAddress(int position) {
+                Intent intent = new Intent();
+                intent.putExtra("address_id",mData.get(position).getId());
+                //100是随意定义
+                setResult(100,intent);
+                finish();
             }
 
         });

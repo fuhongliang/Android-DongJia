@@ -15,12 +15,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
-import cn.ifhu.dongjia.model.data.AddressDataBean;
 import cn.ifhu.dongjia.model.data.AddressListDataBean;
 
 public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.ListBean, AddressAdapter.ViewHolder> {
 
-//    private address address_id;
+
+    //    private address address_id;
     private Context context;
     private List<AddressListDataBean.ListBean> mData;
     private OnClickItem onClickItem;
@@ -60,7 +60,7 @@ public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.List
         holder.tvPhone.setText(mData.get(position).getMobile());
         holder.tvAddress.setText(mData.get(position).getAddress());
         if (onClickItem != null) {
-            holder.rlDelete.setOnClickListener(v ->{
+            holder.rlDelete.setOnClickListener(v -> {
                         onClickItem.Delete(position);
 //                        address_id.id(mData.get(position).getId());
                     }
@@ -68,14 +68,17 @@ public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.List
 
             holder.rlEdit.setOnClickListener(v ->
                     onClickItem.Edit(position));
+            holder.rlAddress.setOnClickListener(v -> {
+                onClickItem.RlAddress(position);
+            });
         }
         holder.ivSelect.setOnClickListener(v -> {
             holder.ivSelect.setSelected(!holder.ivSelect.isSelected());
         });
         //String的不能用=号  int可以用= ，String用.equals
-        if (mData.get(position).getIs_default().equals("0")){
+        if (mData.get(position).getIs_default().equals("0")) {
             holder.ivSelect.setSelected(false);
-        }else {
+        } else {
             holder.ivSelect.setSelected(true);
         }
     }
@@ -91,6 +94,8 @@ public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.List
 
         void Edit(int position);
 
+        void RlAddress(int position);
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,6 +105,8 @@ public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.List
         TextView tvPhone;
         @BindView(R.id.tv_address)
         TextView tvAddress;
+        @BindView(R.id.rl_address)
+        RelativeLayout rlAddress;
         @BindView(R.id.iv_select)
         ImageView ivSelect;
         @BindView(R.id.delete)

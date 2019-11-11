@@ -120,6 +120,12 @@ public class ShopCartFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCartList();
+    }
+
     /**
      * 初始化ExpandableListView
      * 创建数据适配器adapter，并进行初始化操作
