@@ -24,7 +24,7 @@ import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 
 /**
- * 增加联系设计师
+ * 联系设计师详情
  */
 public class CallDesignerActivity extends BaseActivity {
     @BindView(R.id.iv_avatar_bg)
@@ -47,6 +47,8 @@ public class CallDesignerActivity extends BaseActivity {
     RelativeLayout rlCallDesigner;
 
     String id;
+    //创建id接收数据传输到联系设计师
+    String topic_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +78,8 @@ public class CallDesignerActivity extends BaseActivity {
                 tvName.setText(t.getData().getAuthor());
                 tvStoreTitle.setText(t.getData().getTitle());
                 tvTime.setText(t.getData().getAddtime());
-                tvContent.setText(t.getData().getSub_title());
+                tvContent.setText(t.getData().getContent());
+                topic_id = t.getData().getId();
             }
         });
     }
@@ -89,6 +92,8 @@ public class CallDesignerActivity extends BaseActivity {
 
     @OnClick(R.id.rl_call_designer)
     public void onRlCallDesignerClicked() {
-        goToActivity(AddCallDesignerActivity.class);
+        Intent intent = new Intent(this,AddCallDesignerActivity.class);
+        intent.putExtra("topic_id",topic_id);
+        startActivity(intent);
     }
 }

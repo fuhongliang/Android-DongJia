@@ -126,6 +126,9 @@ public class GoodDetailsActivity extends BaseActivity {
     //商品sku
     private GoodDialog dialog;
 
+    //是否收藏商品  0否 1是
+    int IsFavorite;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_good_details);
@@ -206,11 +209,17 @@ public class GoodDetailsActivity extends BaseActivity {
                 ivAvatar.load(t.getData().getMch().getLogo());
                 tvStoreName.setText(t.getData().getMch().getName());
                 wvDetail.loadData(t.getData().getDetail(), "text/html", "UTF-8");
+                IsFavorite = t.getData().getIs_favorite();
 
                 //TODO:webView自适应手机屏幕
                 wvDetail.getSettings().setUseWideViewPort(true);
                 wvDetail.getSettings().setLoadWithOverviewMode(true);
                 getRecommend();
+                if (IsFavorite == 0){
+                    options2.setImageResource(R.drawable.detail_ic_sc);
+                }else {
+                    options2.setImageResource(R.drawable.detail_ic_sc1);
+                }
             }
         });
     }
@@ -269,10 +278,12 @@ public class GoodDetailsActivity extends BaseActivity {
     public void onRlCollectionClicked() {
         if (UserLogic.getUser() == null) {
             WXLoginUtils.WxLogin(this);
-        } else if (UserLogic.getUser().getAccess_token() != null) {
-            getFavoriteAdd();
         } else {
-            getFavoriteRemove();
+            if (IsFavorite == 0) {
+                getFavoriteAdd();
+            } else {
+                getFavoriteRemove();
+            }
         }
     }
 
@@ -287,13 +298,12 @@ public class GoodDetailsActivity extends BaseActivity {
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
             @Override
             protected void onApiComplete() {
-
             }
 
             @Override
             protected void onSuccees(BaseEntity t) throws Exception {
-                ToastHelper.makeText(t.getMessage()).show();
-                options2.setSelected(true);
+                options2.setImageDrawable(getResources().getDrawable(R.drawable.detail_ic_sc1));
+                IsFavorite = 1;
             }
 
         });
@@ -303,7 +313,6 @@ public class GoodDetailsActivity extends BaseActivity {
      * 取消收藏接口
      */
     public void getFavoriteRemove() {
-        setLoadingMessageIndicator(true);
         FavoriteAddPostBean favoriteAddPostBean = new FavoriteAddPostBean();
         favoriteAddPostBean.setAccess_token(UserLogic.getUser().getAccess_token());
         favoriteAddPostBean.setGoods_id(id);
@@ -311,13 +320,12 @@ public class GoodDetailsActivity extends BaseActivity {
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<Object>(true) {
             @Override
             protected void onApiComplete() {
-                setLoadingMessageIndicator(false);
             }
 
             @Override
             protected void onSuccees(BaseEntity t) throws Exception {
-                ToastHelper.makeText(t.getMessage()).show();
-                options2.setSelected(false);
+                options2.setImageDrawable(getResources().getDrawable(R.drawable.detail_ic_sc));
+                IsFavorite = 0;
             }
 
         });
