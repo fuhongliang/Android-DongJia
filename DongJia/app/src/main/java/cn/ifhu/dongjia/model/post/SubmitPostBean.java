@@ -9,6 +9,15 @@ public class SubmitPostBean extends BaseBean {
     private String mch_list;
     private String payment;
     private String app_key;
+    private String goods_info;
+
+    public String getGoods_info() {
+        return goods_info;
+    }
+
+    public void setGoods_info(String goods_info) {
+        this.goods_info = goods_info;
+    }
 
     public String getAccess_token() {
         return access_token;

@@ -21,6 +21,7 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.activity.me.AboutUsActivity;
 import cn.ifhu.dongjia.activity.me.AddressActivity;
 import cn.ifhu.dongjia.activity.me.ContentActivity;
+import cn.ifhu.dongjia.activity.order.OrderListActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.MeDataBean;
@@ -221,6 +222,7 @@ public class MeFragment extends BaseFragment {
     //全部订单
     @OnClick(R.id.rl_order)
     public void onRlOrderClicked() {
+        goToActivity(OrderListActivity.class);
     }
 
     //待付款

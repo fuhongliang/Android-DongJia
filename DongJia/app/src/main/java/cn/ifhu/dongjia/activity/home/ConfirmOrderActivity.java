@@ -93,6 +93,9 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     SubmitPreviewDataBean mData = new SubmitPreviewDataBean();
 
+    //提交订单返回id
+    String order_id;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +143,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             String mchListJson = GsonUtils.convertList2Json(mch_list);
             submitPreviewGetBean.setMch_list(mchListJson);
         } else {
-            submitPreviewGetBean.setCart_id_list("");
+            submitPreviewGetBean.setMch_list("");
         }
         RetrofitAPIManager.create(HomeService.class).submitPreview(submitPreviewGetBean.getPostParam())
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<SubmitPreviewDataBean>(true) {
@@ -203,20 +206,29 @@ public class ConfirmOrderActivity extends BaseActivity {
         submitPost("app");
     }
 
+    /**
+     * 订单提交接口
+     * @param app
+     */
     public void submitPost(String app) {
         setLoadingMessageIndicator(true);
         SubmitPostBean submitPostBean = new SubmitPostBean();
         submitPostBean.setAccess_token(UserLogic.getUser().getAccess_token());
         submitPostBean.setAddress_id(address_id);
-        submitPostBean.setApp_key(app);
         submitPostBean.setCart_id_list("");
-        if (mch_list == null){
-            submitPostBean.setMch_list(goodsId);
-        }else {
+        if (mch_list != null){
             String mchListJson = GsonUtils.convertList2Json(mch_list);
             submitPostBean.setMch_list(mchListJson);
+        }else {
+            submitPostBean.setMch_list("");
         }
-        submitPostBean.setPayment(payment + "");
+        submitPostBean.setPayment(payment+"");
+        submitPostBean.setApp_key(app);
+        if (goodsInfoData != null){
+            submitPostBean.setGoods_info(goodsInfoData);
+        }else {
+            submitPostBean.setGoods_info("");
+        }
         RetrofitAPIManager.create(HomeService.class).submit(submitPostBean)
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<SubmitDataBean>(true) {
             @Override

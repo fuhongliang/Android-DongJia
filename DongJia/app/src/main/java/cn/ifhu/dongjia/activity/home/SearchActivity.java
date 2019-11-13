@@ -111,6 +111,8 @@ public class SearchActivity extends BaseActivity {
             protected void onSuccees(BaseEntity<SearchDataBean> t) throws Exception {
                 mDatas = t.getData().getList();
                 searchAdapter.setData(mDatas);
+                flow.setVisibility(View.GONE);
+                ll.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -13,8 +13,8 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="${app_icon}"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -33,12 +33,13 @@
             android:name=".activity.home.SearchActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".activity.home.GoodDetailsActivity" />
-        <activity android:name=".activity.home.StoreHomeActivity"/>
-        <activity android:name=".activity.home.ConfirmOrderActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".activity.home.SelectCityActivity"/>
-        <activity android:name=".activity.home.CatListActivity"/>
-        <activity android:name=".activity.home.GoodsListActivity"/>
+        <activity android:name=".activity.home.StoreHomeActivity" />
+        <activity
+            android:name=".activity.home.ConfirmOrderActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".activity.home.SelectCityActivity" />
+        <activity android:name=".activity.home.CatListActivity" />
+        <activity android:name=".activity.home.GoodsListActivity" />
         <!--homeCase-->
         <activity android:name=".activity.homeCase.AddCallDesignerActivity" />
         <activity android:name=".activity.homeCase.CallDesignerActivity" />
@@ -47,7 +48,10 @@
         <activity android:name=".activity.me.AboutUsActivity" />
         <activity android:name=".activity.me.AddressActivity" />
         <activity android:name=".activity.me.AddAddressActivity" />
-        <activity android:name=".activity.me.ContentActivity"/>
+        <activity android:name=".activity.me.ContentActivity" />
+        <!--order-->
+        <activity android:name=".activity.order.OrderListActivity"/>
+        <activity android:name=".activity.order.OrderDetailsActivity"/>
         <!--shopCart-->
         <activity
             android:name="cn.ifhu.dongjia.wxapi.WXEntryActivity"

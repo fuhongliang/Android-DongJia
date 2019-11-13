@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
