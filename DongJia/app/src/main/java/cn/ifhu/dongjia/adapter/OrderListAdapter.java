@@ -26,12 +26,11 @@ import cn.ifhu.dongjia.model.data.OrderListDataBean;
 public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.ListBean, OrderListAdapter.ViewHolder> {
 
 
-
     private List<OrderListDataBean.ListBean> mDatas;
     private Context context;
     private OnClickItem onClickItem;
 
-    public OrderListAdapter(List<OrderListDataBean.ListBean>mDatas,Context context, OnClickItem onClickItem) {
+    public OrderListAdapter(List<OrderListDataBean.ListBean> mDatas, Context context, OnClickItem onClickItem) {
         this.mDatas = mDatas;
         this.context = context;
         this.onClickItem = onClickItem;
@@ -69,7 +68,7 @@ public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.List
                 OrderListDataBean.ListBean.GoodsListBean.AttrListBean attrList = mDatas.get(position).getGoods_list().get(i).getAttr_list().get(j);
                 attr.append(attrList.getAttr_group_name()).append(":").append(attrList.getAttr_name()).append(" ");
             }
-            View view = gernerateGoodsView(mDatas.get(position).getOrder_id(),goodsList.getGoods_pic(), goodsList.getGoods_name(), attr.toString(), goodsList.getPrice(), goodsList.getNum() + "");
+            View view = gernerateGoodsView(mDatas.get(position).getOrder_id(), goodsList.getGoods_pic(), goodsList.getGoods_name(), attr.toString(), goodsList.getPrice(), goodsList.getNum() + "");
             holder.llOrder.addView(view);
         }
         if (onClickItem != null) {
@@ -90,7 +89,7 @@ public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.List
      * @param number    商品数量
      * @return
      */
-    public View gernerateGoodsView(int orderId,String goodsPic, String goodsName, String attr, String price, String number) {
+    public View gernerateGoodsView(int orderId, String goodsPic, String goodsName, String attr, String price, String number) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_order_group, null, false);
         ((GlideImageView) view.findViewById(R.id.iv_good_pic)).load(goodsPic);
         ((TextView) view.findViewById(R.id.tv_good_name)).setText(goodsName);
@@ -101,7 +100,7 @@ public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.List
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
-                intent.putExtra("orderId",orderId);
+                intent.putExtra("Order_id", orderId);
                 context.startActivity(intent);
             }
         });

@@ -1,5 +1,7 @@
 package cn.ifhu.dongjia.activity.order;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,8 +101,8 @@ public class OrderDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
         ButterKnife.bind(this);
-        OrderId = getIntent().getIntExtra("Order_id", 0);
 //        OrderId = getDataInt();
+        OrderId = getIntent().getIntExtra("Order_id", 0);
         getOrderDetail();
     }
 
@@ -134,12 +136,8 @@ public class OrderDetailsActivity extends BaseActivity {
         tvAddress.setText(mDatas.getAddress());
         tvUserName.setText(mDatas.getName());
         tvPhone.setText(mDatas.getMobile());
-        //商家信息
-        for (int i = 0; i < goodsList.size(); i++) {
-            ivStorePic.load(goodsList.get(i).getGoods_pic());
-            tvStoreName.setText(goodsList.get(i).getName());
-        }
-
+        ivStorePic.load(mDatas.getMch().getLogo());
+        tvStoreName.setText(mDatas.getMch().getName());
         //商品信息
         llGoods.removeAllViews();
         for (int i = 0; i < mDatas.getGoods_list().size(); i++) {
@@ -159,10 +157,15 @@ public class OrderDetailsActivity extends BaseActivity {
         tvPrice.setText(mDatas.getGoods_total_price() + "");
         tvRemarks.setText(mDatas.getContent());
         //订单信息
-        tvNumbering.setText(mDatas.getExpress_no());
+        tvNumbering.setText(mDatas.getOrder_no());
         tvOrderTime.setText(mDatas.getAddtime());
+        //按钮
+        setOrderProcess();
     }
 
+    /**
+     * 按钮隐藏显示
+     */
     public void setOrderProcess() {
         if (mDatas.getStatus_code() == 0) {
             //订单待付款
@@ -234,4 +237,11 @@ public class OrderDetailsActivity extends BaseActivity {
     @OnClick(R.id.tv_call_store)
     public void onTvCallStoreClicked() {
     }
+
+//    @OnClick(R.id.tv_copy)
+//    public void onTvCopyClicked() {
+//        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//        cm.setText(tvNumbering.getText());
+//    }
+
 }

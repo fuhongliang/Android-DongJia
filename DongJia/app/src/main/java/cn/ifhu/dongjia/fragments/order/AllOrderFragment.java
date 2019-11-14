@@ -60,7 +60,6 @@ public class AllOrderFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         setRefreshLayout();
         getOrderList();
-        setRefreshLayout();
         orderListAdapter = new OrderListAdapter(listBeans, getContext(), new OrderListAdapter.OnClickItem() {
             @Override
             //取消订单
@@ -71,9 +70,9 @@ public class AllOrderFragment extends BaseFragment {
             @Override
             //跳转到订单详情
             public void LlOrder(int position) {
-                Intent intent = new Intent(getContext(), OrderDetailsActivity.class);
-                intent.putExtra("Order_id", listBeans.get(position).getOrder_id());
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), OrderDetailsActivity.class);
+//                intent.putExtra("Order_id", listBeans.get(position).getOrder_id()+"");
+//                startActivity(intent);
 //                goToActivity(OrderDetailsActivity.class,listBeans.get(position).getOrder_id());
             }
         });

@@ -51,9 +51,9 @@ public class OrderDetailDataBean {
     private String address;
     private String order_no;
     private String addtime;
-    private int total_price;
-    private int express_price;
-    private int goods_total_price;
+    private double total_price;
+    private double express_price;
+    private double goods_total_price;
     private String coupon_sub_price;
     private String pay_price;
     private int num;
@@ -180,27 +180,27 @@ public class OrderDetailDataBean {
         this.addtime = addtime;
     }
 
-    public int getTotal_price() {
+    public double getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(int total_price) {
+    public void setTotal_price(double total_price) {
         this.total_price = total_price;
     }
 
-    public int getExpress_price() {
+    public double getExpress_price() {
         return express_price;
     }
 
-    public void setExpress_price(int express_price) {
+    public void setExpress_price(double express_price) {
         this.express_price = express_price;
     }
 
-    public int getGoods_total_price() {
+    public double getGoods_total_price() {
         return goods_total_price;
     }
 
-    public void setGoods_total_price(int goods_total_price) {
+    public void setGoods_total_price(double goods_total_price) {
         this.goods_total_price = goods_total_price;
     }
 

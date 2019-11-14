@@ -1,5 +1,6 @@
 package cn.ifhu.dongjia.fragments.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import cn.ifhu.dongjia.activity.me.AddressActivity;
 import cn.ifhu.dongjia.activity.me.ContentActivity;
 import cn.ifhu.dongjia.activity.order.OrderListActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
+import cn.ifhu.dongjia.fragments.order.UnReceiptOrderFragment;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.MeDataBean;
 import cn.ifhu.dongjia.model.data.UserDataBean;
