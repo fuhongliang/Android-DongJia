@@ -16,15 +16,22 @@
             <com.sunfusheng.GlideImageView
                 android:id="@+id/iv_avatar_bg"
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
+                android:layout_height="200dp"
+                android:scaleType="fitXY"/>
 
+<!--            <ImageView-->
+<!--                android:id="@+id/iv_back"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:src="@drawable/statusbar_ic_fanhui" />-->
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="15dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:layout_marginTop="35dp"
                 android:src="@drawable/statusbar_ic_fanhui" />
-
             <LinearLayout
                 android:id="@+id/options1"
                 android:layout_width="match_parent"

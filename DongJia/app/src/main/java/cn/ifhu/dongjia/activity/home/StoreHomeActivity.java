@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.activity.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sunfusheng.GlideImageView;
@@ -35,7 +35,6 @@ import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
-import cn.ifhu.dongjia.utils.DialogUtils;
 import cn.ifhu.dongjia.utils.GridDividerItemDecoration;
 import cn.ifhu.dongjia.utils.UserLogic;
 
@@ -171,6 +170,7 @@ public class StoreHomeActivity extends BaseActivity {
                 ivAvatar.load(t.getData().getShop().getLogo());
                 ivAvatarBg.load(t.getData().getShop().getHeader_bg());
                 tvInformation.setText(t.getData().getShop().getMch_desc());
+                options1.setBackgroundColor(Color.parseColor(t.getData().getShop().getHeader_color()));
                 getMchArticle();
             }
         });
@@ -199,10 +199,6 @@ public class StoreHomeActivity extends BaseActivity {
     @OnClick(R.id.iv_back)
     public void onIvBackClicked() {
         finish();
-    }
-
-    @OnClick(R.id.rl_see_more)
-    public void onRlSeeMoreClicked() {
     }
 
     @OnClick(R.id.rl_more)

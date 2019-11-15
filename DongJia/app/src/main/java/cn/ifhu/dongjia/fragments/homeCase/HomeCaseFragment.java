@@ -32,6 +32,7 @@ import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeCaseService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
  * 家装方案页面
@@ -70,7 +71,11 @@ public class HomeCaseFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setRefreshLayout();
+        if (UserLogic.getUser() != null){
+            setRefreshLayout();
+            getTopicList(1);
+        }
+
         homeCaseAdpter = new HomeCaseAdpter(mData, getContext(), new HomeCaseAdpter.OnClickItem() {
             @Override
             public void llHomeCase(int position) {
@@ -83,7 +88,6 @@ public class HomeCaseFragment extends BaseFragment {
         rvHomeCase.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         rvHomeCase.setAdapter(homeCaseAdpter);
         rvHomeCase.setOnScrollListener(new LoadMoreScrollListener(rvHomeCase));
-        getTopicList(1);
     }
 
     @SuppressLint("ResourceAsColor")

@@ -78,8 +78,6 @@ public class MeFragment extends BaseFragment {
     RelativeLayout rlLogin;
     @BindView(R.id.rl_noLogin)
     RelativeLayout rlNoLogin;
-    @BindView(R.id.tv_logout)
-    TextView tvLogout;
     @BindView(R.id.iv_avatar)
     GlideImageView ivAvatar;
     @BindView(R.id.tv_my_scores)
@@ -152,7 +150,6 @@ public class MeFragment extends BaseFragment {
             //登录状态
             rlNoLogin.setVisibility(View.GONE);
             rlLogin.setVisibility(View.VISIBLE);
-            tvLogout.setVisibility(View.VISIBLE);
             ivAvatar.setVisibility(View.VISIBLE);
             rlOrder2.setVisibility(View.VISIBLE);
             /**
@@ -164,7 +161,6 @@ public class MeFragment extends BaseFragment {
             //未登录
             rlNoLogin.setVisibility(View.VISIBLE);
             rlLogin.setVisibility(View.GONE);
-            tvLogout.setVisibility(View.GONE);
             ivAvatar.setVisibility(View.GONE);
             rlOrder2.setVisibility(View.GONE);
         }
@@ -300,7 +296,6 @@ public class MeFragment extends BaseFragment {
                 UserLogic.loginOut();
                 rlNoLogin.setVisibility(View.VISIBLE);
                 rlLogin.setVisibility(View.GONE);
-                tvLogout.setVisibility(View.GONE);
                 ivAvatar.setVisibility(View.GONE);
                 rlOrder2.setVisibility(View.GONE);
             }

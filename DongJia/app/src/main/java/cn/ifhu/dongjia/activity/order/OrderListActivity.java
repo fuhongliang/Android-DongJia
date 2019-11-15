@@ -45,7 +45,7 @@ public class OrderListActivity extends BaseActivity {
     @BindView(R.id.vp_content)
     ViewPager vpContent;
 
-    private List<String> list = Arrays.asList("全部", "待付款", "待发货", "待收货", "售后订单", "已完成", "已取消");
+    private List<String> list = Arrays.asList("全部", "待付款", "待发货", "待收货", "售后", "已完成", "已取消");
 
     private List<Fragment> mFragmentsArrayList = new ArrayList<>();
     FragmentPagerAdapter mAdpter;

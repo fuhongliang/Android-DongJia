@@ -34,6 +34,7 @@ public class RetrofitAPIManager {
 
     private static String BASE_URL = STRING_API_ENV.equals("0")
             ? RELEASE_URL : DEV_URL;
+//    private static String BASE_URL = RELEASE_URL ;
 
 
     private RetrofitAPIManager() {
