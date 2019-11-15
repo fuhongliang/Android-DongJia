@@ -25,11 +25,13 @@ import cn.ifhu.dongjia.adapter.OrderListAdapter;
 import cn.ifhu.dongjia.base.BaseFragment;
 import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.OrderDetailDataBean;
 import cn.ifhu.dongjia.model.data.OrderListDataBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.OrderServer;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
@@ -63,19 +65,41 @@ public class FinishedOrderFragment extends BaseFragment {
         setRefreshLayout();
         orderListAdapter = new OrderListAdapter(listBeans, getContext(), new OrderListAdapter.OnClickItem() {
             @Override
-            //取消订单
+            /**
+             * 取消订单接口
+             */
             public void TvCancel(int position) {
+                setLoadingMessageIndicator(true);
+                RetrofitAPIManager.create(OrderServer.class).orderRevoke(4, -1, -1, UserLogic.getUser().getAccess_token(), listBeans.get(position).getOrder_id())
+                        .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<OrderDetailDataBean>(true) {
+                    @Override
+                    protected void onApiComplete() {
+                        setLoadingMessageIndicator(false);
+                    }
+
+                    @Override
+                    protected void onSuccees(BaseEntity<OrderDetailDataBean> t) throws Exception {
+                        ToastHelper.makeText(t.getMessage()).show();
+                        getOrderList();
+                    }
+                });
+            }
+
+            @Override
+            public void TvDelete(int position) {
 
             }
 
             @Override
-            //跳转到订单详情
-            public void LlOrder(int position) {
-                Intent intent = new Intent(getContext(), OrderDetailsActivity.class);
-                intent.putExtra("Order_id", listBeans.get(position).getOrder_id());
-                startActivity(intent);
-//                goToActivity(OrderDetailsActivity.class,listBeans.get(position).getOrder_id());
+            public void TvPay(int position) {
+
             }
+
+            @Override
+            public void TvConfirm(int position) {
+
+            }
+
         });
         rvOrder.setNestedScrollingEnabled(false);
         rvOrder.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
@@ -83,7 +107,11 @@ public class FinishedOrderFragment extends BaseFragment {
         rvOrder.setOnScrollListener(new LoadMoreScrollListener(rvOrder));
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getOrderList();
+    }
     /**
      * * 订单列表接口
      */

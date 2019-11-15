@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
+import cn.ifhu.dongjia.utils.Utils;
 
 /**
  * 超级品牌
@@ -60,6 +62,7 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
         holder.ivMchLogo.load(mDatas.get(position).getMch_logo());
         holder.tvStoreName.setText(mDatas.get(position).getMch_name());
         holder.tvGoodsCount.setText("共" + mDatas.get(position).getGoods_count() + "件商品");
+        holder.rlMchLogo.setBackgroundColor(Color.parseColor(mDatas.get(position).getMch_color()));
 
         if (mDatas.get(position).getGoods_list() != null && mDatas.get(position).getGoods_list().size() > 0) {
             switch (mDatas.size()) {
@@ -73,8 +76,8 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
                     holder.llStore2.setVisibility(View.INVISIBLE);
                     holder.llStore3.setVisibility(View.INVISIBLE);
                     holder.ivCoverPic0.load(mDatas.get(position).getGoods_list().get(0).getCover_pic());
-                    holder.tvPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getPrice());
-                    holder.tvOriginalPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getOriginal_price());
+                    holder.tvPrice0.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(0).getPrice()));
+                    holder.tvOriginalPrice0.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(0).getOriginal_price()));
                     holder.tvOriginalPrice0.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     break;
                 case 2:
@@ -82,13 +85,13 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
                     holder.llStore2.setVisibility(View.VISIBLE);
                     holder.llStore3.setVisibility(View.INVISIBLE);
                     holder.ivCoverPic0.load(mDatas.get(position).getGoods_list().get(0).getCover_pic());
-                    holder.tvPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getPrice());
-                    holder.tvOriginalPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getOriginal_price());
+                    holder.tvPrice0.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(0).getPrice()));
+                    holder.tvOriginalPrice0.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(0).getOriginal_price()));
                     holder.tvOriginalPrice0.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
                     holder.ivCoverPic1.load(mDatas.get(position).getGoods_list().get(1).getCover_pic());
-                    holder.tvPrice1.setText("￥" + mDatas.get(position).getGoods_list().get(1).getPrice());
-                    holder.tvOriginalPrice1.setText("￥" + mDatas.get(position).getGoods_list().get(1).getOriginal_price());
+                    holder.tvPrice1.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(1).getPrice()));
+                    holder.tvOriginalPrice1.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(1).getOriginal_price()));
                     holder.tvOriginalPrice1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     break;
                 case 3:
@@ -96,18 +99,18 @@ public class SuperAdapter extends BaseLoadMoreAdapter<HomeDataBean.NewMchListBea
                     holder.llStore2.setVisibility(View.VISIBLE);
                     holder.llStore3.setVisibility(View.VISIBLE);
                     holder.ivCoverPic0.load(mDatas.get(position).getGoods_list().get(0).getCover_pic());
-                    holder.tvPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getPrice());
-                    holder.tvOriginalPrice0.setText("￥" + mDatas.get(position).getGoods_list().get(0).getOriginal_price());
+                    holder.tvPrice0.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(0).getPrice()));
+                    holder.tvOriginalPrice0.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(0).getOriginal_price()));
                     holder.tvOriginalPrice0.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
                     holder.ivCoverPic1.load(mDatas.get(position).getGoods_list().get(1).getCover_pic());
-                    holder.tvPrice1.setText("￥" + mDatas.get(position).getGoods_list().get(1).getPrice());
-                    holder.tvOriginalPrice1.setText("￥" + mDatas.get(position).getGoods_list().get(1).getOriginal_price());
+                    holder.tvPrice1.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(1).getPrice()));
+                    holder.tvOriginalPrice1.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(1).getOriginal_price()));
                     holder.tvOriginalPrice1.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
                     holder.ivCoverPic2.load(mDatas.get(position).getGoods_list().get(2).getCover_pic());
-                    holder.tvPrice2.setText("￥" + mDatas.get(position).getGoods_list().get(2).getPrice());
-                    holder.tvOriginalPrice2.setText("￥" + mDatas.get(position).getGoods_list().get(2).getOriginal_price());
+                    holder.tvPrice2.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(2).getPrice()));
+                    holder.tvOriginalPrice2.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getGoods_list().get(2).getOriginal_price()));
                     holder.tvOriginalPrice2.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     break;
                 default:

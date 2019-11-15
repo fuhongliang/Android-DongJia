@@ -23,7 +23,9 @@ import cn.ifhu.dongjia.adapter.AddressAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.base.LoadMoreScrollListener;
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.AddressBean;
 import cn.ifhu.dongjia.model.data.AddressListDataBean;
+import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
 import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.MeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
@@ -53,7 +55,7 @@ public class AddressActivity extends BaseActivity {
 
 
     AddressAdapter addressAdapter;
-    private List<AddressListDataBean.ListBean> mData = new ArrayList<>();
+    private List<AddressBean> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,19 +97,17 @@ public class AddressActivity extends BaseActivity {
             @Override
             public void Edit(int position) {
                 Intent intent = new Intent(AddressActivity.this, AddAddressActivity.class);
-                AddressListDataBean.ListBean listBean = mData.get(position);
+                AddressBean listBean = mData.get(position);
                 intent.putExtra("bean",listBean);
                 startActivity(intent);
-//                goToActivity(AddAddressActivity.class);
 
             }
 
             @Override
             public void RlAddress(int position) {
                 Intent intent = new Intent();
-                intent.putExtra("address_id",mData.get(position).getId());
-                //100是随意定义
-                setResult(100,intent);
+                intent.putExtra("addressBean",mData.get(position));
+                setResult(RESULT_OK,intent);
                 finish();
             }
 

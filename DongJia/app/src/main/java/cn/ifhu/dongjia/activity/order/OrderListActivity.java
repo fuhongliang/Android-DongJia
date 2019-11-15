@@ -49,7 +49,7 @@ public class OrderListActivity extends BaseActivity {
 
     private List<Fragment> mFragmentsArrayList = new ArrayList<>();
     FragmentPagerAdapter mAdpter;
-
+    int positon;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,9 @@ public class OrderListActivity extends BaseActivity {
         rvpIndicator.setTitleList(list);
         vpContent.setOffscreenPageLimit(7);
         vpContent.setAdapter(mAdpter);
-        rvpIndicator.setViewPager(vpContent, 0);
+        //取出索引
+        positon = getIntent().getIntExtra("position",0);
+        rvpIndicator.setViewPager(vpContent, positon);
     }
 
     @OnClick(R.id.iv_back)

@@ -39,6 +39,7 @@ import cn.ifhu.dongjia.fragments.shopCart.ShopCartFragment;
 import cn.ifhu.dongjia.model.MessageEvent;
 import cn.ifhu.dongjia.utils.MchInfoLogic;
 import cn.ifhu.dongjia.utils.ToastHelper;
+import cn.ifhu.dongjia.utils.UserLogic;
 
 import static cn.ifhu.dongjia.utils.Constants.LOGOIN;
 import static cn.ifhu.dongjia.utils.Constants.LOGOUT;
@@ -174,7 +175,7 @@ public class MainActivity extends BaseActivity {
 
 
     public void logout() {
-        MchInfoLogic.loginOut();
+        UserLogic.loginOut();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
     }

@@ -31,8 +31,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.WebView.WebViewActivity;
-import cn.ifhu.dongjia.activity.home.GoodDetailsActivity;
 import cn.ifhu.dongjia.activity.home.CatListActivity;
+import cn.ifhu.dongjia.activity.home.GoodDetailsActivity;
+import cn.ifhu.dongjia.activity.home.GoodsListActivity;
 import cn.ifhu.dongjia.activity.home.SearchActivity;
 import cn.ifhu.dongjia.activity.home.SelectCityActivity;
 import cn.ifhu.dongjia.activity.home.StoreHomeActivity;
@@ -79,13 +80,23 @@ public class HomeFragment extends BaseFragment {
     RecyclerView rvRecommendGoods;
     @BindView(R.id.rv_recommend)
     RecyclerView rvRecommend;
+
+    @BindView(R.id.layout_swipe_refresh)
+    SwipeRefreshLayout layoutSwipeRefresh;
+    @BindView(R.id.panic_buy)
+    TextView panicBuy;
+    @BindView(R.id.recommend_goods)
+    TextView recommendGoods;
+    @BindView(R.id.super_list)
+    TextView superList;
+    @BindView(R.id.recommend)
+    TextView recommend;
+    @BindView(R.id.rl_nav_icon)
+    RelativeLayout rlNavIcon;
     /**
      * 最多能显示五个
      */
     final int maxNavNumber = 5;
-    @BindView(R.id.layout_swipe_refresh)
-    SwipeRefreshLayout layoutSwipeRefresh;
-
 
     //轮播图
     private List<HomeDataBean.BannerListBean> banner_data = new ArrayList<>();
@@ -131,16 +142,16 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void Classification(int position) {
                 String url = navData.get(position).getUrl();
-                if(!StringUtils.isEmpty(url)){
-                    if (url.contains("cat")){
+                if (!StringUtils.isEmpty(url)) {
+                    if (url.contains("cat")) {
                         goToActivity(CatListActivity.class);
-                    }else {
+                    } else {
                         // to-do 商品列表
-                        try{
-                            int beginIndex = url.indexOf("cat_id=")+7;
-                            String id = url.substring(beginIndex,url.length());
-
-                        }catch (Exception e){
+                        try {
+                            int beginIndex = url.indexOf("cat_id=") + 7;
+                            String id = url.substring(beginIndex, url.length());
+                            goToActivity(GoodsListActivity.class, id);
+                        } catch (Exception e) {
                             //异常处理  系统不会崩溃
                             e.printStackTrace();
                         }
@@ -194,7 +205,10 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void llStore(int position) {
                 Intent intent = new Intent(getActivity(), GoodDetailsActivity.class);
-                intent.putExtra("id", superData.get(position).getGoods_list().get(position).getId());
+                for (int i = 0; i < superData.get(position).getGoods_list().size(); i++) {
+                    HomeDataBean.NewMchListBean.GoodsListBeanXX goodsList = superData.get(position).getGoods_list().get(i);
+                    intent.putExtra("id", goodsList.getId());
+                }
                 startActivity(intent);
             }
         });
@@ -227,8 +241,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100){
-            tvAddress.setText( data.getStringExtra("e"));
+        if (requestCode == 100) {
+            tvAddress.setText(data.getStringExtra("e"));
         }
     }
 
@@ -289,15 +303,43 @@ public class HomeFragment extends BaseFragment {
 
                 navData = t.getData().getNav_icon_list();
                 newNavIconAdapter.setData(navData);
+                if (navData == null) {
+                    rlNavIcon.setVisibility(View.GONE);
+                    rvNavIcon.setVisibility(View.GONE);
+                } else {
+                    rlNavIcon.setVisibility(View.VISIBLE);
+                    rvNavIcon.setVisibility(View.VISIBLE);
+                }
 
                 panicBuyData = t.getData().getMiaosha().getGoods_list();
                 newPanicBuyAdapter.setData(panicBuyData);
+                if (panicBuyData == null) {
+                    panicBuy.setVisibility(View.GONE);
+                    rvPanicBuy.setVisibility(View.GONE);
+                } else {
+                    panicBuy.setVisibility(View.VISIBLE);
+                    rvPanicBuy.setVisibility(View.VISIBLE);
+                }
 
                 recommendGoodsData = t.getData().getRecommend_goods();
                 newRecommendGoodsAdapter.setData(recommendGoodsData);
+                if (recommendGoodsData == null) {
+                    recommendGoods.setVisibility(View.GONE);
+                    rvRecommendGoods.setVisibility(View.GONE);
+                } else {
+                    recommendGoods.setVisibility(View.VISIBLE);
+                    rvRecommendGoods.setVisibility(View.VISIBLE);
+                }
 
                 superData = t.getData().getNew_mch_list();
                 newSuperAdapter.setData(superData);
+                if (superData == null) {
+                    superList.setVisibility(View.GONE);
+                    rvSuperList.setVisibility(View.GONE);
+                } else {
+                    superList.setVisibility(View.VISIBLE);
+                    rvSuperList.setVisibility(View.VISIBLE);
+                }
                 getRecommend(1);
 
             }

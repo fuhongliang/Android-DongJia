@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
+import cn.ifhu.dongjia.utils.Utils;
 
 /**
  * 首页爆款热卖适配器
@@ -57,8 +58,8 @@ public class RecommendGoodsAdapter extends BaseLoadMoreAdapter<HomeDataBean.Reco
 
         holder.ivStorePic.load(mDatas.get(position).getCover_pic());
         holder.tvStoreName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText("￥" + mDatas.get(position).getPrice());
-        holder.tvOriginalPrice.setText("￥" + mDatas.get(position).getOriginal_price());
+        holder.tvPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getPrice()));
+        holder.tvOriginalPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getOriginal_price()));
         holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         if (onClickItem != null) {
             holder.llRecommendGoods.setOnClickListener(v ->

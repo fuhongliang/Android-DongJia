@@ -8,6 +8,7 @@ import com.orhanobut.logger.Logger;
 public class BaseEntity<T> {
 
     public static int SUCCESS_CODE = 0;
+    public static int LOGINFAIL_CODE = -1;
     public static int TOKENMISSION_CODE = 3001;
     public static int TOKENTFAKE_CODE = 3000;
     public static int TOKENTIMEOUT_CODE = 3002;
@@ -27,7 +28,7 @@ public class BaseEntity<T> {
     }
 
     public boolean isTokenTimeOut() {
-        if (code == TOKENTIMEOUT_CODE || code == TOKENMISSION_CODE || code == TOKENTFAKE_CODE || code == TOKENINVALID_CODE ) {
+        if (code == LOGINFAIL_CODE || code == TOKENTIMEOUT_CODE || code == TOKENMISSION_CODE || code == TOKENTFAKE_CODE || code == TOKENINVALID_CODE ) {
             return true;
         }
         return false;

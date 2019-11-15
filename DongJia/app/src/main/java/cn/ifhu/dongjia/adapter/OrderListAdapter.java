@@ -73,9 +73,28 @@ public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.List
         }
         if (onClickItem != null) {
             holder.tvCancel.setOnClickListener(v -> onClickItem.TvCancel(position));
+            holder.tvDelete.setOnClickListener(v -> onClickItem.TvDelete(position));
+            holder.tvPay.setOnClickListener(v -> onClickItem.TvPay(position));
+            holder.tvConfirm.setOnClickListener(v -> onClickItem.TvConfirm(position));
         }
-        if (onClickItem != null) {
-            holder.llOrder.setOnClickListener(v -> onClickItem.LlOrder(position));
+        if (mDatas.get(position).getStatus_code() == 0) {
+            //订单待付款
+            holder.tvPay.setVisibility(View.VISIBLE);
+            holder.tvCancel.setVisibility(View.VISIBLE);
+        } else if (mDatas.get(position).getStatus_code() == 1) {
+            //订单待发货
+            holder.tvCancel.setVisibility(View.VISIBLE);
+        } else if (mDatas.get(position).getStatus_code() == 2) {
+            //订单待收货
+            holder.tvConfirm.setVisibility(View.VISIBLE);
+        } else if (mDatas.get(position).getStatus_code() == 3) {
+            //订单已完成
+        } else if (mDatas.get(position).getStatus_code() == 4) {
+            //订单售后
+        } else if (mDatas.get(position).getStatus_code() == 5) {
+            //订单已取消
+        } else if (mDatas.get(position).getStatus_code() == 6) {
+            //全部订单
         }
     }
 
@@ -110,13 +129,21 @@ public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.List
 
     @Override
     public int getItemCount() {
-        return mDatas == null ? 0 : mDatas.size() + 1;
+        if (mDatas == null) {
+            return 0;
+        }
+        return mDatas.size();
     }
 
     public interface OnClickItem {
         void TvCancel(int position);
 
-        void LlOrder(int position);
+        void TvDelete(int position);
+
+        void TvPay(int position);
+
+        void TvConfirm(int position);
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -130,8 +157,6 @@ public class OrderListAdapter extends BaseLoadMoreAdapter<OrderListDataBean.List
         LinearLayout llOrder;
         @BindView(R.id.tv_cancel)
         TextView tvCancel;
-        @BindView(R.id.tv_call_store)
-        TextView tvCallStore;
         @BindView(R.id.tv_delete)
         TextView tvDelete;
         @BindView(R.id.tv_pay)

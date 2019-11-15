@@ -36,6 +36,7 @@ import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DialogUtils;
+import cn.ifhu.dongjia.utils.GridDividerItemDecoration;
 import cn.ifhu.dongjia.utils.UserLogic;
 
 /**
@@ -110,7 +111,8 @@ public class StoreHomeActivity extends BaseActivity {
             }
         });
         rvRecommend.setNestedScrollingEnabled(false);
-        rvRecommend.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        rvRecommend.setLayoutManager(new GridLayoutManager(this, 3));
+        rvRecommend.addItemDecoration(new GridDividerItemDecoration(12));
         rvRecommend.setAdapter(shopRecommendAdapter);
         rvRecommend.setOnScrollListener(new LoadMoreScrollListener(rvRecommend));
         //商品精品案例
@@ -122,6 +124,7 @@ public class StoreHomeActivity extends BaseActivity {
         });
         rvCase.setNestedScrollingEnabled(false);
         rvCase.setLayoutManager(new GridLayoutManager(this, 2));
+        rvCase.addItemDecoration(new GridDividerItemDecoration(12));
         rvCase.setAdapter(mchArticleAdapter);
         rvCase.setOnScrollListener(new LoadMoreScrollListener(rvCase));
         //精选必买

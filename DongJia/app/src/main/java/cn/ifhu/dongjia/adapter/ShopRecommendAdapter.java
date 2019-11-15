@@ -1,6 +1,7 @@
 package cn.ifhu.dongjia.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
+import cn.ifhu.dongjia.utils.Utils;
 
 public class ShopRecommendAdapter extends BaseLoadMoreAdapter<ShopDataBean.RecommendListBean, ShopRecommendAdapter.ViewHolder> {
 
@@ -50,8 +52,9 @@ public class ShopRecommendAdapter extends BaseLoadMoreAdapter<ShopDataBean.Recom
     public void bindOtherViewHolder(@NonNull ViewHolder holder, int position) {
         if (position == mDatas.size()) return;
         holder.ivStorePic.load(mDatas.get(position).getCover_pic());
-        holder.tvOriginalPrice.setText(mDatas.get(position).getOriginal_price());
-        holder.tvPrice.setText(mDatas.get(position).getPrice());
+        holder.tvOriginalPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getOriginal_price()));
+        holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.tvPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getPrice()));
         holder.tvStoreName.setText(mDatas.get(position).getName());
         if (onClickItem != null) {
             holder.llRecommendGoods.setOnClickListener(v ->

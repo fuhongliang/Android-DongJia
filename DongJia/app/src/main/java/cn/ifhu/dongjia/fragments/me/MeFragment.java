@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sunfusheng.GlideImageView;
 
 import butterknife.BindView;
@@ -24,7 +26,6 @@ import cn.ifhu.dongjia.activity.me.AddressActivity;
 import cn.ifhu.dongjia.activity.me.ContentActivity;
 import cn.ifhu.dongjia.activity.order.OrderListActivity;
 import cn.ifhu.dongjia.base.BaseFragment;
-import cn.ifhu.dongjia.fragments.order.UnReceiptOrderFragment;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.MeDataBean;
 import cn.ifhu.dongjia.model.data.UserDataBean;
@@ -34,8 +35,10 @@ import cn.ifhu.dongjia.net.MeService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.net.UserService;
+import cn.ifhu.dongjia.utils.DialogUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
+import cn.ifhu.dongjia.view.dialog.nicedialog.ConfirmDialog;
 import cn.ifhu.dongjia.wxapi.WXLoginUtils;
 
 /**
@@ -91,6 +94,8 @@ public class MeFragment extends BaseFragment {
     LinearLayout llCoupon;
     @BindView(R.id.rl_order2)
     RelativeLayout rlOrder2;
+    @BindView(R.id.iv_drop_out)
+    ImageView ivDropOut;
 
 
     public static BaseFragment newInstance() {
@@ -192,6 +197,14 @@ public class MeFragment extends BaseFragment {
     //我的售后
     @OnClick(R.id.ll_after_sale)
     public void onLlAfterSaleClicked() {
+        if (UserLogic.getUser() != null) {
+            Intent intent = new Intent(getContext(), OrderListActivity.class);
+            //创建索引跳转接受
+            intent.putExtra("position", 4);
+            startActivity(intent);
+        } else {
+            ToastHelper.makeText("请登录您的账号").show();
+        }
 
     }
 
@@ -224,27 +237,47 @@ public class MeFragment extends BaseFragment {
     //全部订单
     @OnClick(R.id.rl_order)
     public void onRlOrderClicked() {
-        goToActivity(OrderListActivity.class);
+        Intent intent = new Intent(getContext(), OrderListActivity.class);
+        //创建索引跳转接受
+        intent.putExtra("position", 0);
+        startActivity(intent);
+//        goToActivity(OrderListActivity.class);
     }
 
     //待付款
     @OnClick(R.id.ll_wait_payment)
     public void onLlWaitPaymentClicked() {
+        Intent intent = new Intent(getContext(), OrderListActivity.class);
+        //创建索引跳转接受
+        intent.putExtra("position", 1);
+        startActivity(intent);
     }
 
     //待发货
     @OnClick(R.id.ll_wait_ship)
     public void onLlWaitShipClicked() {
+        Intent intent = new Intent(getContext(), OrderListActivity.class);
+        //创建索引跳转接受
+        intent.putExtra("position", 2);
+        startActivity(intent);
     }
 
     //待收货
     @OnClick(R.id.ll_wait_receipt)
     public void onLlWaitReceiptClicked() {
+        Intent intent = new Intent(getContext(), OrderListActivity.class);
+        //创建索引跳转接受
+        intent.putExtra("position", 3);
+        startActivity(intent);
     }
 
     //已完成
     @OnClick(R.id.ll_completed)
     public void onLlCompletedClicked() {
+        Intent intent = new Intent(getContext(), OrderListActivity.class);
+        //创建索引跳转接受
+        intent.putExtra("position", 5);
+        startActivity(intent);
     }
 
     //登录
@@ -254,4 +287,24 @@ public class MeFragment extends BaseFragment {
     }
 
 
+    @OnClick(R.id.iv_drop_out)
+    public void onIvDropOutClicked() {
+        DialogUtils.showConfirmDialog("温馨提示", "是否退出登录", getFragmentManager(), new ConfirmDialog.ButtonOnclick() {
+            @Override
+            public void cancel() {
+
+            }
+
+            @Override
+            public void ok() {
+                UserLogic.loginOut();
+                rlNoLogin.setVisibility(View.VISIBLE);
+                rlLogin.setVisibility(View.GONE);
+                tvLogout.setVisibility(View.GONE);
+                ivAvatar.setVisibility(View.GONE);
+                rlOrder2.setVisibility(View.GONE);
+            }
+        });
+
+    }
 }

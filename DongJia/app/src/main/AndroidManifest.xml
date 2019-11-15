@@ -43,7 +43,7 @@
         <!--homeCase-->
         <activity android:name=".activity.homeCase.AddCallDesignerActivity" />
         <activity android:name=".activity.homeCase.CallDesignerActivity" />
-
+        <activity android:name=".WebView.WebViewActivity"/>
         <!--me-->
         <activity android:name=".activity.me.AboutUsActivity" />
         <activity android:name=".activity.me.AddressActivity" />

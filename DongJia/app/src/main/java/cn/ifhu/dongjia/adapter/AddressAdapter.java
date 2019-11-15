@@ -15,17 +15,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
+import cn.ifhu.dongjia.model.data.AddressBean;
 import cn.ifhu.dongjia.model.data.AddressListDataBean;
+import cn.ifhu.dongjia.model.data.SubmitPreviewDataBean;
 
-public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.ListBean, AddressAdapter.ViewHolder> {
+public class AddressAdapter extends BaseLoadMoreAdapter<AddressBean, AddressAdapter.ViewHolder> {
 
 
     //    private address address_id;
     private Context context;
-    private List<AddressListDataBean.ListBean> mData;
+    private List<AddressBean> mData;
     private OnClickItem onClickItem;
 
-    public AddressAdapter(List<AddressListDataBean.ListBean> mData, Context context, OnClickItem onClickItem) {
+    public AddressAdapter(List<AddressBean> mData, Context context, OnClickItem onClickItem) {
         this.mData = mData;
         this.context = context;
         this.onClickItem = onClickItem;
@@ -37,7 +39,7 @@ public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.List
 //
 
     @Override
-    public void setData(List<AddressListDataBean.ListBean> data) {
+    public void setData(List<AddressBean> data) {
         this.mData = data;
         resetLodingMore();
         notifyDataSetChanged();
@@ -49,16 +51,17 @@ public class AddressAdapter extends BaseLoadMoreAdapter<AddressListDataBean.List
     }
 
     @Override
-    public List<AddressListDataBean.ListBean> getDataList() {
+    public List<AddressBean> getDataList() {
         return mData;
     }
 
     @Override
     public void bindOtherViewHolder(@NonNull ViewHolder holder, int position) {
         if (position == mData.size()) return;
+
         holder.tvName.setText(mData.get(position).getName());
         holder.tvPhone.setText(mData.get(position).getMobile());
-        holder.tvAddress.setText(mData.get(position).getAddress());
+        holder.tvAddress.setText(mData.get(position).getProvince()+ mData.get(position).getCity() + mData.get(position).getDistrict() + mData.get(position).getDetail());
         if (onClickItem != null) {
             holder.rlDelete.setOnClickListener(v -> {
                         onClickItem.Delete(position);

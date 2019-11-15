@@ -9,6 +9,7 @@ import com.orhanobut.logger.Logger;
 import cn.ifhu.dongjia.model.UserBean;
 import cn.ifhu.dongjia.model.data.UserDataBean;
 
+import static cn.ifhu.dongjia.utils.Constants.MEICHANTINFO;
 import static cn.ifhu.dongjia.utils.Constants.USER;
 
 /**
@@ -37,6 +38,11 @@ public class UserLogic {
             return mUser;
         }
         return null;
+    }
+
+
+    public static void loginOut() {
+        IrReference.getInstance().clearSingle(USER);
     }
 
 }

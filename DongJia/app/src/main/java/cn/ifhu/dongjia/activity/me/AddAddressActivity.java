@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.model.BaseEntity;
+import cn.ifhu.dongjia.model.data.AddressBean;
 import cn.ifhu.dongjia.model.data.AddressListDataBean;
 import cn.ifhu.dongjia.model.data.DistrictDataBean;
 import cn.ifhu.dongjia.model.post.AddressSaveDataBean;
@@ -74,13 +75,13 @@ public class AddAddressActivity extends BaseActivity {
     private int province_id;
     private int city_id;
     private int area_id;
-    private AddressListDataBean.ListBean listBean;
+    private AddressBean listBean;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
-        listBean = (AddressListDataBean.ListBean)getIntent().getSerializableExtra("bean");
+        listBean = (AddressBean)getIntent().getSerializableExtra("bean");
         if (listBean == null){
             tvTitle.setText("新增地址");
         }else {
@@ -185,7 +186,6 @@ public class AddAddressActivity extends BaseActivity {
             protected void onApiComplete() {
 
             }
-
             @Override
             protected void onSuccees(BaseEntity<List<DistrictDataBean>> t) throws Exception {
                 province = t.getData();

@@ -13,6 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.sunfusheng.GlideImageView;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +24,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ifhu.dongjia.R;
+import cn.ifhu.dongjia.activity.home.ConfirmOrderActivity;
 import cn.ifhu.dongjia.base.BaseActivity;
 import cn.ifhu.dongjia.model.BaseEntity;
 import cn.ifhu.dongjia.model.data.OrderDetailDataBean;
+import cn.ifhu.dongjia.model.data.OrderPayDataBean;
+import cn.ifhu.dongjia.model.get.OrderPayGetBean;
 import cn.ifhu.dongjia.net.BaseObserver;
+import cn.ifhu.dongjia.net.HomeService;
 import cn.ifhu.dongjia.net.OrderServer;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
+
+import static cn.ifhu.dongjia.MainActivity.APP_ID;
 
 /**
  * 订单详情页面
@@ -90,18 +100,16 @@ public class OrderDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
 
+    //订单ID
     int OrderId;
     List<OrderDetailDataBean.GoodsListBean> goodsList = new ArrayList<>();
     OrderDetailDataBean mDatas;
-    @BindView(R.id.tv_call_store)
-    TextView tvCallStore;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
         ButterKnife.bind(this);
-//        OrderId = getDataInt();
         OrderId = getIntent().getIntExtra("Order_id", 0);
         getOrderDetail();
     }
@@ -175,7 +183,6 @@ public class OrderDetailsActivity extends BaseActivity {
             //订单待发货
             rlDelivery.setVisibility(View.VISIBLE);
             tvCancel.setVisibility(View.VISIBLE);
-            tvCallStore.setVisibility(View.VISIBLE);
         } else if (mDatas.getStatus_code() == 2) {
             //订单待收货
             rlDelivery.setVisibility(View.VISIBLE);
@@ -184,13 +191,14 @@ public class OrderDetailsActivity extends BaseActivity {
             //订单已完成
             rlDelivery.setVisibility(View.VISIBLE);
 
-        } else if (mDatas.getStatus_code() == 4) {
-            //订单售后
-        } else if (mDatas.getStatus_code() == 5) {
-            //订单已取消
-        } else if (mDatas.getStatus_code() == 6) {
-            //全部订单
         }
+//        else if (mDatas.getStatus_code() == 4) {
+//            //订单售后
+//        } else if (mDatas.getStatus_code() == 5) {
+//            //订单已取消
+//        } else if (mDatas.getStatus_code() == 6) {
+//            //全部订单
+//        }
     }
 
     /**
@@ -213,6 +221,26 @@ public class OrderDetailsActivity extends BaseActivity {
         return view;
     }
 
+    /**
+     * 取消订单接口
+     */
+    public void getOrderRevoke() {
+        setLoadingMessageIndicator(true);
+        RetrofitAPIManager.create(OrderServer.class).orderRevoke(4, -1, -1, UserLogic.getUser().getAccess_token(), OrderId)
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<OrderDetailDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
+                setLoadingMessageIndicator(false);
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<OrderDetailDataBean> t) throws Exception {
+                finish();
+                ToastHelper.makeText(t.getMessage()).show();
+            }
+        });
+    }
+
     @OnClick(R.id.iv_back)
     public void onIvBackClicked() {
         finish();
@@ -226,18 +254,48 @@ public class OrderDetailsActivity extends BaseActivity {
     //立即支付
     @OnClick(R.id.tv_pay)
     public void onTvPayClicked() {
+        orderPayData(OrderId);
     }
 
     //取消订单
     @OnClick(R.id.tv_cancel)
     public void onTvCancelClicked() {
+        getOrderRevoke();
     }
 
-    //联系卖家
-    @OnClick(R.id.tv_call_store)
-    public void onTvCallStoreClicked() {
-    }
+    /**
+     * 调起支付接口
+     */
+    public void orderPayData(int order_id) {
+        setLoadingMessageIndicator(true);
+        OrderPayGetBean orderPayGetBean = new OrderPayGetBean();
+        orderPayGetBean.setAccess_token(UserLogic.getUser().getAccess_token());
+        orderPayGetBean.setApp_key("app");
+        orderPayGetBean.setOrder_id(order_id);
+        orderPayGetBean.setOrder_id_list("");
+        orderPayGetBean.setPay_type("WECHAT_PAY");
+        RetrofitAPIManager.create(HomeService.class).OrderPayData(orderPayGetBean.getPostParam())
+                .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<OrderPayDataBean>(true) {
+            @Override
+            protected void onApiComplete() {
 
+            }
+
+            @Override
+            protected void onSuccees(BaseEntity<OrderPayDataBean> t) throws Exception {
+                PayReq request = new PayReq();
+                request.appId = t.getData().getAppid();
+                request.partnerId = t.getData().getPartnerid();
+                request.prepayId = t.getData().getPrepayid();
+                request.packageValue = t.getData().getPackageX();
+                request.nonceStr = t.getData().getNoncestr();
+                request.timeStamp = t.getData().getTimestamp() + "";
+                request.sign = t.getData().getSign();
+                IWXAPI api = WXAPIFactory.createWXAPI(OrderDetailsActivity.this, APP_ID, true);
+                api.sendReq(request);
+            }
+        });
+    }
 //    @OnClick(R.id.tv_copy)
 //    public void onTvCopyClicked() {
 //        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);

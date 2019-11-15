@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ifhu.dongjia.MainActivity;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.adapter.GoodsRecommendAdapter;
 import cn.ifhu.dongjia.base.BaseActivity;
@@ -49,6 +51,7 @@ import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.utils.DeviceUtil;
 import cn.ifhu.dongjia.utils.GlideRoundTransform;
+import cn.ifhu.dongjia.utils.GridDividerItemDecoration;
 import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
 import cn.ifhu.dongjia.utils.X5WebView;
@@ -129,6 +132,8 @@ public class GoodDetailsActivity extends BaseActivity {
     //是否收藏商品  0否 1是
     int IsFavorite;
 
+    String url;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_good_details);
@@ -151,7 +156,8 @@ public class GoodDetailsActivity extends BaseActivity {
         //爆款热卖
         goodsRecommendAdapter = new GoodsRecommendAdapter(mDatas, this);
         rvRecommendGoods.setNestedScrollingEnabled(false);
-        rvRecommendGoods.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        rvRecommendGoods.setLayoutManager(new GridLayoutManager(this,3));
+        rvRecommendGoods.addItemDecoration(new GridDividerItemDecoration(12));
         rvRecommendGoods.setAdapter(goodsRecommendAdapter);
         rvRecommendGoods.setOnScrollListener(new LoadMoreScrollListener(rvRecommendGoods));
     }
@@ -197,6 +203,13 @@ public class GoodDetailsActivity extends BaseActivity {
             }
 
             @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                ToastHelper.makeText("店铺不存在").show();
+                finish();
+            }
+
+            @Override
             protected void onSuccees(BaseEntity<GoodDetailsDataBean> t) throws Exception {
                 banner_data = t.getData().getPic_list();
                 mch = t.getData().getMch();
@@ -210,6 +223,10 @@ public class GoodDetailsActivity extends BaseActivity {
                 tvStoreName.setText(t.getData().getMch().getName());
                 wvDetail.loadData(t.getData().getDetail(), "text/html", "UTF-8");
                 IsFavorite = t.getData().getIs_favorite();
+                for (int i = 0; i < t.getData().getPic_list().size(); i++) {
+                    GoodDetailsDataBean.PicListBean picList = t.getData().getPic_list().get(i);
+                    url = picList.getPic_url();
+                }
 
                 //TODO:webView自适应手机屏幕
                 wvDetail.getSettings().setUseWideViewPort(true);
@@ -259,15 +276,24 @@ public class GoodDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.rl_shop_car)
     public void onRlShopCarClicked() {
+//        Intent intent = new Intent(GoodDetailsActivity.this, MainActivity.class);
+//        intent.putExtra("position",3);
+//        startActivity(intent);
     }
 
     @OnClick(R.id.tv_shop_cart)
     public void onTvShopCartClicked() {
+        if (UserLogic.getUser() != null) {
+            showSkuDialog();
+        } else {
+            WXLoginUtils.WxLogin(this);
+        }
     }
 
     @OnClick(R.id.tv_buy)
     public void onTvBuyClicked() {
         if (UserLogic.getUser() != null) {
+            showSkuDialog();
         } else {
             WXLoginUtils.WxLogin(this);
         }
@@ -340,7 +366,7 @@ public class GoodDetailsActivity extends BaseActivity {
     public void showSkuDialog() {
         if (dialog == null) {
             dialog = new GoodDialog(this);
-            dialog.setData(attrGroupList(), id, new GoodDialog.Callback() {
+            dialog.setData(attrGroupList(), id,url, new GoodDialog.Callback() {
                 @Override
                 public void onAdded(GoodsAttrInfoDataBean goodsAttrInfoDataBean, int quantity) {
                 }

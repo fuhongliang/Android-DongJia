@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_store_pic"
         android:text=""
+        android:maxLines="1"
         android:textColor="@color/typed_text_color"
         android:textSize="15sp" />
 

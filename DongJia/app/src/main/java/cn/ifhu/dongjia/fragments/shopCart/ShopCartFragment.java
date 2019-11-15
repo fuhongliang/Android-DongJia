@@ -35,6 +35,7 @@ import cn.ifhu.dongjia.net.SchedulerUtils;
 import cn.ifhu.dongjia.net.ShopCartService;
 import cn.ifhu.dongjia.utils.DialogUtils;
 import cn.ifhu.dongjia.utils.GsonUtils;
+import cn.ifhu.dongjia.utils.StringUtils;
 import cn.ifhu.dongjia.utils.ToastHelper;
 import cn.ifhu.dongjia.utils.UserLogic;
 import cn.ifhu.dongjia.view.dialog.nicedialog.ConfirmDialog;
@@ -123,7 +124,9 @@ public class ShopCartFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getCartList();
+        if(UserLogic.getUser() != null){
+            getCartList();
+        }
     }
 
     /**
@@ -167,7 +170,6 @@ public class ShopCartFragment extends BaseFragment {
 
                     @Override
                     protected void onSuccees(BaseEntity t) throws Exception {
-                        ToastHelper.makeText(t.getMessage()).show();
                     }
 
                 });

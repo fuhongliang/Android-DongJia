@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
+import cn.ifhu.dongjia.utils.Utils;
 
 public class FeaturedBuyAdapter extends BaseLoadMoreAdapter<ShopDataBean.GoodsListBean, FeaturedBuyAdapter.ViewHolder> {
 
@@ -53,9 +54,9 @@ public class FeaturedBuyAdapter extends BaseLoadMoreAdapter<ShopDataBean.GoodsLi
         if (position == mDatas.size()) return;
         holder.ivCoverPic.load(mDatas.get(position).getCover_pic());
         holder.tvName.setText(mDatas.get(position).getName());
-        holder.tvOriginalPrice.setText("￥"+mDatas.get(position).getOriginal_price());
+        holder.tvOriginalPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getOriginal_price()));
         holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tvPrice.setText("￥"+mDatas.get(position).getPrice());
+        holder.tvPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getPrice()));
         holder.tvShowIntegral.setText(mDatas.get(position).getGoods_num()+"人购买");
         if (onClickItem != null){
             holder.llRecommend.setOnClickListener(v ->

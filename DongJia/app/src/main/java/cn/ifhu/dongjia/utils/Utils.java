@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.math.BigDecimal;
+
 /**
  * <p>Utils初始化相关 </p>
  */
@@ -118,4 +120,13 @@ public class Utils {
         return obj;
     }
 
+    /**
+     * 除掉String多余的0
+     * @param number
+     * @return
+     */
+    public static String getPrettyNumber(String number) {
+        return BigDecimal.valueOf(Double.parseDouble(number))
+                .stripTrailingZeros().toPlainString();
+    }
 }

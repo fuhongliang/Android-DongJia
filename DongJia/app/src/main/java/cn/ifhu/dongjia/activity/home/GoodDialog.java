@@ -63,9 +63,12 @@ public class GoodDialog extends Dialog {
     TextView tvPrice;
     TextView tvInfo;
     TextView tvQuantity;
+    GlideImageView ivLogo;
     private GlideImageView ivlogo;
     //商品详情里传过来的商品id
     private String good_id;
+    //商品详情传过来的图片url;
+    private String url;
     //已选的属性id
     int[] attrId;
     String[] attrString;
@@ -194,7 +197,11 @@ public class GoodDialog extends Dialog {
                     protected void onSuccees(BaseEntity<GoodsAttrInfoDataBean> t) throws Exception {
                         tvQuantity.setText("库存: " + t.getData().getNum() + "");
                         tvPrice.setText("￥" + t.getData().getPrice());
-                        ivlogo.load(t.getData().getPic());
+                        if (t.getData().getPic().equals("")){
+                         ivlogo.load(url);
+                        }else {
+                            ivlogo.load(t.getData().getPic());
+                        }
                         attrInfoData = t.getData();
                     }
                 });
@@ -209,6 +216,10 @@ public class GoodDialog extends Dialog {
                     return;
                 }
                 int quantityInt = Integer.valueOf(quantity);
+                if (attrInfoData == null){
+                    ToastHelper.makeText("请选择商品规格").show();
+                    return;
+                }
                 if (quantityInt > 0 && quantityInt <= attrInfoData.getNum()) {
                     callback.onAdded(attrInfoData, quantityInt);
                     dismiss();
@@ -224,7 +235,8 @@ public class GoodDialog extends Dialog {
                     //加入购物车数组、声明一个数组来保存对象上传
                     attrBeanPostList.add(attrBeanPost);
                 }
-                getGoodsCart(quantity);
+                    getGoodsCart(quantity);
+
             }
         });
         //立即购买
@@ -236,6 +248,10 @@ public class GoodDialog extends Dialog {
                     return;
                 }
                 int quantityInt = Integer.valueOf(quantity);
+                if (attrInfoData == null){
+                    ToastHelper.makeText("请选择商品规格").show();
+                    return;
+                }
                 if (quantityInt > 0 && quantityInt <= attrInfoData.getNum()) {
                     callback.onAdded(attrInfoData, quantityInt);
                     getGoodsInfo();
@@ -306,14 +322,15 @@ public class GoodDialog extends Dialog {
      * @param id            商家ID
      * @param callback      回调数据
      */
-    public void setData(List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList, String id, Callback callback) {
+    public void setData(List<GoodDetailsDataBean.AttrGroupListBean> attrGroupList, String id,String url, Callback callback) {
         this.callback = callback;
         this.good_id = id;
         this.attrGroupList = attrGroupList;
+        this.url = url;
         //初始化
         attrId = new int[attrGroupList.size()];
         attrString = new String[attrGroupList.size()];
-
+        ivlogo.load(url);
         scrollSkuList.setSkuList(attrGroupList);
 
     }

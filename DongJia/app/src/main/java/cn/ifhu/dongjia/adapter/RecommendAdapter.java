@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
+import cn.ifhu.dongjia.utils.Utils;
 
 /**
  * 懂家臻选
@@ -57,8 +58,8 @@ public class RecommendAdapter extends BaseLoadMoreAdapter<RecommendDataBean.List
         if (position == mDatas.size()) return;
         holder.ivCoverPic.load(mDatas.get(position).getCover_pic());
         holder.tvName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText("￥" + mDatas.get(position).getPrice());
-        holder.tvOriginalPrice.setText("￥" + mDatas.get(position).getOriginal_price());
+        holder.tvPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getPrice()));
+        holder.tvOriginalPrice.setText("￥" + Utils.getPrettyNumber(mDatas.get(position).getOriginal_price()));
         holder.tvOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvShowIntegral.setText(mDatas.get(position).getShow_integral() + "人已买");
         if (onClickItem != null){

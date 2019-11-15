@@ -22,6 +22,7 @@ import cn.ifhu.dongjia.net.BaseObserver;
 import cn.ifhu.dongjia.net.HomeCaseService;
 import cn.ifhu.dongjia.net.RetrofitAPIManager;
 import cn.ifhu.dongjia.net.SchedulerUtils;
+import cn.ifhu.dongjia.utils.X5WebView;
 
 /**
  * 联系设计师详情
@@ -41,14 +42,14 @@ public class CallDesignerActivity extends BaseActivity {
     TextView tvTime;
     @BindView(R.id.options1)
     LinearLayout options1;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
     @BindView(R.id.rl_call_designer)
     RelativeLayout rlCallDesigner;
-
+    @BindView(R.id.web_content)
+    X5WebView webContent;
     String id;
     //创建id接收数据传输到联系设计师
     String topic_id;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,8 +79,11 @@ public class CallDesignerActivity extends BaseActivity {
                 tvName.setText(t.getData().getAuthor());
                 tvStoreTitle.setText(t.getData().getTitle());
                 tvTime.setText(t.getData().getAddtime());
-                tvContent.setText(t.getData().getContent());
                 topic_id = t.getData().getId();
+                //webView设置数据
+                webContent.loadData(t.getData().getContent(),"text/html", "UTF-8");
+                webContent.getSettings().setUseWideViewPort(true);
+                webContent.getSettings().setLoadWithOverviewMode(true);
             }
         });
     }
@@ -92,8 +96,8 @@ public class CallDesignerActivity extends BaseActivity {
 
     @OnClick(R.id.rl_call_designer)
     public void onRlCallDesignerClicked() {
-        Intent intent = new Intent(this,AddCallDesignerActivity.class);
-        intent.putExtra("topic_id",topic_id);
+        Intent intent = new Intent(this, AddCallDesignerActivity.class);
+        intent.putExtra("topic_id", topic_id);
         startActivity(intent);
     }
 }

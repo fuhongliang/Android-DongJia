@@ -21,4 +21,10 @@ public interface OrderServer {
     @GET("/index.php?r=api/order/detail")
     public Observable<BaseEntity<OrderDetailDataBean>> orderDetail(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("access_token") String access_token, @Query("order_id") int order_id);
 
+    /**
+     * 取消订单
+     */
+    @GET("/index.php?r=api/order/revoke")
+    public Observable<BaseEntity<Object>> orderRevoke(@Query("store_id") int store_id, @Query("_uniacid") int uniacid, @Query("_acid") int acid, @Query("access_token") String access_token, @Query("order_id") int order_id);
+
 }

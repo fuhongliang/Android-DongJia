@@ -19,6 +19,7 @@ import cn.ifhu.dongjia.R;
 import cn.ifhu.dongjia.base.BaseLoadMoreAdapter;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
 import cn.ifhu.dongjia.utils.DateUtil;
+import cn.ifhu.dongjia.utils.Utils;
 
 public class PanicBuyAdapter extends BaseLoadMoreAdapter<HomeDataBean.MiaoshaBean.GoodsListBean, PanicBuyAdapter.ViewHolder> {
 
@@ -58,9 +59,9 @@ public class PanicBuyAdapter extends BaseLoadMoreAdapter<HomeDataBean.MiaoshaBea
         //String类型转换long类型
         holder.tvStartTime.setText("距结束" + DateUtil.getLongToTimeString(Long.valueOf(mDatas.get(position).getStart_time())));
         holder.tvName.setText(mDatas.get(position).getName());
-        holder.tvPrice.setText(mDatas.get(position).getPrice());
+        holder.tvPrice.setText("￥"+Utils.getPrettyNumber(mDatas.get(position).getPrice()));
         holder.tvPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tvMiaoShaPrice.setText(mDatas.get(position).getMiaosha_price());
+        holder.tvMiaoShaPrice.setText("￥"+Utils.getPrettyNumber(mDatas.get(position).getMiaosha_price()));
         if (onClickItem != null) {
             holder.llBuy.setOnClickListener(v ->
                     onClickItem.panicBuy(position));

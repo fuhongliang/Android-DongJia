@@ -14,6 +14,7 @@ import cn.ifhu.dongjia.model.data.GoodsRecommendDataBean;
 import cn.ifhu.dongjia.model.data.HomeDataBean;
 import cn.ifhu.dongjia.model.data.MchArticleDataBean;
 import cn.ifhu.dongjia.model.data.MchListDataBean;
+import cn.ifhu.dongjia.model.data.OrderPayDataBean;
 import cn.ifhu.dongjia.model.data.RecommendDataBean;
 import cn.ifhu.dongjia.model.data.SearchDataBean;
 import cn.ifhu.dongjia.model.data.ShopDataBean;
@@ -128,5 +129,12 @@ public interface HomeService {
      */
     @GET("/index.php?r=api/default/mch-list")
     public Observable<BaseEntity<MchListDataBean>> MchList(@QueryMap Map<String,Object> urlParam);
+
+    /**
+     * 订单支付
+     */
+    @GET("/index.php?r=api/order/pay-data")
+    public Observable<BaseEntity<OrderPayDataBean>> OrderPayData(@QueryMap Map<String,Object> urlParam);
+
 
 }
