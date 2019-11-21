@@ -3,6 +3,7 @@ package cn.ifhu.dongjia.activity.home;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,6 +65,19 @@ public class GoodsListActivity extends BaseActivity {
     RecyclerView rvGoods;
     @BindView(R.id.rv_mch)
     RecyclerView rvMch;
+    @BindView(R.id.ll_goods)
+    LinearLayout llGoods;
+    @BindView(R.id.tv_mch_comprehensive)
+    TextView tvMchComprehensive;
+    @BindView(R.id.tv_sales_volumes)
+    TextView tvSalesVolumes;
+    @BindView(R.id.rl_sales_volumes)
+    RelativeLayout rlSalesVolumes;
+    @BindView(R.id.tv_newest)
+    TextView tvNewest;
+    @BindView(R.id.ll_mch)
+    LinearLayout llMch;
+
     //商品列表
     GoodsListAdapter goodsListAdapter;
     List<GoodsListDataBean.ListBean> goodsList = new ArrayList<>();
@@ -73,7 +87,6 @@ public class GoodsListActivity extends BaseActivity {
     List<MchListDataBean.ListBean> mchList = new ArrayList<>();
 
     String CatID;
-    String sort;
 
 
     @Override
@@ -83,7 +96,7 @@ public class GoodsListActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText("家居家装");
         CatID = getIntent().getStringExtra("CatId");
-        getGoodsListShow();
+        getGoodsListShow(0, 0, 1);
         //商品列表
         goodsListAdapter = new GoodsListAdapter(goodsList, this, new GoodsListAdapter.OnClickItem() {
             @Override
@@ -110,7 +123,7 @@ public class GoodsListActivity extends BaseActivity {
             }
         });
         rvMch.setNestedScrollingEnabled(false);
-        rvMch.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+        rvMch.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvMch.setAdapter(mchListAdapter);
         rvMch.setOnScrollListener(new LoadMoreScrollListener(rvMch));
 
@@ -119,20 +132,13 @@ public class GoodsListActivity extends BaseActivity {
     /**
      * 商品列表接口
      */
-    public void getGoodsListShow() {
+    public void getGoodsListShow(int GoodSort, int GoodSortType, int Page) {
         setLoadingMessageIndicator(true);
         GoodsListGetBean goodsListGetBean = new GoodsListGetBean();
         goodsListGetBean.setCat_id(CatID);
-//        if (sort.equals("0")){
-//            goodsListGetBean.setSort(sort);
-//        }else if (sort.equals("1")){
-//            goodsListGetBean.setSort(sort);
-//        }else {
-//            goodsListGetBean.setSort(sort);
-//        }
-        goodsListGetBean.setSort(0);
-        goodsListGetBean.setSort_type(0);
-        goodsListGetBean.setPage(1);
+        goodsListGetBean.setSort(GoodSort);
+        goodsListGetBean.setSort_type(GoodSortType);
+        goodsListGetBean.setPage(Page);
         goodsListGetBean.setDistrict("陆丰市");
         RetrofitAPIManager.create(HomeService.class).GoodsList(goodsListGetBean.getPostParam())
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<GoodsListDataBean>(true) {
@@ -158,31 +164,39 @@ public class GoodsListActivity extends BaseActivity {
     //商品点击
     @OnClick(R.id.rl_goods)
     public void onRlGoodsClicked() {
-        getGoodsListShow();
+        getGoodsListShow(0, 0, 1);
         goodsView.setVisibility(View.VISIBLE);
         storeView.setVisibility(View.GONE);
         rvGoods.setVisibility(View.VISIBLE);
         rvMch.setVisibility(View.GONE);
         goodsListAdapter.notifyDataSetChanged();
+        llGoods.setVisibility(View.VISIBLE);
+        llMch.setVisibility(View.GONE);
+
     }
 
     //店铺点击
     @OnClick(R.id.rl_store)
     public void onRlStoreClicked() {
-        getMchListShow();
+        getMchListShow(1, 1);
         storeView.setVisibility(View.VISIBLE);
         goodsView.setVisibility(View.GONE);
         rvGoods.setVisibility(View.GONE);
         rvMch.setVisibility(View.VISIBLE);
+        llGoods.setVisibility(View.GONE);
+        llMch.setVisibility(View.VISIBLE);
     }
 
-    public void getMchListShow() {
+    /**
+     * 商家列表接口
+     */
+    public void getMchListShow(int Sort, int Page) {
         setLoadingMessageIndicator(true);
         MchListGetBean mchListGetBean = new MchListGetBean();
         mchListGetBean.setCat_id(CatID);
         mchListGetBean.setDistrict("陆丰市");
-        mchListGetBean.setPage(1);
-        mchListGetBean.setSort(1);
+        mchListGetBean.setPage(Page);
+        mchListGetBean.setSort(Sort);
         RetrofitAPIManager.create(HomeService.class).MchList(mchListGetBean.getPostParam())
                 .compose(SchedulerUtils.ioMainScheduler()).subscribe(new BaseObserver<MchListDataBean>(true) {
             @Override
@@ -202,15 +216,38 @@ public class GoodsListActivity extends BaseActivity {
     //综合点击
     @OnClick(R.id.tv_comprehensive)
     public void onTvComprehensiveClicked() {
+        getGoodsListShow(0, 0, 1);
     }
 
     //价格点击
     @OnClick(R.id.rl_price)
     public void onRlPriceClicked() {
+        // TODO: 2019-11-20 升降排序
+        getGoodsListShow(1, 0, 1);
     }
 
     //销量点击
     @OnClick(R.id.tv_sales_volume)
     public void onTvSalesVolumeClicked() {
+        getGoodsListShow(2, 0, 1);
+    }
+
+    //店铺综合
+    @OnClick(R.id.tv_mch_comprehensive)
+    public void onTvMchComprehensiveClicked() {
+        getMchListShow(1, 1);
+
+    }
+
+    //店铺销量点击
+    @OnClick(R.id.rl_sales_volumes)
+    public void onRlSalesVolumesClicked() {
+        getMchListShow(2, 1);
+    }
+
+    //最新
+    @OnClick(R.id.tv_newest)
+    public void onTvNewestClicked() {
+        getMchListShow(3, 1);
     }
 }
